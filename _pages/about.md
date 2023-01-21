@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "Sophie Su's personal website"
+title: "Sophie(Xing) Su"
 author_profile: true
 redirect_from: 
   - /about/
