@@ -7,12 +7,14 @@ redirect_from:
   - /about.html
 ---
 
-Hi, My name is Sophie Su (苏醒), welcome to my personal page
+Hi, My name is Sophie Su (苏醒)
 ======
 
-I am a first year PhD student working with Dr.Jeff Zacks at Washington University in Saint Louis. I am interested in computational approaches, dynamic cognition and action control.  <br/>
+I am a second year PhD student working with Dr.Jeff Zacks at Washington University in Saint Louis. I am interested in computational approaches, dynamic cognition and action control.  <br/>
 Before WashU, I was at Haskins Lab, work on an imaging-genetics projects of dyslexia. <br/>
-I graduated from Cornell with a degree in Economics and Psychology.
+I graduated from Cornell with a degree in Economics and Psychology. 
+I publish essaies in both Chinese and English. 
+I love to bake, and gain insight of action planning from making cakes. 
 Here is my [CV](/files/Sophie_Su_CV_2022.pdf), and if you want to know what I am thinking right now, here is my [blog](/_portfolio)
 
 
