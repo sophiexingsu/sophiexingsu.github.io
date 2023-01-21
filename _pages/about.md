@@ -10,8 +10,9 @@ redirect_from:
 Hi, My name is Sophie Su (苏醒)
 ======
 
-I am a second year PhD student working with Dr.Jeff Zacks at Washington University in Saint Louis. I am interested in computational approaches, dynamic cognition and action control.  <br/>
-Before WashU, I was at Haskins Lab, work on an imaging-genetics projects of dyslexia. <br/>
+I am a second year Psychological and Brain Sciences PhD student working with Dr. Jeff Zacks at Washington University in Saint Louis. I am interested in computational approaches, dynamic cognition and action control.  <br/> <br/>
+
+Before WashU, I was at Haskins Lab, working as a research assistant for an imaging-genetics projects of dyslexia. <br/>
 I graduated from Cornell with a degree in Economics and Psychology. <br/>
 I publish essaies in both Chinese and English. <br/>
 I love to bake, and gain insight of action planning from making cakes. <br/>
