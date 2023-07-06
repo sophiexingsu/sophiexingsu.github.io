@@ -11,10 +11,13 @@ redirect_from:
 
 Education
 ======
-* B.S. in GitHub, GitHub University, 2012
-* M.S. in Jekyll, GitHub University, 2014
-* Ph.D in Version Control Theory, GitHub University, 2018 (expected)
-
+* Washington University in Saint Louis
+	* PHD in Psychological and Brain Sciences-Brain Behavior & Cognition 
+		* GPA:4.0 Aug 2021 - Present
+*  Cornell University 
+	* BA in Psychology and Economics 
+		* GPA: 3.79 Aug 2017 - May 2019 
+		
 Work experience
 ======
 * Summer 2015: Research Assistant
