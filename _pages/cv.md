@@ -9,6 +9,8 @@ redirect_from:
 
 {% include base_path %}
 
+You can download a pdf version of my CV [here] (/files/Sophie_Su_CV.pdf) 
+
 Education
 ======
 * Washington University in Saint Louis
@@ -18,26 +20,17 @@ Education
 	* BA in Psychology and Economics 
 		* GPA: 3.79 Aug 2017 - May 2019 
 		
-Work experience
-======
-* Summer 2015: Research Assistant
-  * Github University
-  * Duties included: Tagging issues
-  * Supervisor: Professor Git
+ Work Experience
+ ======
+**Summer Instructor, STEM Challenge Course**  
+*Washington University in St. Louis, Saint Louis, MO*  
+*June 2021 - August 2021*
 
-* Fall 2015: Research Assistant
-  * Github University
-  * Duties included: Merging pull requests
-  * Supervisor: Professor Hub
-  
-Skills
-======
-* Skill 1
-* Skill 2
-  * Sub-skill 2.1
-  * Sub-skill 2.2
-  * Sub-skill 2.3
-* Skill 3
+- **Curriculum Design and Instruction**
+  - Developed and taught a course on computational modeling in psychology for middle school students from 5th to 8th grade.
+
+- **Empowering Middle School Students in STEM**
+  - Introduced students to computational modeling in psychology, teaching them to use tools like R and Excel for their own experiments.
 
 Publications
 ======
@@ -59,4 +52,4 @@ Teaching
   
 Service and leadership
 ======
-* Currently signed in to 43 different slack teams
+* Treasure for WashU Graduate Christian Fellowship  2021-2023
