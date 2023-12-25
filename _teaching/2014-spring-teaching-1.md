@@ -1,14 +1,15 @@
 ---
-title: "Teaching experience 1"
+title: "Course Cruator and instrucofort"
 collection: teaching
 type: "Undergraduate course"
 permalink: /teaching/2014-spring-teaching-1
-venue: "University 1, Department"
-date: 2014-01-01
-location: "City, Country"
+venue: "Washington University in Saint Louis"
+date: Fall 2023
+location: "Saint Louis"
 ---
 
-This is a description of a teaching experience. You can use markdown like any other post.
+I was the AT 
+
 
 Heading 1
 ======
