@@ -14,7 +14,7 @@ I'm a third-year PhD Psychology student at Washington University in St. Louis, d
 
 Prior to this, my journey in research began at the Haskins Lab, focusing on dyslexia. I earned my bachelor's degrees in Economics and Psychology from Cornell University, where I collaborated with [Dr. Khena Swallow](https://psychology.cornell.edu/khena-m-swallow).
 
-When I'm not mentalizing or number-crunching, I write essays in both [Chinese](/files/Sophie_Su_CV.pdf) and English and bake cakes that are as much a science experiment as a treat. Check out my cake [gallery](//portfolio/) for a peek at my baking escapades.
+When I'm not brainstorming or number-crunching, I write essays in both [Chinese](/files/Sophie_Su_CV.pdf) and English and bake cakes that are as much a science experiment as a treat. Check out my cake [gallery](//portfolio/) for a peek at my baking escapades.
 
 Curious about my professional path or what's cooking in my mind? Here's my [CV](/files/wechat.bmp) and [blog](/year-archive/)  for more!
 
