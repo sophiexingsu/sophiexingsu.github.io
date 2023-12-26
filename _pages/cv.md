@@ -11,8 +11,7 @@ redirect_from:
 
 You can download a pdf version of my CV [here] (/files/Sophie_Su_CV.pdf) 
 
-Education
-======
+## Education
 * Washington University in Saint Louis
 	* PHD in Psychological and Brain Sciences-Brain Behavior & Cognition 
 		* GPA:4.0 Aug 2021 - Present
@@ -20,8 +19,8 @@ Education
 	* BA in Psychology and Economics 
 		* GPA: 3.79 Aug 2017 - May 2019 
 		
- Work Experience
- ======
+## Work Experience
+
 **Summer Instructor, STEM Challenge Course**  
 *Washington University in St. Louis, Saint Louis, MO*  
 *June 2021 - August 2021*
@@ -32,24 +31,21 @@ Education
 - **Empowering Middle School Students in STEM**
   - Introduced students to computational modeling in psychology, teaching them to use tools like R and Excel for their own experiments.
 
-Publications
-======
+## Publications
   <ul>{% for post in site.publications %}
     {% include archive-single-cv.html %}
   {% endfor %}</ul>
   
-Talks
-======
+##Talks
+
   <ul>{% for post in site.talks %}
     {% include archive-single-talk-cv.html %}
   {% endfor %}</ul>
   
-Teaching
-======
+## Teaching
   <ul>{% for post in site.teaching %}
     {% include archive-single-cv.html %}
   {% endfor %}</ul>
   
-Service and leadership
-======
+## Service and leadership
 * Treasure for WashU Graduate Christian Fellowship  2021-2023
