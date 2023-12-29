@@ -9,7 +9,7 @@ redirect_from:
 
 {% include base_path %}
 
-You can download a pdf version of my CV [here] (/files/Sophie_Su_CV.pdf) 
+You can download a pdf version of my CV [here](/files/Sophie_Su_CV.pdf) 
 
 ## Education
 * Washington University in Saint Louis
@@ -31,7 +31,7 @@ You can download a pdf version of my CV [here] (/files/Sophie_Su_CV.pdf)
 - **Empowering Middle School Students in STEM**
   - Introduced students to computational modeling in psychology, teaching them to use tools like R and Excel for their own experiments.
 
-## Publications
+##Publications
   <ul>{% for post in site.publications %}
     {% include archive-single-cv.html %}
   {% endfor %}</ul>

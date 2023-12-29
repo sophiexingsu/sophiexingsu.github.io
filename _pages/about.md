@@ -20,6 +20,7 @@ Curious about my professional path or what's cooking in my mind? Here's my [CV](
 
 
 ## News & Highlights
+- *December 2023:** I rr
 - **August 2023:** Celebrating the successful defense of my Master's thesis!
 - **May 2022:** Honored to receive the Graduate Conference Award at the Psychonomic Conference for my project "Predictive Looking and Predictive Looking Error in Everyday Activities."
 - **August 2021:**Started my PhD journey, collaborating with [Dr. Jeff Zacks](https://dcl.wustl.edu/people/jzacks/).
