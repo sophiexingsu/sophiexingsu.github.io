@@ -1,5 +1,5 @@
 ---
-title: "Course Cruator and instrucofort"
+title: "TA for Gene, Environment, and Human Behavior"
 collection: teaching
 type: "Undergraduate course"
 permalink: /teaching/2014-spring-teaching-1
