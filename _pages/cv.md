@@ -12,10 +12,10 @@ redirect_from:
 You can download a pdf version of my CV [here](/files/Sophie_Su_CV.pdf) 
 
 ## Education
-* Washington University in Saint Louis
+* **Washington University in Saint Louis**
 	* PHD in Psychological and Brain Sciences-Brain Behavior & Cognition 
 		* GPA:4.0 Aug 2021 - Present
-*  Cornell University 
+*  **Cornell University**
 	* BA in Psychology and Economics 
 		* GPA: 3.79 Aug 2017 - May 2019 
 		
