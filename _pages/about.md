@@ -19,7 +19,7 @@ When I'm not brainstorming or number-crunching, I write essays in both [Chinese]
 Curious about my academic journey or what's cooking in my mind? Here's my [CV](/files/Sophie_Su_CV.pdf) and [blog](/year-archive/)  for more! 
  
 ## News & Highlights
-- **December 2023:** I received a research grant for my action project from the The Department of Psychological & Brain Sciences at WasU. 
+- **December 2023:** I received a research grant for my action project from The Department of Psychological & Brain Sciences at WashU. 
 - **August 2023:** Celebrating the successful defense of my Master's thesis!
 - **May 2022:** Honored to receive the Graduate Conference Award at the Psychonomic Conference for my project "Predictive Looking and Predictive Looking Error in Everyday Activities."
 - **August 2021:**Started my PhD journey, collaborating with [Dr. Jeff Zacks](https://dcl.wustl.edu/people/jzacks/).

@@ -1,5 +1,5 @@
 ---
-permalink: /
+permalink: /portfolio/portfolio-1
 title: "Matcha Basque Cheesecake with Strawberries"
 excerpt: "A simple cheese cake that won over a diverse crowd. <br/><img src='/images/matcha_strawberry_500.jpg'>"
 collection: portfolio
