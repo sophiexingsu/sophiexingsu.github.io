@@ -9,7 +9,7 @@ This is a matcha basque cheesecake with strawberries I made for a Thanksgiving d
 
 
 %%[Matcha Basque Cheesecake](/images/matcha_strawberry.jpg)
-br/><img src='/images/matcha_strawberry.jpg'>"
+<img src='/images/matcha_strawberry_500.jpg'>
 
 Basque Cheesecake is quite easy to make as it only involves mixing all the ingredients using a spatula. However, after many failed attempts and products that received complaints not only from my friends but were also left relatively uneaten, there are some tips I learned:
 
@@ -24,9 +24,9 @@ I followed for this particular matcha Basque cheesecake. The amount of sugar nee
 Here is the matcha Basque cheesecake straight from the oven:
 
 %%[Plain Matcha Basque Cheesecake](/images/matcha.jpg)
-br/><img src='/images/matcha.jpg'>"
+<img src='/images/mathca_500.jpg''>
 
 I simply decorated it with strawberries and powdered sugar for the final product.
 
 %%![Matcha Basque Cheesecake](/images/matcha_strawberry.jpg)
-br/><img src='/images/matcha_strawberry.jpg'>"
+<img src='/images/matcha_strawberry_500.jpg'>

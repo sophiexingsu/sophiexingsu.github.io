@@ -10,9 +10,9 @@ redirect_from:
 # Hello and Welcome!
 
 ## About Me
-I'm a third-year Psychology  PhD student at WashU completing the [Cognitive, Computational and Systems Neuroscience Pathway](https://sites.wustl.edu/systemsneuroscience/ccsn-pathway/), diving deep into the brain and behavior's mysteries in [Dr. Jeff Zacks](https://dcl.wustl.edu/people/jzacks/)'s lab. My journey blends computational approaches with dynamic cognition and action control.
+I'm a third-year Psychology PhD student at WashU completing the [Cognitive, Computational and Systems Neuroscience Pathway](https://sites.wustl.edu/systemsneuroscience/ccsn-pathway/), and diving deep into the brain and behavior's mysteries in [Dr. Jeff Zacks](https://dcl.wustl.edu/people/jzacks/)'s lab. My journey blends computational approaches with dynamic cognition and action control.
 
-Prior to this, I was in [Dr.Nicole Landi](https://psychology.uconn.edu/person/nicole-landi/)'s lab applying Imaging genetics methods to understand the mechanisms of dyslexia. I earned my bachelor's degrees in Economics and Psychology from Cornell University, where I collaborated with [Dr. Khena Swallow](https://psychology.cornell.edu/khena-m-swallow).
+Prior to this, I was in [Dr.Nicole Landi's Lab](https://psychology.uconn.edu/person/nicole-landi/) applying Imaging genetics methods to understand the mechanisms of dyslexia. I earned my bachelor's degrees in Economics and Psychology from Cornell University, where I collaborated with [Dr. Khena Swallow](https://psychology.cornell.edu/khena-m-swallow).
 
 When I'm not brainstorming or number-crunching, I write essays in both [Chinese](/files/wechat.bmp) and English and bake cakes that are as much a science experiment as a treat. Check out my cake [gallery](/portfolio/) for a peek at my baking escapades. 
 
