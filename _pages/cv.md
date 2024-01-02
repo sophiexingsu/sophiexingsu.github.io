@@ -19,8 +19,7 @@ You can download a pdf version of my CV [here](/files/Sophie_Su_CV.pdf).
 	* BA in Psychology and Economics 
 		* GPA: 3.79 Aug 2017 - May 2019 
 		
-## Work Experience
-
+## Selected Work Experience
 **Summer Instructor, STEM Challenge Course**  
 *Washington University in St. Louis, Saint Louis, MO*  
 *June 2021 - August 2021*
