@@ -14,6 +14,7 @@ Basque Cheesecake is quite easy to make as it only involves mixing all the ingre
 - **Sifting**: Sifting your cake batter is a must! If you don't want your cake to have weird textures or some bits of uncooked batter in the middle of your cake, please sift your cake batter! It can remedy some damage you might have caused if you didn't let your cream cheese rest to room temperature fully. You will see many unincorporated cream cheese pieces left in your sifter.
 
 Here is the matcha Basque cheesecake straight from the oven:
-<img src='/images/mathca_500.jpg''>
+<img src='/images/mathca_500.jpg'>
+
 I simply decorated it with strawberries and powdered sugar for the final product.
 <img src='/images/matcha_strawberry_500.jpg'>
