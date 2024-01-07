@@ -7,7 +7,7 @@
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Sophie Su's Personal Website"
+title                    : "Sophie(Xing) Su's Personal Website"
 title_separator          : "-"
 name                     : &name "Sophie(Xing) Su"
 description              : &description "WUSTL PBS Grad, Haskins, Lab"
@@ -80,7 +80,7 @@ analytics:
 
 # Site Author
 author:
-  name             : "Sophie(Xing) su "
+  name             : "Sophie(Xing) Su "
   avatar           : "65092167.jpeg"
   bio              : "WUSTL PBS Grad,Haskins, Cornell"
   location         : "Saint Louis, Missouri"
