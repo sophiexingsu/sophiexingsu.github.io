@@ -20,7 +20,7 @@ Curious about my academic journey or what's cooking in my mind? Here's my [CV](/
  
 ## News & Highlights
 - **June 2024:** I passed my subject matter exam about global versus incremental updating for event representation. Please stay tuned for the manuscript! 
-- **May 2024: **  I presented a talk on the 'Predictive Looking and Predictive Looking Error' project at VSS 2024! 
+- **May 2024:**  I presented a talk on the 'Predictive Looking and Predictive Looking Error' project at VSS 2024! 
 - **December 2023:** I received a research grant for my action project from The Department of Psychological & Brain Sciences at WashU. 
 - **August 2023:** Celebrating the successful defense of my Master's thesis!
 - **May 2022:** Honored to receive the Graduate Conference Award at the Psychonomic Conference for my project "Predictive Looking and Predictive Looking Error in Everyday Activities."
