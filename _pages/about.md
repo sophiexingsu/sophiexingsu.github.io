@@ -17,6 +17,11 @@ Prior to this, I was in [Dr.Nicole Landi's Lab](https://psychology.uconn.edu/per
 When I'm not brainstorming or number-crunching, I write essays in both [Chinese](/files/wechat.bmp) and English and bake cakes that are as much a science experiment as a treat. Check out my cake [gallery](/portfolio/) for a peek at my baking escapades. 
 
 Curious about my academic journey or what's cooking in my mind? Here's my [CV](/files/Sophie_Su_CV.pdf) and [blog](/year-archive/) for more ! 
+
+## Research Program 
+
+## Prediction Error Signals from the eyes 
+
  
 ## News & Highlights
 - **June 2024:** I passed my subject matter exam about global versus incremental updating for event representation. Please stay tuned for the manuscript! 
