@@ -18,9 +18,10 @@ When I'm not brainstorming or number-crunching, I write essays in both [Chinese]
 
 Curious about my academic journey or what's cooking in my mind? Here's my [CV](/files/Sophie_Su_CV.pdf) and [blog](/year-archive/) for more ! 
 
-## Research Program 
+# Research Program 
 
-## Prediction Error Signals from the eyes 
+## Prediction Error Signals from the eyes  
+![gaze heatmap overlayed on actor's performance](./files/output.gif)
 
  
 ## News & Highlights
