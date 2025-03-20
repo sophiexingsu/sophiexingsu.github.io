@@ -20,9 +20,22 @@ Curious about my academic journey or what's cooking in my mind? Here's my [CV](/
 
 # Research Program 
 
-## Prediction Error Signals from the eyes  
+## Inferring Mental Processes from Gaze Patterns
+
+Can we decode cognitive processes by analyzing where people look? This research explores how gaze patterns during natural viewing reveal our internal models of the world.
+
 ![gaze heatmap overlayed on actor's performance](./files/output.gif)
 
+### Key Findings:
+
+1. **Prediction Error Signals**: Gaze patterns reveal prediction errors that align with computational models of event perception.
+
+2. **Semantic Influence**: Semantic content shapes visual attention during naturalistic viewing.
+
+### Current Direction:
+
+Investigating how mental models update (incrementally vs. globally) and whether gaze patterns reveal hierarchical structures in our cognitive representations.
+ 
  
 ## News & Highlights
 - **June 2024:** I passed my subject matter exam about global versus incremental updating for event representation. Please stay tuned for the manuscript! 
