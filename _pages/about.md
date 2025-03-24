@@ -26,11 +26,16 @@ Can we decode cognitive processes by analyzing where people look? This research 
 
 ![gaze heatmap overlayed on actor's performance](./files/output.gif)
 
-### Key Findings:
+#### Latest Finding: Predictive Looking in Everyday Activities
 
-1. **Prediction Error Signals**: Gaze patterns reveal prediction errors that align with computational models of event perception.
+Our recently revised paper in JEP: General reveals that:
 
-2. **Semantic Influence**: Semantic content shapes visual attention during naturalistic viewing.
+- 👁️ Viewers predict actors' hand movements up to 9 seconds in advance
+- 🧠 Prediction errors (not uncertainty) align with computational models of event perception
+- 🔍 Increased prediction errors occur at event boundaries
+
+This provides strong evidence that prediction errors drive how we segment continuous experience into discrete events.
+[Read the full research update](/year-archive/predictive-looking-2025.md)
 
 ### Current Direction:
 
