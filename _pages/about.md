@@ -22,20 +22,18 @@ Curious about my academic journey or what's cooking in my mind? Here's my [CV](/
 
 ## Inferring Mental Processes from Gaze Patterns
 
-Can we decode cognitive processes by analyzing where people look? This research explores how gaze patterns during natural viewing reveal our internal models of the world.
+Can we decode cognitive processes by analyzing where people look? This line research of mine explores how gaze patterns during natural viewing reveal our internal models of the world.
 
 ![gaze heatmap overlayed on actor's performance](./files/output.gif)
 
-#### Latest Finding: Predictive Looking in Everyday Activities
-
-Our recently revised paper in JEP: General reveals that:
+#### Latest Finding: Predictive Looking Errors in Everyday Activities
 
 - 👁️ Viewers predict actors' hand movements up to 9 seconds in advance
 - 🧠 Prediction errors (not uncertainty) align with computational models of event perception
 - 🔍 Increased prediction errors occur at event boundaries
 
 This provides strong evidence that prediction errors drive how we segment continuous experience into discrete events.
-[Read the full research update](/year-archive/predictive-looking-2025.md)
+[Read the full research update](/_posts/predictive-looking-2025.md)
 
 ### Current Direction:
 
