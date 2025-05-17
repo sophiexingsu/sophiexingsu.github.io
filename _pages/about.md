@@ -10,7 +10,13 @@ redirect_from:
 # Hello and Welcome!
 
 ## About Me
-I'm a  fourth-year Psychology PhD student at WashU completing the [Cognitive, Computational and Systems Neuroscience Pathway](https://sites.wustl.edu/systemsneuroscience/ccsn-pathway/), and diving deep into the brain and behavior's mysteries in [Dr. Jeff Zacks](https://dcl.wustl.edu/people/jzacks/)'s lab. My journey blends computational approaches with dynamic cognition and action control.
+I'm a fourth-year Psychology PhD student at WashU, working with Dr. Jeff Zacks. I completed the [Cognitive, Computational, and Systems Neuroscience Pathway](https://sites.wustl.edu/systemsneuroscience/ccsn-pathway/) and hold a Graduate Certificate in Quantitative Data Analysis.
+
+My current research focuses on how people build and update mental representations during dynamic perception. Specifically, I investigate what these mental models contain, [what triggers their updates](https://doi.org/10.7936/xqb3-z870), and how those updates unfold—are they #incremental or #global? I'm also interested in whether people can reliably perceive everyday actions, and whether performing those actions might (or might not) enhance their perception and memory.
+
+To address these questions, I combine behavioral experiments, eye-tracking, and computational modeling.
+
+My interest in using computational approaches to study cognition was sparked by the [Neuromatch Academy](https://neuromatch.io/neuroscience/) online summer school in cognitive neuroscience, where I was a student in 2020 and a TA in 2021.
 
 Prior to this, I was in [Dr.Nicole Landi's Lab](https://psychology.uconn.edu/person/nicole-landi/) applying Imaging genetics methods to understand the mechanisms of dyslexia. I earned my bachelor's degrees in Economics and Psychology from Cornell University, where I collaborated with [Dr. Khena Swallow](https://psychology.cornell.edu/khena-m-swallow).
 
