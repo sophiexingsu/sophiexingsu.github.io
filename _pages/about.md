@@ -38,7 +38,7 @@ Can we decode cognitive processes by analyzing where people look? This line rese
 
 ![gaze heatmap overlayed on actor's performance](./files/output.gif)
 
-#### Link Between CLIP Model Embeddings and Gaze Patterns in Movies
+### Link Between CLIP Model Embeddings and Gaze Patterns in Movies
 
 - 🔄 Inverting frames preserves low-level image properties but distorts semantic information
 - 📊 Inverted frames show worse alignment with action descriptions compared to upright frames
@@ -46,11 +46,11 @@ Can we decode cognitive processes by analyzing where people look? This line rese
 
 This research demonstrates that high-level semantic understanding, not just visual features, drives viewers' attention patterns during film watching.[Read the full research update](/files/VSS2025_Sophie_Su_CLIP_Gaze.pdf)
 
-### Current Direction:
+#### Current Direction:
 Apply this research pipeline to investigate other properties proposed to influence viewers' gaze patterns. 
 
 
-#### Predictive Looking Errors in Everyday Activities
+### Predictive Looking Errors in Everyday Activities
 
 - 👁️ Viewers predict actors' hand movements up to 9 seconds in advance
 - 🧠 Predictive looking errors align with computational model's prediction errors. 
@@ -59,7 +59,7 @@ Apply this research pipeline to investigate other properties proposed to influen
 This provides strong evidence that prediction errors drive how we segment continuous experience into discrete events.
 [Read the full research update](/_posts/predictive-looking-2025.md)
 
-### Current Direction:
+#### Current Direction:
 
 Investigating how mental models update (incrementally vs. globally) and whether gaze patterns reveal hierarchical structures in our cognitive representations.
  
