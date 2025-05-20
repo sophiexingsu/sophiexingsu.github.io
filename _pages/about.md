@@ -9,7 +9,8 @@ redirect_from:
 
 # Hello and Welcome!
 
-** on the job marktet for pod-docs and erarh ccienst postiiosn year 2025-2026. 
+**On the Job Market (2026-2027)
+***  Expected to complete PhD in Spring/Summer 2026. Available for postdoctoral and early career positions beginning Fall 2026.
 
 ## About Me
 I'm a fourth-year Psychology PhD student at WashU, working with Dr. Jeff Zacks. I completed the [Cognitive, Computational, and Systems Neuroscience Pathway](https://sites.wustl.edu/systemsneuroscience/ccsn-pathway/) and hold a Graduate Certificate in Quantitative Data Analysis.
@@ -24,8 +25,9 @@ Prior to this, I was in [Dr.Nicole Landi's Lab](https://psychology.uconn.edu/per
 
 When I'm not brainstorming or number-crunching, I write essays in both [Chinese](/files/wechat.bmp) and English and bake cakes that are as much a science experiment as a treat. Check out my cake [gallery](/portfolio/) for a peek at my baking escapades. 
 
-Curious about my academic journey or what's cooking in my mind? Here's my [CV](/files/Sophie_Su_CV.pdf) and [blog](/year-archive/) for more !  I am always looing 
- 
+## Connect With me 
+I'm always open to collaborations and enjoy sharing my research interest. Please don't hesitate to reach out if you have questions about my work or potential research opportunities.
+Email: s.sophie at wustl dot edu
 
 # Research Program 
 
