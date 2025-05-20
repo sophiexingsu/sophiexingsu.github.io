@@ -9,10 +9,12 @@ redirect_from:
 
 # Hello and Welcome!
 
+** on the job marktet for pod-docs and erarh ccienst postiiosn year 2025-2026. 
+
 ## About Me
 I'm a fourth-year Psychology PhD student at WashU, working with Dr. Jeff Zacks. I completed the [Cognitive, Computational, and Systems Neuroscience Pathway](https://sites.wustl.edu/systemsneuroscience/ccsn-pathway/) and hold a Graduate Certificate in Quantitative Data Analysis.
 
-My current research focuses on how people build and update mental representations during dynamic perception. Specifically, I investigate what these mental models contain, [what triggers their updates](https://doi.org/10.7936/xqb3-z870), and how those updates unfold—are they #incremental or #global? I'm also interested in whether people can reliably perceive everyday actions, and whether performing those actions might (or might not) enhance their perception and memory.
+My current research focuses on how people build and update mental representations during dynamic perception. Specifically, I investigate what these mental models contain, [what triggers their updates](https://doi.org/10.7936/xqb3-z870), and how those updates unfold—are they #incremental or #global? I'm also interested in whether people can reliably perceive [goal changes and action changes](/files/cornell1.pdf), and whether [performing those actions might (or might not) enhance their perception and memory](/files/Psychonomics_Sophie_Su_2024.pdf).
 
 To address these questions, I combine behavioral experiments, eye-tracking, and computational modeling.
 
@@ -22,7 +24,8 @@ Prior to this, I was in [Dr.Nicole Landi's Lab](https://psychology.uconn.edu/per
 
 When I'm not brainstorming or number-crunching, I write essays in both [Chinese](/files/wechat.bmp) and English and bake cakes that are as much a science experiment as a treat. Check out my cake [gallery](/portfolio/) for a peek at my baking escapades. 
 
-Curious about my academic journey or what's cooking in my mind? Here's my [CV](/files/Sophie_Su_CV.pdf) and [blog](/year-archive/) for more ! 
+Curious about my academic journey or what's cooking in my mind? Here's my [CV](/files/Sophie_Su_CV.pdf) and [blog](/year-archive/) for more !  I am always looing 
+ 
 
 # Research Program 
 
@@ -32,10 +35,22 @@ Can we decode cognitive processes by analyzing where people look? This line rese
 
 ![gaze heatmap overlayed on actor's performance](./files/output.gif)
 
-#### Latest Finding: Predictive Looking Errors in Everyday Activities
+#### Link Between CLIP Model Embeddings and Gaze Patterns in Movies
+
+- 🔄 Inverting frames preserves low-level image properties but distorts semantic information
+- 📊 Inverted frames show worse alignment with action descriptions compared to upright frames
+- 👁️ Inverting frames leads to more errors in predicting people's gaze patterns, suggesting semantic information is critical for where people look when viewing movies
+
+This research demonstrates that high-level semantic understanding, not just visual features, drives viewers' attention patterns during film watching.[Read the full research update](/files/VSS2025_Sophie_Su_CLIP_Gaze.pdf)
+
+### Current Direction:
+Apply this research pipeline to investigate other properties proposed to influence viewers' gaze patterns. 
+
+
+#### Predictive Looking Errors in Everyday Activities
 
 - 👁️ Viewers predict actors' hand movements up to 9 seconds in advance
-- 🧠 Prediction errors (not uncertainty) align with computational models of event perception
+- 🧠 Predictive looking errors align with computational model's prediction errors. 
 - 🔍 Increased prediction errors occur at event boundaries
 
 This provides strong evidence that prediction errors drive how we segment continuous experience into discrete events.
