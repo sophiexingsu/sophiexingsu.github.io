@@ -9,12 +9,14 @@ redirect_from:
 
 {% include base_path %}
 
-You can download a pdf version of my CV [here](/files/Sophie_Su_CV.pdf). 
+You can download a pdf version of my CV [here](/files/Sophie_Su_CV_2025.pdf). 
 
 ## Education
 * **Washington University in Saint Louis**
-	* PHD in Psychological and Brain Sciences-Brain Behavior & Cognition 
-		* GPA:4.0 Aug 2021 - Present
+	* PHD in Psychology 
+		* GPA:4.0 Aug 2021 - Dec 2025
+	* Master in Psychology
+		* Advisor: Dr. Jeff Zacks
 *  **Cornell University**
 	* BA in Psychology and Economics 
 		* GPA: 3.79 Aug 2017 - May 2019 
@@ -41,6 +43,22 @@ You can download a pdf version of my CV [here](/files/Sophie_Su_CV.pdf).
 - **Technical Communication and Collaboration**
   - Presented complex data analyses and findings to technical teams and stakeholders, effectively communicating the implications of employee vacation patterns and vaccination status on organizational productivity and health policies. Facilitated technical discussions to refine data visualization techniques, ensuring clear and actionable insights were derived from employee data.
 
+**Instructor, Selected Topics in Psychology**  
+*Washington University in St. Louis, Saint Louis, MO*  
+*2024*
+
+- **Advanced Course Instruction**
+  - Designed and taught an advanced undergraduate course on selected topics in psychology.
+
+**Teaching Assistant**  
+*Washington University in St. Louis, Saint Louis, MO*  
+*2022-2023*
+
+- **Course Support**
+  - Introduction to Psychology (2023)
+  - Psychology of Learning (2022) 
+  - Genes, Environment, and Behavior (2022)
+
 **Summer Instructor, STEM Challenge Course**  
 *Washington University in St. Louis, Saint Louis, MO*  
 *June 2021 - August 2021*
@@ -50,6 +68,13 @@ You can download a pdf version of my CV [here](/files/Sophie_Su_CV.pdf).
 
 - **Empowering Middle School Students in STEM**
   - Introduced students to computational modeling in psychology, teaching them to use tools like R and Excel for their own experiments.
+
+**Mentoring**  
+*2021-2024*
+
+- **Research Mentorship**
+  - Neuromatch Academy – Led Python sessions for 12 graduate students (Jul–Aug 2021)
+  - Undergraduate Research Mentor: Jeremy Cohn (2023–2024)
   
 ## Publications
   <ul>{% for post in site.publications %}
