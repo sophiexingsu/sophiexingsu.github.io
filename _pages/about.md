@@ -1,6 +1,7 @@
 ---
 permalink: /
 title: "Sophie Su"
+excerpt: "SOPHIE SU"
 author_profile: true
 redirect_from: 
   - /about/
@@ -97,5 +98,4 @@ This provides strong evidence that prediction errors drive how we segment contin
 
 ### 2019
 - **August:** Joined the Haskins Lab as a Research Assistant under Dr. Nicole Landi
-- **May:** Graduated from Cornell University with degrees in Psychology and Economics
-bim 
+- **May:** Graduated from Cornell University with degrees in Psychology and Economics.
