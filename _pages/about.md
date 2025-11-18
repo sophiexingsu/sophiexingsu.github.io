@@ -69,7 +69,7 @@ This research demonstrates that high-level semantic understanding, not just visu
 - Predictive looking errors align with computational model's prediction errors
 - Increased prediction errors occur at event boundaries
 
-This provides strong evidence that prediction errors drive how we segment continuous experience into discrete events. [Read the full research update](/_posts/predictive-looking-2025.md)
+This provides strong evidence that prediction errors drive how we segment continuous experience into discrete events. [Read the full research update](/files/p2026-84598-001.pdf)
 
 **Current Direction:** Investigating how mental models update (incrementally vs. globally) and whether gaze patterns reveal hierarchical structures in our cognitive representations.
  
@@ -99,3 +99,4 @@ This provides strong evidence that prediction errors drive how we segment contin
 ### 2019
 - **August:** Joined the Haskins Lab as a Research Assistant under Dr. Nicole Landi
 - **May:** Graduated from Cornell University with degrees in Psychology and Economics
+bim 
