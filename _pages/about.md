@@ -1,3 +1,4 @@
+
 ---
 permalink: /
 title: "Sophie Su"
@@ -9,13 +10,13 @@ redirect_from:
 
 # Hello and Welcome!
 
-> **On the Job Market (2026-2027)**
+> **On the Job Market (2025-2026)**
 
 ---
 
 ## About Me
 
-I'm a fourth-year Psychology PhD student at WashU, working with Dr. Jeff Zacks. I completed the [Cognitive, Computational, and Systems Neuroscience Pathway](https://sites.wustl.edu/systemsneuroscience/ccsn-pathway/) and hold a Graduate Certificate in Quantitative Data Analysis.
+I'm a ABD Psychology PhD student at WashU, working with Dr. Jeff Zacks. I completed the [Cognitive, Computational, and Systems Neuroscience Pathway](https://sites.wustl.edu/systemsneuroscience/ccsn-pathway/) and hold a Graduate Certificate in Quantitative Data Analysis.
 
 ### Research Focus
 
@@ -75,7 +76,11 @@ This provides strong evidence that prediction errors drive how we segment contin
  
 ---
 
-## News & Highlights
+## News & Highlights  
+### 2025  
+- **Oct:** My eye-tracking paper has been published in *JEP: General*!  
+  Read it [here](https://psycnet.apa.org/record/2026-84598-001).
+- **May:** Presented a poster on the 'Vision Large Language Model Derived Action-Related Semantic Information Shapes Gaze Patterns During Naturalistic Movie Viewing' project at VSS 2025
 
 ### 2024
 - **June:** Passed subject matter exam about global versus incremental updating for event representation. Please stay tuned for the manuscript!
