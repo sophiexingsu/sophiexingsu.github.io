@@ -1,0 +1,695 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>Segmentation as Proactive Control: Gaze Patterns and Event Boundaries - Sophie(Xing) Su’s Personal Website</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en-US">
+<meta property="og:site_name" content="Sophie(Xing) Su's Personal Website">
+<meta property="og:title" content="Segmentation as Proactive Control: Gaze Patterns and Event Boundaries">
+
+
+  <link rel="canonical" href="http://localhost:4000/portfolio/gaze-entropy-event-boundaries/">
+  <meta property="og:url" content="http://localhost:4000/portfolio/gaze-entropy-event-boundaries/">
+
+
+
+  <meta property="og:description" content="Gaze entropy increases predictively before event boundaries, revealing proactive cognitive control during naturalistic viewing">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2024-01-01T00:00:00-08:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Sophie(Xing) Su",
+      "url" : "http://localhost:4000",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Sophie(Xing) Su's Personal Website Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+    
+
+<!-- start custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="57x57" href="http://localhost:4000/images/apple-touch-icon-57x57.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="60x60" href="http://localhost:4000/images/apple-touch-icon-60x60.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="76x76" href="http://localhost:4000/images/apple-touch-icon-76x76.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="120x120" href="http://localhost:4000/images/apple-touch-icon-120x120.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="152x152" href="http://localhost:4000/images/apple-touch-icon-152x152.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:4000/images/apple-touch-icon-180x180.png?v=M44lzPylqQ">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-32x32.png?v=M44lzPylqQ" sizes="32x32">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/android-chrome-192x192.png?v=M44lzPylqQ" sizes="192x192">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-96x96.png?v=M44lzPylqQ" sizes="96x96">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-16x16.png?v=M44lzPylqQ" sizes="16x16">
+<link rel="manifest" href="http://localhost:4000/images/manifest.json?v=M44lzPylqQ">
+<link rel="mask-icon" href="http://localhost:4000/images/safari-pinned-tab.svg?v=M44lzPylqQ" color="#000000">
+<link rel="shortcut icon" href="/images/favicon.ico?v=M44lzPylqQ">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="msapplication-TileImage" content="http://localhost:4000/images/mstile-144x144.png?v=M44lzPylqQ">
+<meta name="msapplication-config" content="http://localhost:4000/images/browserconfig.xml?v=M44lzPylqQ">
+<meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" href="http://localhost:4000/assets/css/academicons.css"/>
+
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+<!-- Custom CSS for consistent fonts -->
+<style>
+/* Ensure consistent font family across all elements on the front page */
+body, .page__content, .page__content p, .page__content li, .page__content h1, .page__content h2, .page__content h3, .page__content h4, .page__content h5, .page__content h6 {
+  font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif !important;
+}
+
+/* Consistent line heights for better visual harmony */
+.page__content p, .page__content li {
+  line-height: 1.6 !important;
+}
+
+/* Ensure headings have consistent font weight and spacing */
+.page__content h1, .page__content h2, .page__content h3, .page__content h4, .page__content h5, .page__content h6 {
+  font-weight: 600 !important;
+  margin-top: 1.5em !important;
+  margin-bottom: 0.5em !important;
+}
+
+/* Override figure captions to use consistent sans-serif font */
+figcaption {
+  font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif !important;
+}
+
+/* Ensure consistent font size for main content */
+.page__content {
+  font-size: 16px !important;
+}
+
+/* Consistent styling for bold text */
+.page__content strong, .page__content b {
+  font-weight: 600 !important;
+}
+</style>
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="http://localhost:4000/">Sophie(Xing) Su's Personal Website</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/publications/">Publications</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/portfolio/">Research Projects</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/year-archive/">Blog</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/cv/">CV</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="http://localhost:4000/images/1559750279003.jpeg" class="author__avatar" alt="Sophie(Xing) Su ">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Sophie(Xing) Su </h3>
+    <p class="author__bio">WUSTL PBS Grad,Haskins, Cornell</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Saint Louis, Missouri</li>
+      
+      
+        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Washington University in Saint Louis</li>
+      
+      
+      
+        <li><a href="mailto:sophiesu1996@gmail.com"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i> Email</a></li>
+      
+      
+       
+      
+        <li><a href="https://twitter.com/sophiejoesu"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+        <li><a href="https://github.com/sophiexingsu"><i class="fab fa-fw fa-github" aria-hidden="true"></i> Github</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+        <li><a href="https://scholar.google.com/citations?user=L4EIOIYAAAAJ&hl=en""><i class="fas fa-fw fa-graduation-cap"></i> Google Scholar</a></li>
+      
+      
+        <li><a href="https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"><i class="ai ai-pubmed-square ai-fw"></i> PubMed</a></li>
+      
+      
+        <li><a href="https://orcid.org/0000-0002-1026-6940"><i class="ai ai-orcid-square ai-fw"></i> ORCID</a></li>
+      
+      
+      
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page research-project" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Segmentation as Proactive Control: Gaze Patterns and Event Boundaries">
+    <meta itemprop="description" content="Gaze entropy increases predictively before event boundaries, revealing proactive cognitive control during naturalistic viewing">
+    <meta itemprop="datePublished" content="January 01, 2024">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">Segmentation as Proactive Control: Gaze Patterns and Event Boundaries
+</h1>
+
+          
+          
+            <div class="project-meta-bar">
+              
+                <span class="project-status project-status--published">Published</span>
+              
+
+              
+                <span class="project-date">
+                  <i class="fa fa-calendar" aria-hidden="true"></i>
+                  January 2024
+                </span>
+              
+
+              
+                <span class="project-github">
+                  <i class="fab fa-github" aria-hidden="true"></i>
+                  1 Repository
+                </span>
+              
+            </div>
+          
+
+          
+          
+            
+
+
+
+
+<div class="tech-stack">
+  <div class="tech-badges">
+    
+      
+        <span class="tech-badge tech-badge--language">Python</span>
+      
+        <span class="tech-badge tech-badge--language">R</span>
+      
+    
+
+    
+
+    
+      
+        <span class="tech-badge tech-badge--tool">Eye-tracking</span>
+      
+        <span class="tech-badge tech-badge--tool">Statistical Analysis</span>
+      
+        <span class="tech-badge tech-badge--tool">Entropy Calculation</span>
+      
+    
+  </div>
+</div>
+
+
+          
+
+          
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        
+
+        
+        <h2 id="research-question">Research Question</h2>
+
+<div class="research-question research-question--info">
+  <p>Can gaze entropy predict upcoming event boundaries, revealing proactive cognitive control during naturalistic perception?
+</p>
+</div>
+
+<h2 id="overview">Overview</h2>
+
+<p>This project investigates whether patterns in gaze behavior—specifically, increases in <strong>gaze entropy</strong>—can predict when viewers will perceive an upcoming event boundary. By analyzing eye-tracking data collected during naturalistic movie viewing, I test the hypothesis that gaze becomes more dispersed (higher entropy) before major scene transitions, reflecting proactive shifts in cognitive control.</p>
+
+<h2 id="background">Background</h2>
+
+<p>Event segmentation is the process by which people parse continuous experience into discrete events. Traditional theories suggest that event boundaries are detected <strong>reactively</strong>—after a change has occurred. However, there is growing evidence that viewers may anticipate upcoming boundaries through:</p>
+
+<ul>
+  <li>Predictive gaze patterns</li>
+  <li>Changes in attentional allocation</li>
+  <li>Proactive model updating</li>
+</ul>
+
+<p><strong>Gaze entropy</strong> quantifies the dispersion of fixations over time. Higher entropy indicates more exploratory gaze patterns, while lower entropy reflects focused attention on specific regions.</p>
+
+<h2 id="methodology">Methodology</h2>
+
+<h3 id="participants-and-stimuli">Participants and Stimuli</h3>
+
+<ul>
+  <li>Participants watched naturalistic movie clips while their eye movements were recorded at high temporal resolution</li>
+  <li>Movies included everyday activities with clear event boundaries (e.g., cooking, social interactions)</li>
+</ul>
+
+<h3 id="eye-tracking-data-collection">Eye-Tracking Data Collection</h3>
+
+<ul>
+  <li>High-frequency eye-tracking (500 Hz or higher)</li>
+  <li>Calibration and validation procedures</li>
+  <li>Gaze mapped to screen coordinates</li>
+</ul>
+
+<h3 id="gaze-entropy-calculation">Gaze Entropy Calculation</h3>
+
+<p>Gaze entropy was computed using the following pipeline:</p>
+
+<ol>
+  <li><strong>Spatial Binning</strong>: Screen space divided into grid cells</li>
+  <li><strong>Fixation Distribution</strong>: Proportion of fixations per cell over sliding time windows</li>
+  <li>
+    <p><strong>Entropy Calculation</strong>: Shannon entropy computed for each time window:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>H(t) = -Σ p(i,t) × log₂(p(i,t))
+</code></pre></div>    </div>
+
+    <p>where <code class="language-plaintext highlighter-rouge">p(i,t)</code> is the proportion of fixations in cell <code class="language-plaintext highlighter-rouge">i</code> at time <code class="language-plaintext highlighter-rouge">t</code></p>
+  </li>
+  <li><strong>Event Boundary Alignment</strong>: Entropy timecourses aligned to manually segmented event boundaries</li>
+</ol>
+
+<h3 id="analysis-pipeline">Analysis Pipeline</h3>
+
+<p>The analysis pipeline is available in the <a href="https://github.com/sophiexingsu/GazeEntropyEB">GazeEntropyEB repository</a> and includes:</p>
+
+<ul>
+  <li><strong>Preprocessing scripts</strong> (Python): Clean raw eye-tracking data, remove blinks, interpolate missing data</li>
+  <li><strong>Entropy calculation</strong> (HTML/JavaScript): Compute spatial entropy over sliding windows</li>
+  <li><strong>Statistical analysis</strong> (R): Mixed-effects models testing entropy changes around boundaries</li>
+</ul>
+
+<h2 id="key-findings">Key Findings</h2>
+
+<ul>
+  <li><strong>Gaze entropy increases predictively</strong> before event boundaries, with peak increases occurring 1-2 seconds prior to transitions</li>
+  <li><strong>Effect is specific to event boundaries</strong>: Entropy does not increase randomly throughout the movie</li>
+  <li><strong>Individual differences</strong>: Some viewers show stronger predictive entropy increases than others</li>
+  <li><strong>Relation to segmentation ability</strong>: Viewers with higher boundary agreement show more pronounced entropy increases</li>
+</ul>
+
+<h2 id="interpretation">Interpretation</h2>
+
+<p>These findings suggest that:</p>
+
+<ol>
+  <li><strong>Event segmentation involves proactive cognitive control</strong>: Viewers anticipate upcoming boundaries through exploratory gaze patterns</li>
+  <li><strong>Gaze entropy as a window into cognitive state</strong>: Changes in gaze dispersion reflect shifts in attentional strategy</li>
+  <li><strong>Top-down guidance</strong>: Predictive entropy increases likely reflect top-down model-based predictions rather than bottom-up visual features</li>
+</ol>
+
+<h2 id="analysis-code">Analysis Code</h2>
+
+<p>All preprocessing, analysis, and visualization code is available in the GitHub repository:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">preprocessing/</code>: Eye-tracking data cleaning and preparation</li>
+  <li><code class="language-plaintext highlighter-rouge">entropy_calculation/</code>: Scripts for computing spatial entropy</li>
+  <li><code class="language-plaintext highlighter-rouge">statistical_analysis/</code>: R scripts for mixed-effects models and visualization</li>
+  <li><code class="language-plaintext highlighter-rouge">outputs/</code>: Example figures and plots</li>
+</ul>
+
+<h2 id="related-publications">Related Publications</h2>
+
+<p>This work builds on and extends findings from:</p>
+
+<ul>
+  <li>Predictive looking and event segmentation research</li>
+  <li>Mental model inference from gaze patterns</li>
+  <li>Event cognition and cognitive control</li>
+</ul>
+
+<h2 id="future-directions">Future Directions</h2>
+
+<ul>
+  <li><strong>fMRI integration</strong>: Relate gaze entropy changes to neural signatures of event boundaries</li>
+  <li><strong>Computational modeling</strong>: Implement predictive models that generate entropy patterns</li>
+  <li><strong>Individual differences</strong>: Investigate what drives variation in predictive gaze control</li>
+</ul>
+
+<hr />
+
+<p><strong>Keywords</strong>: Eye-tracking, Event Segmentation, Gaze Entropy, Predictive Processing, Cognitive Control, Naturalistic Perception</p>
+
+
+        
+        
+
+        
+        
+          <h2>Code & Resources</h2>
+          <div class="github-repos">
+            
+              
+
+
+
+<div class="code-repository">
+  <div class="repo-header">
+    <i class="fab fa-github"></i>
+    <h3>GazeEntropyEB</h3>
+  </div>
+
+  
+  <p class="repo-description">All codes for gaze entropy analysis around event boundaries</p>
+  
+
+  
+  <div class="repo-languages">
+    
+      
+        <span class="language-badge">Python</span>
+      
+        <span class="language-badge">HTML</span>
+      
+        <span class="language-badge">R</span>
+      
+    
+  </div>
+  
+
+  <a href="https://github.com/sophiexingsu/GazeEntropyEB" class="repo-link" target="_blank" rel="noopener noreferrer">
+    <i class="fas fa-external-link-alt"></i> View Repository
+  </a>
+</div>
+
+            
+          </div>
+        
+
+        
+        
+
+        
+        
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="http://localhost:4000/tags/#cognitive-control" class="page__taxonomy-item" rel="tag">cognitive-control</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#entropy" class="page__taxonomy-item" rel="tag">entropy</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#event-segmentation" class="page__taxonomy-item" rel="tag">event-segmentation</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#eye-tracking" class="page__taxonomy-item" rel="tag">eye-tracking</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#naturalistic-viewing" class="page__taxonomy-item" rel="tag">naturalistic-viewing</a>
+    
+    </span>
+  </p>
+
+
+
+
+      </footer>
+
+      
+
+<section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=http://localhost:4000/portfolio/gaze-entropy-event-boundaries/" class="btn btn--twitter" title="Share on Twitter"><i class="fab fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/portfolio/gaze-entropy-event-boundaries/" class="btn btn--facebook" title="Share on Facebook"><i class="fab fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/portfolio/gaze-entropy-event-boundaries/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fab fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+      
+      
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="http://localhost:4000/portfolio/incremental-global-updating/" class="pagination--pager" title="Incremental vs. Global Updating of Event Representations
+">Previous</a>
+    
+    
+      <a href="http://localhost:4000/portfolio/movement-analysis-dashboard/" class="pagination--pager" title="Human Movement Analysis Dashboard
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <aside class="sidebar__right sticky">
+      <nav class="toc">
+        <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> Project Overview</h4></header>
+        <!-- Table of contents placeholder -->
+<!-- If you don't need a TOC, leave this file empty or remove the include from the layout. -->
+
+      </nav>
+    </aside>
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+<a href="/sitemap/">Sitemap</a>
+<!-- end custom footer snippets -->
+
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+      <li><a href="http://github.com/sophiexingsu"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    <li><a href="http://localhost:4000/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2026 Sophie(Xing) Su. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/academicpages/academicpages.github.io">AcademicPages</a>, a fork of <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/main.min.js"></script>
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  </body>
+</html>
+

@@ -1,0 +1,30 @@
+{% comment %}
+  Technology Stack Badges
+  Parameters: tech_stack (with languages, frameworks, tools)
+{% endcomment %}
+
+{% assign tech_stack = include.tech_stack | default: page.tech_stack %}
+
+{% if tech_stack %}
+<div class="tech-stack">
+  <div class="tech-badges">
+    {% if tech_stack.languages %}
+      {% for language in tech_stack.languages %}
+        <span class="tech-badge tech-badge--language">{{ language }}</span>
+      {% endfor %}
+    {% endif %}
+
+    {% if tech_stack.frameworks %}
+      {% for framework in tech_stack.frameworks %}
+        <span class="tech-badge tech-badge--framework">{{ framework }}</span>
+      {% endfor %}
+    {% endif %}
+
+    {% if tech_stack.tools %}
+      {% for tool in tech_stack.tools %}
+        <span class="tech-badge tech-badge--tool">{{ tool }}</span>
+      {% endfor %}
+    {% endif %}
+  </div>
+</div>
+{% endif %}

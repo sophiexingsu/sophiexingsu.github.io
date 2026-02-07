@@ -1,0 +1,25 @@
+{% comment %}
+  Demo/Notebook Embed
+  Parameters: url, title, type, height
+{% endcomment %}
+
+{% assign demo = include.demo %}
+{% assign aspect_class = "" %}
+
+{% if demo.type == "colab" %}
+  {% assign aspect_class = "demo-frame--colab" %}
+{% endif %}
+
+<div class="demo-embed">
+  {% if demo.title %}
+    <h3 class="demo-title">{{ demo.title }}</h3>
+  {% endif %}
+
+  <div class="demo-frame {{ aspect_class }}" {% if demo.height %}style="padding-bottom: {{ demo.height }};"{% endif %}>
+    <iframe src="{{ demo.url }}"
+            title="{{ demo.title | default: 'Interactive Demo' }}"
+            frameborder="0"
+            allowfullscreen>
+    </iframe>
+  </div>
+</div>

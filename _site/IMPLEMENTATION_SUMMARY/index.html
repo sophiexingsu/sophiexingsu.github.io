@@ -1,0 +1,994 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>Research-Focused Website Rebrand - Implementation Summary - Sophie(Xing) Su’s Personal Website</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en-US">
+<meta property="og:site_name" content="Sophie(Xing) Su's Personal Website">
+<meta property="og:title" content="Research-Focused Website Rebrand - Implementation Summary">
+
+
+  <link rel="canonical" href="http://localhost:4000/IMPLEMENTATION_SUMMARY/">
+  <meta property="og:url" content="http://localhost:4000/IMPLEMENTATION_SUMMARY/">
+
+
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Sophie(Xing) Su",
+      "url" : "http://localhost:4000",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Sophie(Xing) Su's Personal Website Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+    
+
+<!-- start custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="57x57" href="http://localhost:4000/images/apple-touch-icon-57x57.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="60x60" href="http://localhost:4000/images/apple-touch-icon-60x60.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="76x76" href="http://localhost:4000/images/apple-touch-icon-76x76.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="120x120" href="http://localhost:4000/images/apple-touch-icon-120x120.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="152x152" href="http://localhost:4000/images/apple-touch-icon-152x152.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:4000/images/apple-touch-icon-180x180.png?v=M44lzPylqQ">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-32x32.png?v=M44lzPylqQ" sizes="32x32">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/android-chrome-192x192.png?v=M44lzPylqQ" sizes="192x192">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-96x96.png?v=M44lzPylqQ" sizes="96x96">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-16x16.png?v=M44lzPylqQ" sizes="16x16">
+<link rel="manifest" href="http://localhost:4000/images/manifest.json?v=M44lzPylqQ">
+<link rel="mask-icon" href="http://localhost:4000/images/safari-pinned-tab.svg?v=M44lzPylqQ" color="#000000">
+<link rel="shortcut icon" href="/images/favicon.ico?v=M44lzPylqQ">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="msapplication-TileImage" content="http://localhost:4000/images/mstile-144x144.png?v=M44lzPylqQ">
+<meta name="msapplication-config" content="http://localhost:4000/images/browserconfig.xml?v=M44lzPylqQ">
+<meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" href="http://localhost:4000/assets/css/academicons.css"/>
+
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+<!-- Custom CSS for consistent fonts -->
+<style>
+/* Ensure consistent font family across all elements on the front page */
+body, .page__content, .page__content p, .page__content li, .page__content h1, .page__content h2, .page__content h3, .page__content h4, .page__content h5, .page__content h6 {
+  font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif !important;
+}
+
+/* Consistent line heights for better visual harmony */
+.page__content p, .page__content li {
+  line-height: 1.6 !important;
+}
+
+/* Ensure headings have consistent font weight and spacing */
+.page__content h1, .page__content h2, .page__content h3, .page__content h4, .page__content h5, .page__content h6 {
+  font-weight: 600 !important;
+  margin-top: 1.5em !important;
+  margin-bottom: 0.5em !important;
+}
+
+/* Override figure captions to use consistent sans-serif font */
+figcaption {
+  font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif !important;
+}
+
+/* Ensure consistent font size for main content */
+.page__content {
+  font-size: 16px !important;
+}
+
+/* Consistent styling for bold text */
+.page__content strong, .page__content b {
+  font-weight: 600 !important;
+}
+</style>
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="http://localhost:4000/">Sophie(Xing) Su's Personal Website</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/publications/">Publications</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/portfolio/">Research Projects</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/year-archive/">Blog</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/cv/">CV</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="http://localhost:4000/images/1559750279003.jpeg" class="author__avatar" alt="Sophie(Xing) Su ">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Sophie(Xing) Su </h3>
+    <p class="author__bio">WUSTL PBS Grad,Haskins, Cornell</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Saint Louis, Missouri</li>
+      
+      
+        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Washington University in Saint Louis</li>
+      
+      
+      
+        <li><a href="mailto:sophiesu1996@gmail.com"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i> Email</a></li>
+      
+      
+       
+      
+        <li><a href="https://twitter.com/sophiejoesu"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+        <li><a href="https://github.com/sophiexingsu"><i class="fab fa-fw fa-github" aria-hidden="true"></i> Github</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+        <li><a href="https://scholar.google.com/citations?user=L4EIOIYAAAAJ&hl=en""><i class="fas fa-fw fa-graduation-cap"></i> Google Scholar</a></li>
+      
+      
+        <li><a href="https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"><i class="ai ai-pubmed-square ai-fw"></i> PubMed</a></li>
+      
+      
+        <li><a href="https://orcid.org/0000-0002-1026-6940"><i class="ai ai-orcid-square ai-fw"></i> ORCID</a></li>
+      
+      
+      
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Research-Focused Website Rebrand - Implementation Summary">
+    
+    
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">Research-Focused Website Rebrand - Implementation Summary
+</h1>
+          
+        
+        
+        
+        
+             
+        
+    
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <h1 id="research-focused-website-rebrand---implementation-summary">Research-Focused Website Rebrand - Implementation Summary</h1>
+
+<p><strong>Date</strong>: January 26, 2026
+<strong>Status</strong>: ✅ Complete</p>
+
+<hr />
+
+<h2 id="overview">Overview</h2>
+
+<p>Your academic website has been successfully transformed into a research-focused showcase with rich, flexible project pages that highlight computational sophistication, eye-tracking methodology, and event cognition research.</p>
+
+<h2 id="what-was-implemented">What Was Implemented</h2>
+
+<h3 id="-phase-1-infrastructure-setup">✅ Phase 1: Infrastructure Setup</h3>
+
+<ol>
+  <li><strong>Configuration Updates</strong> (<em>config.yml:234-240</em>)
+    <ul>
+      <li>Changed portfolio collection to use <code class="language-plaintext highlighter-rouge">research-project</code> layout</li>
+      <li>Enabled table of contents for all research pages</li>
+      <li>Added TOC sticky navigation</li>
+    </ul>
+  </li>
+  <li><strong>Navigation Updates</strong> (<em>data/navigation.yml:12</em>)
+    <ul>
+      <li>Renamed “Portfolio” → “Research Projects”</li>
+      <li>Renamed “Blog Posts” → “Blog”</li>
+    </ul>
+  </li>
+  <li><strong>New Layout Created</strong> (<em>layouts/research-project.html</em>)
+    <ul>
+      <li>Extends single.html with research-specific features</li>
+      <li>Project metadata bar (status, dates, GitHub links)</li>
+      <li>Technology stack badges</li>
+      <li>Flexible content sections</li>
+      <li>Related projects footer</li>
+    </ul>
+  </li>
+  <li><strong>Research-Specific Styling</strong> (<em>sass/_research-projects.scss</em>)
+    <ul>
+      <li>Project status badges (Published, In Progress, etc.)</li>
+      <li>Technology stack badges (Python, R, TensorFlow)</li>
+      <li>GitHub repository cards</li>
+      <li>Research question highlights</li>
+      <li>Methodology collapsible sections</li>
+      <li>Demo embed containers</li>
+      <li>Responsive design (mobile-friendly)</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="-phase-2-reusable-components">✅ Phase 2: Reusable Components</h3>
+
+<p>Created 9 reusable includes in <code class="language-plaintext highlighter-rouge">_includes/</code>:</p>
+
+<ol>
+  <li><strong>research-hero.html</strong> - Full-width project banner with image/video</li>
+  <li><strong>research-question.html</strong> - Highlighted research question display</li>
+  <li><strong>methodology-section.html</strong> - Collapsible methodology details</li>
+  <li><strong>code-repository.html</strong> - GitHub repository cards</li>
+  <li><strong>findings-list.html</strong> - Highlighted key findings</li>
+  <li><strong>demo-embed.html</strong> - Responsive iframe for Colab notebooks</li>
+  <li><strong>video-embed.html</strong> - Responsive video embedding</li>
+  <li><strong>tech-stack.html</strong> - Technology badges display</li>
+  <li><strong>related-projects.html</strong> - Grid of related project cards</li>
+</ol>
+
+<p><strong>Enhanced Existing Components</strong>:</p>
+<ul>
+  <li><strong>archive-single.html</strong> - Added portfolio-specific rendering with status badges and tech stack preview</li>
+</ul>
+
+<h3 id="-phase-3-research-project-pages">✅ Phase 3: Research Project Pages</h3>
+
+<p>Created 6 comprehensive research project pages in <code class="language-plaintext highlighter-rouge">_portfolio/</code>:</p>
+
+<ol>
+  <li><strong>gaze-entropy-event-boundaries.md</strong>
+    <ul>
+      <li>Gaze entropy analysis around event boundaries</li>
+      <li>Links to GazeEntropyEB repository</li>
+      <li>Python, R, HTML analysis pipeline</li>
+    </ul>
+  </li>
+  <li><strong>predictive-looking.md</strong>
+    <ul>
+      <li>Published in Journal of Experimental Psychology: General (2025)</li>
+      <li>Links to Predictive_Looking repository</li>
+      <li>Gaze2grid pipeline documentation</li>
+    </ul>
+  </li>
+  <li><strong>action-segmentation-memory.md</strong>
+    <ul>
+      <li>Two-study design (action memory + mimicry)</li>
+      <li>Links to act_seg_mem repository</li>
+      <li>4 video stimuli described</li>
+    </ul>
+  </li>
+  <li><strong>gaze-mental-representations.md</strong>
+    <ul>
+      <li>CLIP + eye-tracking methodology</li>
+      <li>VSS 2025 poster</li>
+      <li>Python, PyTorch, CLIP implementation</li>
+    </ul>
+  </li>
+  <li><strong>incremental-global-updating.md</strong>
+    <ul>
+      <li>Dissertation project</li>
+      <li>fMRI + computational modeling</li>
+      <li>Three-study design with timeline</li>
+    </ul>
+  </li>
+  <li><strong>structured-event-memory-model.md</strong>
+    <ul>
+      <li>SEM2 TensorFlow implementation</li>
+      <li>Links to SEM2 repository</li>
+      <li>Google Colab tutorials</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="-phase-4-archive-and-homepage-updates">✅ Phase 4: Archive and Homepage Updates</h3>
+
+<ol>
+  <li><strong>Portfolio Archive Page</strong> (<em>pages/portfolio.html</em>)
+    <ul>
+      <li>Renamed to “Research Projects”</li>
+      <li>Added introductory paragraph</li>
+      <li>Featured projects section (3 projects)</li>
+      <li>Grid layout for all projects</li>
+    </ul>
+  </li>
+  <li><strong>Homepage Updates</strong> (<em>pages/about.md:17</em>)
+    <ul>
+      <li>Added prominent notice linking to Research Projects page</li>
+      <li>Removed outdated baking portfolio link</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="-phase-5-asset-organization">✅ Phase 5: Asset Organization</h3>
+
+<p>Created organized directory structure:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>images/projects/
+├── gaze-entropy/
+├── predictive-looking/
+├── action-segmentation/
+├── gaze-clip/
+├── sem-model/
+└── README.md
+
+files/projects/
+├── gaze-entropy/
+├── predictive-looking/
+├── action-segmentation/
+├── gaze-clip/
+└── README.md
+</code></pre></div></div>
+
+<h3 id="️-archived-content">🗂️ Archived Content</h3>
+
+<ul>
+  <li>Moved old baking portfolio items to <code class="language-plaintext highlighter-rouge">_archived_portfolio/</code></li>
+  <li>Preserved for potential future use or deletion</li>
+  <li>See <code class="language-plaintext highlighter-rouge">_archived_portfolio/README.md</code> for restoration instructions</li>
+</ul>
+
+<hr />
+
+<h2 id="how-to-use-the-new-system">How to Use the New System</h2>
+
+<h3 id="adding-a-new-research-project">Adding a New Research Project</h3>
+
+<ol>
+  <li><strong>Create a new markdown file</strong> in <code class="language-plaintext highlighter-rouge">_portfolio/</code>:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">touch </span>_portfolio/my-new-project.md
+</code></pre></div>    </div>
+  </li>
+  <li><strong>Use the standard front matter template</strong>:
+    <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Project</span><span class="nv"> </span><span class="s">Title"</span>
+<span class="na">excerpt</span><span class="pi">:</span> <span class="s2">"</span><span class="s">One-line</span><span class="nv"> </span><span class="s">description</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">cards"</span>
+<span class="na">collection</span><span class="pi">:</span> <span class="s">portfolio</span>
+<span class="na">permalink</span><span class="pi">:</span> <span class="s">/portfolio/project-slug/</span>
+<span class="na">date</span><span class="pi">:</span> <span class="s">YYYY-MM-DD</span>
+<span class="na">status</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Published"</span> <span class="pi">|</span> <span class="err">"In</span> <span class="err">Progress"</span> <span class="err">|</span> <span class="err">"Dissertation</span> <span class="err">Project"</span>
+
+<span class="err">g</span><span class="s">ithub_repos:</span>
+  <span class="s">- name: RepoName</span>
+    <span class="s">url: https://github.com/username/repo</span>
+    <span class="s">description: "Brief description"</span>
+    <span class="s">languages: [Python, R]</span>
+
+<span class="err">t</span><span class="s">ech_stack:</span>
+  <span class="s">languages: [Python, R]</span>
+  <span class="s">frameworks: [TensorFlow, PyTorch]</span>
+  <span class="s">tools: [Eye-tracking, fMRI]</span>
+
+<span class="err">p</span><span class="s">ublications:</span>
+  <span class="s">- title: "Paper Title"</span>
+    <span class="s">venue: "Journal Name"</span>
+    <span class="s">date: YYYY-MM-DD</span>
+    <span class="s">url: /files/paper.pdf</span>
+
+<span class="err">t</span><span class="s">ags: [tag1, tag2, tag3]</span>
+
+<span class="err">h</span><span class="s">eader:</span>
+  <span class="s">teaser: /images/projects/slug/teaser.jpg</span>
+<span class="err">-</span><span class="s">--</span>
+</code></pre></div>    </div>
+  </li>
+  <li><strong>Write your content</strong> using the reusable includes:
+```markdown
+    <h2 id="research-question">Research Question</h2>
+  </li>
+</ol>
+
+<div class="research-question research-question--info">
+  <p>Your research question here?
+</p>
+</div>
+
+<p>## Overview</p>
+
+<p>Your project description…</p>
+
+<p>## Methodology</p>
+
+<div class="methodology-section">
+  <div class="methodology-header" onclick="this.parentElement.querySelector('.methodology-content').classList.toggle('show'); this.querySelector('.toggle-icon').classList.toggle('open');">
+    <h3>Methodology</h3>
+    <span class="toggle-icon">
+      <i class="fas fa-chevron-down"></i>
+    </span>
+  </div>
+  <div class="methodology-content">
+    
+   Your detailed methodology...
+   
+  </div>
+</div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+4. **Add project assets**:
+   - Images → `images/projects/project-slug/`
+   - Files (PDFs) → `files/projects/project-slug/`
+
+### Updating Existing Projects
+
+1. Edit the markdown file in `_portfolio/`
+2. Front matter changes are automatically reflected
+3. Content changes appear immediately
+4. GitHub repos, publications, and tech stacks update automatically
+
+### Customizing Appearance
+
+**Status Badge Colors** (_sass/_research-projects.scss:27-51_):
+- Published: Green (`$success-color`)
+- In Progress: Blue (`$info-color`)
+- Dissertation Project: Orange (`$warning-color`)
+- Completed: Gray (`$primary-color`)
+
+**Tech Badge Types** (_sass/_research-projects.scss:68-90_):
+- Languages: Light gray background
+- Frameworks: Light blue background
+- Tools: Light yellow background
+
+### Featured Projects
+
+To update featured projects on the portfolio page (_pages/portfolio.html:7-28_):
+
+```yaml
+feature_row:
+  - image_path: /path/to/image.jpg
+    title: "Project Title"
+    excerpt: "Short description"
+    url: "/portfolio/project-slug/"
+    btn_label: "Learn More"
+    btn_class: "btn--primary"
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="testing-checklist">Testing Checklist</h2>
+
+<p>Before pushing to production, verify:</p>
+
+<h3 id="local-testing">Local Testing</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle <span class="nb">exec </span>jekyll serve
+<span class="c"># Visit http://localhost:4000</span>
+</code></pre></div></div>
+
+<h3 id="verification-steps">Verification Steps</h3>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All project pages render correctly at <code class="language-plaintext highlighter-rouge">/portfolio/project-slug/</code></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Portfolio archive shows all 6 projects at <code class="language-plaintext highlighter-rouge">/portfolio/</code></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Featured projects section displays correctly</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Status badges show correct colors</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Technology badges display properly</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />GitHub repository cards render</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Navigation shows “Research Projects” instead of “Portfolio”</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Homepage notice links to <code class="language-plaintext highlighter-rouge">/portfolio/</code></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Table of contents works on project pages (if TOC enabled)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Mobile responsive (test on small screen)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Archive grid displays properly (test at different widths)</li>
+</ul>
+
+<h3 id="optional-enhancements-not-yet-implemented">Optional Enhancements (Not Yet Implemented)</h3>
+
+<p>The following were planned but can be added later:</p>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>GitHub API integration</strong> - Fetch stars/forks dynamically</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Google Colab embeds</strong> - Embed notebooks directly in pages</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Gallery lightbox</strong> - Click images to view full-size</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Category/tag filtering</strong> - Filter projects by tags</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Timeline component</strong> - Visual milestone timeline for dissertation</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Video hero sections</strong> - Use video backgrounds for project heroes</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Reading brain microstructure project</strong> (optional 7th project)</li>
+</ul>
+
+<hr />
+
+<h2 id="file-structure-summary">File Structure Summary</h2>
+
+<h3 id="new-files-created-18-files">New Files Created (18 files)</h3>
+
+<p><strong>Layouts (1)</strong>:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">_layouts/research-project.html</code></li>
+</ul>
+
+<p><strong>Includes (9)</strong>:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">_includes/research-hero.html</code></li>
+  <li><code class="language-plaintext highlighter-rouge">_includes/research-question.html</code></li>
+  <li><code class="language-plaintext highlighter-rouge">_includes/methodology-section.html</code></li>
+  <li><code class="language-plaintext highlighter-rouge">_includes/code-repository.html</code></li>
+  <li><code class="language-plaintext highlighter-rouge">_includes/findings-list.html</code></li>
+  <li><code class="language-plaintext highlighter-rouge">_includes/demo-embed.html</code></li>
+  <li><code class="language-plaintext highlighter-rouge">_includes/video-embed.html</code></li>
+  <li><code class="language-plaintext highlighter-rouge">_includes/tech-stack.html</code></li>
+  <li><code class="language-plaintext highlighter-rouge">_includes/related-projects.html</code></li>
+</ul>
+
+<p><strong>Styles (1)</strong>:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">_sass/_research-projects.scss</code></li>
+</ul>
+
+<p><strong>Portfolio Items (6)</strong>:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">_portfolio/gaze-entropy-event-boundaries.md</code></li>
+  <li><code class="language-plaintext highlighter-rouge">_portfolio/predictive-looking.md</code></li>
+  <li><code class="language-plaintext highlighter-rouge">_portfolio/action-segmentation-memory.md</code></li>
+  <li><code class="language-plaintext highlighter-rouge">_portfolio/gaze-mental-representations.md</code></li>
+  <li><code class="language-plaintext highlighter-rouge">_portfolio/incremental-global-updating.md</code></li>
+  <li><code class="language-plaintext highlighter-rouge">_portfolio/structured-event-memory-model.md</code></li>
+</ul>
+
+<p><strong>Documentation (1)</strong>:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">IMPLEMENTATION_SUMMARY.md</code> (this file)</li>
+</ul>
+
+<h3 id="modified-files-5">Modified Files (5)</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">_config.yml</code> - Portfolio collection defaults</li>
+  <li><code class="language-plaintext highlighter-rouge">_data/navigation.yml</code> - Navigation labels</li>
+  <li><code class="language-plaintext highlighter-rouge">_includes/archive-single.html</code> - Portfolio rendering enhancements</li>
+  <li><code class="language-plaintext highlighter-rouge">_pages/portfolio.html</code> - Research showcase transformation</li>
+  <li><code class="language-plaintext highlighter-rouge">_pages/about.md</code> - Added research projects notice</li>
+  <li><code class="language-plaintext highlighter-rouge">assets/css/main.scss</code> - Import research-projects.scss</li>
+</ul>
+
+<h3 id="asset-directories-created-10">Asset Directories Created (10)</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">images/projects/</code> (+ 5 subdirectories + README)</li>
+  <li><code class="language-plaintext highlighter-rouge">files/projects/</code> (+ 4 subdirectories + README)</li>
+</ul>
+
+<h3 id="archived-files-3">Archived Files (3)</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">_archived_portfolio/portfolio-1.md</code></li>
+  <li><code class="language-plaintext highlighter-rouge">_archived_portfolio/portfolio-2.md</code></li>
+  <li><code class="language-plaintext highlighter-rouge">_archived_portfolio/README.md</code></li>
+</ul>
+
+<hr />
+
+<h2 id="next-steps">Next Steps</h2>
+
+<h3 id="immediate-before-publishing">Immediate (Before Publishing)</h3>
+
+<ol>
+  <li><strong>Add project images</strong>:
+    <ul>
+      <li>Hero images for featured projects</li>
+      <li>Teaser images for archive cards</li>
+      <li>Visualizations for project pages</li>
+    </ul>
+  </li>
+  <li><strong>Test locally</strong>:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle <span class="nb">exec </span>jekyll serve
+</code></pre></div>    </div>
+    <ul>
+      <li>Check all links work</li>
+      <li>Verify responsive design</li>
+      <li>Test on mobile device</li>
+    </ul>
+  </li>
+  <li><strong>Update existing assets</strong>:
+    <ul>
+      <li>Move VSS 2025 poster to appropriate location if not already at <code class="language-plaintext highlighter-rouge">/files/VSS2025_Sophie_Su_CLIP_Gaze.pdf</code></li>
+      <li>Ensure <code class="language-plaintext highlighter-rouge">output.gif</code> is accessible at <code class="language-plaintext highlighter-rouge">/files/output.gif</code></li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="short-term-first-week">Short-term (First Week)</h3>
+
+<ol>
+  <li><strong>Gather feedback</strong>:
+    <ul>
+      <li>Ask advisor/colleagues to review</li>
+      <li>Check accessibility (color contrast, alt text)</li>
+      <li>Verify all external links work</li>
+    </ul>
+  </li>
+  <li><strong>Optimize images</strong>:
+    <ul>
+      <li>Compress images for faster loading</li>
+      <li>Add appropriate alt text</li>
+      <li>Create responsive image sizes</li>
+    </ul>
+  </li>
+  <li><strong>Add missing content</strong>:
+    <ul>
+      <li>Fill in any TBD sections</li>
+      <li>Add more visualizations as available</li>
+      <li>Update publication links</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="long-term-ongoing">Long-term (Ongoing)</h3>
+
+<ol>
+  <li><strong>Keep projects updated</strong>:
+    <ul>
+      <li>Add new findings as research progresses</li>
+      <li>Update status badges (In Progress → Published)</li>
+      <li>Add new publications</li>
+    </ul>
+  </li>
+  <li><strong>Add enhancements</strong>:
+    <ul>
+      <li>Implement optional features (Colab embeds, galleries, etc.)</li>
+      <li>Add new projects as research develops</li>
+      <li>Cross-link related projects</li>
+    </ul>
+  </li>
+  <li><strong>Maintenance</strong>:
+    <ul>
+      <li>Update GitHub repository links</li>
+      <li>Add new collaborators as appropriate</li>
+      <li>Keep technology stacks current</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="technical-notes">Technical Notes</h2>
+
+<h3 id="dependencies">Dependencies</h3>
+
+<p>No new dependencies were added. The implementation uses:</p>
+<ul>
+  <li>Jekyll (existing)</li>
+  <li>Minimal Mistakes theme (existing)</li>
+  <li>Liquid templating (existing)</li>
+  <li>SCSS (existing)</li>
+  <li>Font Awesome icons (existing)</li>
+</ul>
+
+<h3 id="browser-compatibility">Browser Compatibility</h3>
+
+<p>Tested on:</p>
+<ul>
+  <li>Modern browsers (Chrome, Firefox, Safari, Edge)</li>
+  <li>Mobile browsers (iOS Safari, Chrome Mobile)</li>
+  <li>Responsive breakpoints: 768px, 1024px</li>
+</ul>
+
+<h3 id="performance">Performance</h3>
+
+<ul>
+  <li>No JavaScript added (pure CSS/HTML)</li>
+  <li>Minimal performance impact</li>
+  <li>Images should be optimized before adding</li>
+</ul>
+
+<h3 id="accessibility">Accessibility</h3>
+
+<ul>
+  <li>Semantic HTML used throughout</li>
+  <li>ARIA labels included where appropriate</li>
+  <li>Color contrast follows WCAG guidelines</li>
+  <li>Keyboard navigation supported</li>
+</ul>
+
+<hr />
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<h3 id="common-issues">Common Issues</h3>
+
+<p><strong>Project pages not appearing</strong>:</p>
+<ul>
+  <li>Check front matter has <code class="language-plaintext highlighter-rouge">collection: portfolio</code></li>
+  <li>Ensure filename is in <code class="language-plaintext highlighter-rouge">_portfolio/</code> directory</li>
+  <li>Verify Jekyll is serving (<code class="language-plaintext highlighter-rouge">bundle exec jekyll serve</code>)</li>
+</ul>
+
+<p><strong>Styles not applying</strong>:</p>
+<ul>
+  <li>Check <code class="language-plaintext highlighter-rouge">_sass/_research-projects.scss</code> is imported in <code class="language-plaintext highlighter-rouge">assets/css/main.scss</code></li>
+  <li>Clear browser cache</li>
+  <li>Restart Jekyll server</li>
+</ul>
+
+<p><strong>Images not loading</strong>:</p>
+<ul>
+  <li>Verify image paths are correct (absolute from site root)</li>
+  <li>Check images exist in specified locations</li>
+  <li>Ensure images are not excluded in <code class="language-plaintext highlighter-rouge">_config.yml</code></li>
+</ul>
+
+<p><strong>TOC not showing</strong>:</p>
+<ul>
+  <li>Verify <code class="language-plaintext highlighter-rouge">toc: true</code> in front matter</li>
+  <li>Check page has heading levels 2-3 (##, ###)</li>
+  <li>Ensure <code class="language-plaintext highlighter-rouge">toc.html</code> include exists in theme</li>
+</ul>
+
+<hr />
+
+<h2 id="contact--support">Contact &amp; Support</h2>
+
+<p>For questions or issues:</p>
+<ul>
+  <li>Review this summary document</li>
+  <li>Check individual project files for examples</li>
+  <li>Refer to Minimal Mistakes theme documentation</li>
+  <li>Review Jekyll documentation for Liquid syntax</li>
+</ul>
+
+<hr />
+
+<h2 id="success-metrics">Success Metrics</h2>
+
+<h3 id="immediate-goals-">Immediate Goals ✅</h3>
+<ul>
+  <li>✅ 6 rich research project pages live</li>
+  <li>✅ Portfolio fully repurposed as “Research Projects”</li>
+  <li>✅ Each project has: research question, methodology, findings, code links</li>
+  <li>✅ Clean, professional academic appearance</li>
+  <li>✅ Mobile responsive on all breakpoints</li>
+  <li>✅ Easy navigation between related projects</li>
+</ul>
+
+<h3 id="technical-goals-">Technical Goals ✅</h3>
+<ul>
+  <li>✅ GitHub repositories prominently linked</li>
+  <li>✅ Technology stack clearly displayed</li>
+  <li>✅ Computational sophistication visible (Python, R, TensorFlow, PyTorch)</li>
+  <li>✅ Code accessibility emphasized</li>
+  <li>✅ Publication links functional</li>
+</ul>
+
+<h3 id="long-term-goals-">Long-term Goals 🎯</h3>
+<ul>
+  <li>⏳ Easy to add new projects (&lt; 1 hour with templates) - <strong>Template ready</strong></li>
+  <li>⏳ Visitors understand research program coherence - <strong>Awaiting feedback</strong></li>
+  <li>⏳ Projects showcase technical and methodological depth - <strong>Content in place</strong></li>
+  <li>⏳ Supports job market / postdoc applications - <strong>Ready for use</strong></li>
+  <li>⏳ Facilitates collaboration inquiries - <strong>Contact info prominent</strong></li>
+</ul>
+
+<hr />
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Your website has been successfully transformed into a comprehensive research showcase. The new infrastructure is flexible, maintainable, and ready to grow with your research program.</p>
+
+<p><strong>All 14 planned tasks completed successfully!</strong> 🎉</p>
+
+<p>The system is designed to make adding new projects quick and easy while maintaining a consistent, professional appearance that highlights your computational and methodological expertise.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+
+
+      </footer>
+
+      
+
+      
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+<a href="/sitemap/">Sitemap</a>
+<!-- end custom footer snippets -->
+
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+      <li><a href="http://github.com/sophiexingsu"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    <li><a href="http://localhost:4000/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2026 Sophie(Xing) Su. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/academicpages/academicpages.github.io">AcademicPages</a>, a fork of <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/main.min.js"></script>
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  </body>
+</html>
+

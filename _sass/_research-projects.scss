@@ -1,0 +1,517 @@
+/* ==========================================================================
+   RESEARCH PROJECTS
+   Styles for research project pages
+   ========================================================================== */
+
+/* Project Meta Bar
+   ========================================================================== */
+
+.project-meta-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1em;
+  margin: 1em 0;
+  padding: 0.75em 0;
+  border-top: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
+  font-size: $type-size-6;
+
+  > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+  }
+}
+
+/* Project Status Badges
+   ========================================================================== */
+
+.project-status {
+  display: inline-block;
+  padding: 0.25em 0.75em;
+  border-radius: 3px;
+  font-weight: bold;
+  font-size: $type-size-7;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  &--published {
+    background-color: $success-color;
+    color: #fff;
+  }
+
+  &--in-progress {
+    background-color: $info-color;
+    color: #fff;
+  }
+
+  &--dissertation-project {
+    background-color: $warning-color;
+    color: #fff;
+  }
+
+  &--completed {
+    background-color: $primary-color;
+    color: #fff;
+  }
+
+  &--ongoing {
+    background-color: $info-color;
+    color: #fff;
+  }
+}
+
+/* Technology Stack Badges
+   ========================================================================== */
+
+.tech-stack {
+  margin: 1em 0;
+
+  h4 {
+    margin-bottom: 0.5em;
+    font-size: $type-size-6;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: $dark-gray;
+  }
+
+  .tech-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+  }
+
+  .tech-badge {
+    display: inline-block;
+    padding: 0.25em 0.6em;
+    background-color: $lighter-gray;
+    border: 1px solid $border-color;
+    border-radius: 3px;
+    font-size: $type-size-7;
+    font-family: $monospace;
+    color: $text-color;
+
+    &--language {
+      background-color: #f0f0f0;
+      border-color: #d0d0d0;
+    }
+
+    &--framework {
+      background-color: #e8f4f8;
+      border-color: #b8d4e0;
+    }
+
+    &--tool {
+      background-color: #fef5e7;
+      border-color: #f0d9a8;
+    }
+  }
+}
+
+/* Research Question Highlight
+   ========================================================================== */
+
+.research-question {
+  margin: 2em 0;
+  padding: 1.5em;
+  background-color: mix(#fff, $info-color, 95%);
+  border-left: 5px solid $info-color;
+  border-radius: 4px;
+
+  &::before {
+    content: "\f059";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    margin-right: 0.5em;
+    color: $info-color;
+    font-size: 1.2em;
+  }
+
+  p {
+    margin: 0;
+    font-size: $type-size-5;
+    font-weight: 500;
+    font-style: italic;
+    color: $dark-gray;
+  }
+}
+
+/* GitHub Repository Cards
+   ========================================================================== */
+
+.github-repos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1em;
+  margin: 1.5em 0;
+}
+
+.code-repository {
+  padding: 1.5em;
+  background-color: $background-color;
+  border: 1px solid $border-color;
+  border-radius: 4px;
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+
+  .repo-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin-bottom: 0.75em;
+
+    i {
+      font-size: 1.5em;
+      color: $github-color;
+    }
+
+    h3 {
+      margin: 0;
+      font-size: $type-size-5;
+      font-family: $monospace;
+    }
+  }
+
+  .repo-description {
+    margin: 0.75em 0;
+    font-size: $type-size-6;
+    color: $gray;
+  }
+
+  .repo-languages {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4em;
+    margin: 0.75em 0;
+
+    .language-badge {
+      padding: 0.2em 0.5em;
+      background-color: $lighter-gray;
+      border-radius: 3px;
+      font-size: $type-size-8;
+      font-family: $monospace;
+    }
+  }
+
+  .repo-link {
+    display: inline-block;
+    margin-top: 0.5em;
+    font-size: $type-size-6;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+/* Findings List
+   ========================================================================== */
+
+.findings-list {
+  margin: 1.5em 0;
+  padding: 1.5em;
+  background-color: mix(#fff, $success-color, 95%);
+  border-left: 5px solid $success-color;
+  border-radius: 4px;
+
+  ul {
+    margin: 0;
+    padding-left: 1.5em;
+
+    li {
+      margin: 0.75em 0;
+      font-size: $type-size-6;
+      line-height: 1.6;
+
+      &::marker {
+        color: $success-color;
+      }
+    }
+  }
+}
+
+/* Methodology Section (Collapsible)
+   ========================================================================== */
+
+.methodology-section {
+  margin: 2em 0;
+  border: 1px solid $border-color;
+  border-radius: 4px;
+
+  .methodology-header {
+    padding: 1em 1.5em;
+    background-color: $lighter-gray;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &:hover {
+      background-color: mix(#fff, $primary-color, 90%);
+    }
+
+    h3 {
+      margin: 0;
+      font-size: $type-size-5;
+    }
+
+    .toggle-icon {
+      transition: transform 0.3s ease;
+
+      &.open {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .methodology-content {
+    padding: 1.5em;
+    display: none;
+
+    &.show {
+      display: block;
+    }
+
+    h4 {
+      margin-top: 1.5em;
+      margin-bottom: 0.75em;
+      font-size: $type-size-6;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: $dark-gray;
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+/* Demo Embed
+   ========================================================================== */
+
+.demo-embed {
+  margin: 2em 0;
+
+  .demo-title {
+    margin-bottom: 0.75em;
+    font-size: $type-size-5;
+    font-weight: bold;
+  }
+
+  .demo-frame {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    background-color: $lighter-gray;
+    border: 1px solid $border-color;
+    border-radius: 4px;
+    overflow: hidden;
+
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    &--colab {
+      padding-bottom: 75%; /* Taller for Colab notebooks */
+    }
+  }
+}
+
+/* Publications Section
+   ========================================================================== */
+
+.project-publications {
+  margin: 1.5em 0;
+
+  .publication-item {
+    margin-bottom: 1.5em;
+    padding: 1em;
+    background-color: $lighter-gray;
+    border-radius: 4px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .publication-title {
+      margin: 0 0 0.5em 0;
+      font-size: $type-size-5;
+      font-weight: 600;
+    }
+
+    .publication-venue {
+      margin: 0.5em 0;
+      font-size: $type-size-6;
+      color: $gray;
+
+      .publication-type {
+        margin-left: 0.5em;
+        padding: 0.1em 0.4em;
+        background-color: $info-color;
+        color: #fff;
+        border-radius: 3px;
+        font-size: $type-size-8;
+        text-transform: uppercase;
+      }
+    }
+
+    .btn {
+      margin-top: 0.5em;
+      margin-right: 0.5em;
+    }
+  }
+}
+
+/* Project Collaborators
+   ========================================================================== */
+
+.project-collaborators {
+  margin: 1em 0;
+  padding: 0.75em 0;
+  font-size: $type-size-6;
+
+  strong {
+    margin-right: 0.5em;
+  }
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+/* Related Projects Grid
+   ========================================================================== */
+
+.related-projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5em;
+  margin: 2em 0;
+
+  .related-project-card {
+    padding: 1em;
+    background-color: $background-color;
+    border: 1px solid $border-color;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      text-decoration: none;
+    }
+
+    .card-image {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-bottom: 0.75em;
+    }
+
+    .card-title {
+      margin: 0 0 0.5em 0;
+      font-size: $type-size-6;
+      font-weight: bold;
+      color: $text-color;
+    }
+
+    .card-excerpt {
+      margin: 0;
+      font-size: $type-size-7;
+      color: $gray;
+      line-height: 1.4;
+    }
+  }
+}
+
+/* Research Hero Section
+   ========================================================================== */
+
+.research-hero {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  margin-bottom: 2em;
+  overflow: hidden;
+
+  .hero-image,
+  .hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2em;
+
+    .hero-title {
+      margin: 0 0 0.5em 0;
+      color: #fff;
+      font-size: $type-size-2;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+    }
+
+    .hero-subtitle {
+      margin: 0;
+      color: #fff;
+      font-size: $type-size-5;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+    }
+  }
+}
+
+/* Responsive Design
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .github-repos,
+  .related-projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-meta-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .research-hero {
+    height: 250px;
+
+    .hero-overlay {
+      .hero-title {
+        font-size: $type-size-3;
+      }
+
+      .hero-subtitle {
+        font-size: $type-size-6;
+      }
+    }
+  }
+}

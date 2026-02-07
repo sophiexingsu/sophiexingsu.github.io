@@ -1,0 +1,36 @@
+{% comment %}
+  Research Project Hero Section
+  Parameters: image, video, overlay_color, overlay_opacity, title, subtitle
+{% endcomment %}
+
+{% include base_path %}
+
+{% assign hero = include.hero | default: page.project_hero %}
+
+<div class="research-hero">
+  {% if hero.video %}
+    <video class="hero-video" autoplay loop muted playsinline>
+      <source src="{{ hero.video }}" type="video/mp4">
+    </video>
+  {% elsif hero.image %}
+    <img src="{% if hero.image contains "://" %}{{ hero.image }}{% else %}{{ hero.image | prepend: base_path }}{% endif %}"
+         alt="{{ hero.title | default: page.title }}"
+         class="hero-image">
+  {% endif %}
+
+  {% if hero.title or hero.subtitle or page.title %}
+    <div class="hero-overlay" style="{% if hero.overlay_color %}background-color: {{ hero.overlay_color }};{% endif %} {% if hero.overlay_opacity %}opacity: {{ hero.overlay_opacity }};{% endif %}">
+      {% if hero.title %}
+        <h1 class="hero-title">{{ hero.title }}</h1>
+      {% elsif page.title %}
+        <h1 class="hero-title">{{ page.title | markdownify | remove: "<p>" | remove: "</p>" }}</h1>
+      {% endif %}
+
+      {% if hero.subtitle %}
+        <p class="hero-subtitle">{{ hero.subtitle }}</p>
+      {% elsif page.excerpt %}
+        <p class="hero-subtitle">{{ page.excerpt | markdownify | remove: "<p>" | remove: "</p>" }}</p>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>

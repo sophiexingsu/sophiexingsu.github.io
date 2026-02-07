@@ -1,0 +1,1230 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>MedShift UI Specification for Demo Implementation - Sophie(Xing) Su’s Personal Website</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en-US">
+<meta property="og:site_name" content="Sophie(Xing) Su's Personal Website">
+<meta property="og:title" content="MedShift UI Specification for Demo Implementation">
+
+
+  <link rel="canonical" href="http://localhost:4000/app_ideas/">
+  <meta property="og:url" content="http://localhost:4000/app_ideas/">
+
+
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Sophie(Xing) Su",
+      "url" : "http://localhost:4000",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Sophie(Xing) Su's Personal Website Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+    
+
+<!-- start custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="57x57" href="http://localhost:4000/images/apple-touch-icon-57x57.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="60x60" href="http://localhost:4000/images/apple-touch-icon-60x60.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="76x76" href="http://localhost:4000/images/apple-touch-icon-76x76.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="120x120" href="http://localhost:4000/images/apple-touch-icon-120x120.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="152x152" href="http://localhost:4000/images/apple-touch-icon-152x152.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:4000/images/apple-touch-icon-180x180.png?v=M44lzPylqQ">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-32x32.png?v=M44lzPylqQ" sizes="32x32">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/android-chrome-192x192.png?v=M44lzPylqQ" sizes="192x192">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-96x96.png?v=M44lzPylqQ" sizes="96x96">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-16x16.png?v=M44lzPylqQ" sizes="16x16">
+<link rel="manifest" href="http://localhost:4000/images/manifest.json?v=M44lzPylqQ">
+<link rel="mask-icon" href="http://localhost:4000/images/safari-pinned-tab.svg?v=M44lzPylqQ" color="#000000">
+<link rel="shortcut icon" href="/images/favicon.ico?v=M44lzPylqQ">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="msapplication-TileImage" content="http://localhost:4000/images/mstile-144x144.png?v=M44lzPylqQ">
+<meta name="msapplication-config" content="http://localhost:4000/images/browserconfig.xml?v=M44lzPylqQ">
+<meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" href="http://localhost:4000/assets/css/academicons.css"/>
+
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+<!-- Custom CSS for consistent fonts -->
+<style>
+/* Ensure consistent font family across all elements on the front page */
+body, .page__content, .page__content p, .page__content li, .page__content h1, .page__content h2, .page__content h3, .page__content h4, .page__content h5, .page__content h6 {
+  font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif !important;
+}
+
+/* Consistent line heights for better visual harmony */
+.page__content p, .page__content li {
+  line-height: 1.6 !important;
+}
+
+/* Ensure headings have consistent font weight and spacing */
+.page__content h1, .page__content h2, .page__content h3, .page__content h4, .page__content h5, .page__content h6 {
+  font-weight: 600 !important;
+  margin-top: 1.5em !important;
+  margin-bottom: 0.5em !important;
+}
+
+/* Override figure captions to use consistent sans-serif font */
+figcaption {
+  font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif !important;
+}
+
+/* Ensure consistent font size for main content */
+.page__content {
+  font-size: 16px !important;
+}
+
+/* Consistent styling for bold text */
+.page__content strong, .page__content b {
+  font-weight: 600 !important;
+}
+</style>
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="http://localhost:4000/">Sophie(Xing) Su's Personal Website</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/publications/">Publications</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/portfolio/">Research Projects</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/year-archive/">Blog</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/cv/">CV</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="http://localhost:4000/images/1559750279003.jpeg" class="author__avatar" alt="Sophie(Xing) Su ">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Sophie(Xing) Su </h3>
+    <p class="author__bio">WUSTL PBS Grad,Haskins, Cornell</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Saint Louis, Missouri</li>
+      
+      
+        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Washington University in Saint Louis</li>
+      
+      
+      
+        <li><a href="mailto:sophiesu1996@gmail.com"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i> Email</a></li>
+      
+      
+       
+      
+        <li><a href="https://twitter.com/sophiejoesu"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+        <li><a href="https://github.com/sophiexingsu"><i class="fab fa-fw fa-github" aria-hidden="true"></i> Github</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+        <li><a href="https://scholar.google.com/citations?user=L4EIOIYAAAAJ&hl=en""><i class="fas fa-fw fa-graduation-cap"></i> Google Scholar</a></li>
+      
+      
+        <li><a href="https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"><i class="ai ai-pubmed-square ai-fw"></i> PubMed</a></li>
+      
+      
+        <li><a href="https://orcid.org/0000-0002-1026-6940"><i class="ai ai-orcid-square ai-fw"></i> ORCID</a></li>
+      
+      
+      
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="MedShift UI Specification for Demo Implementation">
+    
+    
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">MedShift UI Specification for Demo Implementation
+</h1>
+          
+        
+        
+        
+        
+             
+        
+    
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <h1 id="medshift-ui-specification-for-demo-implementation">MedShift UI Specification for Demo Implementation</h1>
+
+<h2 id="project-overview">Project Overview</h2>
+
+<p><strong>MedShift</strong> is a medication change management app based on EMRC (Event Memory Retrieval and Comparison) theory from cognitive neuroscience. It helps patients remember medication changes by creating “recursive representations” that integrate old and new medication memories.</p>
+
+<h2 id="core-concept">Core Concept</h2>
+
+<p>When medications change, patients often:</p>
+<ul>
+  <li>Forget they switched</li>
+  <li>Take the old medication by mistake</li>
+  <li>Can’t remember which one is current</li>
+</ul>
+
+<p><strong>Solution</strong>: Use the brain’s natural event memory updating mechanisms by:</p>
+<ol>
+  <li><strong>Retrieval</strong>: Actively recall old medication before taking new one</li>
+  <li><strong>Prediction</strong>: Generate expectation of what you’ll take</li>
+  <li><strong>Prediction Error</strong>: Explicitly highlight the change</li>
+  <li><strong>Integration</strong>: Encode the full sequence into one memory</li>
+</ol>
+
+<h2 id="user-flow-specification">User Flow Specification</h2>
+
+<h3 id="scenario-setup">Scenario Setup</h3>
+<ul>
+  <li><strong>User</strong>: Sarah, 68 years old</li>
+  <li><strong>Old Medication</strong>: Blue pill (Metformin 500mg) - taken at 8 AM daily for 2 years</li>
+  <li><strong>New Medication</strong>: White pill (Metformin XR 750mg) - prescribed Jan 15, 2025</li>
+  <li><strong>Change Reason</strong>: Doctor switched to extended-release version for better blood sugar control</li>
+</ul>
+
+<hr />
+
+<h2 id="screen-by-screen-specifications">Screen-by-Screen Specifications</h2>
+
+<h3 id="screen-0-landing-page-demo-start">Screen 0: Landing Page (Demo Start)</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌─────────────────────────────────────────┐
+│                                         │
+│         💊 MedShift Demo                │
+│                                         │
+│   Evidence-Based Medication Memory      │
+│                                         │
+│  Based on cognitive neuroscience        │
+│  research on memory updating            │
+│                                         │
+│  ─────────────────────────────────      │
+│                                         │
+│  Scenario:                              │
+│  Sarah's doctor changed her morning     │
+│  diabetes medication from a blue pill   │
+│  to a white pill yesterday.             │
+│                                         │
+│  Let's see how MedShift helps her       │
+│  remember the change...                 │
+│                                         │
+│         [Start Demo]                    │
+│                                         │
+│  ─────────────────────────────────      │
+│  Research basis: Wahlheim &amp; Zacks       │
+│  (2024) TICS - EMRC Theory              │
+│                                         │
+└─────────────────────────────────────────┘
+</code></pre></div></div>
+
+<p><strong>Interaction</strong>: Click “Start Demo” → Go to Screen 1</p>
+
+<hr />
+
+<h3 id="screen-1-morning-reminder">Screen 1: Morning Reminder</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌─────────────────────────────────────────┐
+│  8:15 AM                        [×]     │
+├─────────────────────────────────────────┤
+│                                         │
+│         🔔                              │
+│                                         │
+│   Good morning, Sarah!                  │
+│                                         │
+│   Time for your morning medication      │
+│                                         │
+│                                         │
+│         [Continue]                      │
+│                                         │
+│                                         │
+│  ───────────────────────────────────    │
+│  🧠 What's happening:                   │
+│  The app is triggering at your normal   │
+│  medication time (8:15 AM)              │
+└─────────────────────────────────────────┘
+</code></pre></div></div>
+
+<p><strong>Interaction</strong>: Click “Continue” → Go to Screen 2</p>
+
+<hr />
+
+<h3 id="screen-2-pre-change-retrieval-step-1-retrieval">Screen 2: Pre-Change Retrieval (Step 1: RETRIEVAL)</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌─────────────────────────────────────────┐
+│  ← Back                          [×]    │
+├─────────────────────────────────────────┤
+│                                         │
+│   BEFORE YOU TAKE YOUR MEDICATION       │
+│                                         │
+│   Let's remember what you used to       │
+│   take at this time...                  │
+│                                         │
+│   ┌───────────────────────┐             │
+│   │                       │             │
+│   │     [Blue Pill]       │             │
+│   │      (Image)          │             │
+│   │                       │             │
+│   └───────────────────────┘             │
+│                                         │
+│   Metformin 500mg                       │
+│                                         │
+│   Where did you keep it?                │
+│   ○ Medicine cabinet                    │
+│   ○ Kitchen counter                     │
+│   ○ Bedside table                       │
+│                                         │
+│         [Next]                          │
+│                                         │
+│  ───────────────────────────────────    │
+│  🧠 Memory Science:                     │
+│  Actively retrieving old medication     │
+│  strengthens that memory and prepares   │
+│  for comparison with new routine        │
+└─────────────────────────────────────────┘
+</code></pre></div></div>
+
+<p><strong>Interactions</strong>:</p>
+<ul>
+  <li>Select location (any option works)</li>
+  <li>Click “Next” → Go to Screen 3</li>
+</ul>
+
+<p><strong>Data to capture</strong>:</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+  <span class="nl">screen</span><span class="p">:</span> <span class="dl">"</span><span class="s2">retrieval</span><span class="dl">"</span><span class="p">,</span>
+  <span class="nx">timestamp</span><span class="p">:</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">(),</span>
+  <span class="nx">old_medication_shown</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Metformin 500mg (blue)</span><span class="dl">"</span><span class="p">,</span>
+  <span class="nx">location_selected</span><span class="p">:</span> <span class="dl">"</span><span class="s2">medicine_cabinet</span><span class="dl">"</span> <span class="o">|</span> <span class="dl">"</span><span class="s2">kitchen_counter</span><span class="dl">"</span> <span class="o">|</span> <span class="dl">"</span><span class="s2">bedside_table</span><span class="dl">"</span><span class="p">,</span>
+  <span class="nx">retrieval_success</span><span class="p">:</span> <span class="kc">true</span> <span class="c1">// user engaged with memory task</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="screen-3-prediction-generation-step-2-prediction">Screen 3: Prediction Generation (Step 2: PREDICTION)</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌─────────────────────────────────────────┐
+│  ← Back                          [×]    │
+├─────────────────────────────────────────┤
+│                                         │
+│   WHAT DO YOU EXPECT TO SEE?            │
+│                                         │
+│   Based on your past routine...         │
+│                                         │
+│   I expect to take:                     │
+│                                         │
+│   ┌───────────────────────┐             │
+│   │                       │             │
+│   │     [Blue Pill]       │             │
+│   │   (Pre-filled)        │             │
+│   │                       │             │
+│   └───────────────────────┘             │
+│                                         │
+│   Metformin 500mg                       │
+│                                         │
+│                                         │
+│     [✓ Tap to confirm prediction]       │
+│                                         │
+│                                         │
+│  ───────────────────────────────────    │
+│  🧠 Memory Science:                     │
+│  Making an explicit prediction creates  │
+│  a "prediction error" when you see      │
+│  something different                    │
+└─────────────────────────────────────────┘
+</code></pre></div></div>
+
+<p><strong>Interaction</strong>: Click “Tap to confirm prediction” → Go to Screen 4</p>
+
+<p><strong>Data to capture</strong>:</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+  <span class="nl">screen</span><span class="p">:</span> <span class="dl">"</span><span class="s2">prediction</span><span class="dl">"</span><span class="p">,</span>
+  <span class="nx">timestamp</span><span class="p">:</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">(),</span>
+  <span class="nx">predicted_medication</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Metformin 500mg (blue)</span><span class="dl">"</span><span class="p">,</span>
+  <span class="nx">user_confirmed</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="screen-4-prediction-error-alert-step-3-prediction-error">Screen 4: Prediction Error Alert (Step 3: PREDICTION ERROR)</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌─────────────────────────────────────────┐
+│                                  [×]    │
+├─────────────────────────────────────────┤
+│                                         │
+│   ⚠️ IMPORTANT CHANGE ALERT ⚠️          │
+│                                         │
+│   Your doctor changed your              │
+│   prescription!                         │
+│                                         │
+│   ┌─────────────────┐                   │
+│   │ OLD:            │                   │
+│   │ [Blue Pill]     │                   │
+│   │ Metformin 500mg │                   │
+│   └─────────────────┘                   │
+│          ↓                              │
+│   ┌─────────────────┐                   │
+│   │ NEW:            │                   │
+│   │ [White Pill]    │                   │
+│   │ Metformin XR    │                   │
+│   │ 750mg           │                   │
+│   └─────────────────┘                   │
+│                                         │
+│   Take the WHITE pill now               │
+│                                         │
+│     [I understand the change]           │
+│                                         │
+│  ───────────────────────────────────    │
+│  🧠 Memory Science:                     │
+│  Explicit prediction errors improve     │
+│  memory updating. You expected blue,    │
+│  but it's white now!                    │
+└─────────────────────────────────────────┘
+</code></pre></div></div>
+
+<p><strong>Interaction</strong>: Click “I understand the change” → Go to Screen 5</p>
+
+<p><strong>Visual requirements</strong>:</p>
+<ul>
+  <li>Use red/orange warning color for alert header</li>
+  <li>Show clear visual contrast between OLD and NEW</li>
+  <li>Arrow or transition visual between them</li>
+</ul>
+
+<p><strong>Data to capture</strong>:</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+  <span class="nl">screen</span><span class="p">:</span> <span class="dl">"</span><span class="s2">prediction_error</span><span class="dl">"</span><span class="p">,</span>
+  <span class="nx">timestamp</span><span class="p">:</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">(),</span>
+  <span class="nx">old_shown</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Metformin 500mg (blue)</span><span class="dl">"</span><span class="p">,</span>
+  <span class="nx">new_shown</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Metformin XR 750mg (white)</span><span class="dl">"</span><span class="p">,</span>
+  <span class="nx">change_acknowledged</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="screen-5-recursive-memory-encoding-step-4-integration">Screen 5: Recursive Memory Encoding (Step 4: INTEGRATION)</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌─────────────────────────────────────────┐
+│  ← Back                          [×]    │
+├─────────────────────────────────────────┤
+│                                         │
+│   ✓ MEDICATION TAKEN                    │
+│                                         │
+│   Let's strengthen this memory...       │
+│                                         │
+│   Today you:                            │
+│   • Went to medicine cabinet            │
+│   • EXPECTED to take blue pill          │
+│   • FOUND white pill instead            │
+│   • Took the new white pill             │
+│                                         │
+│   ─────────────────────────────────     │
+│                                         │
+│   Why did it change?                    │
+│   ┌───────────────────────────────┐     │
+│   │ Dr. Chen switched me to       │     │
+│   │ extended release version      │     │
+│   │                               │     │
+│   └───────────────────────────────┘     │
+│                                         │
+│         [Save Memory]                   │
+│                                         │
+│  ───────────────────────────────────    │
+│  🧠 Memory Science:                     │
+│  Encoding the ENTIRE sequence           │
+│  (retrieval + prediction + error +      │
+│  change) creates a "recursive           │
+│  representation" that prevents          │
+│  interference                           │
+└─────────────────────────────────────────┘
+</code></pre></div></div>
+
+<p><strong>Interactions</strong>:</p>
+<ul>
+  <li>Text area is pre-filled but editable</li>
+  <li>Click “Save Memory” → Go to Screen 6</li>
+</ul>
+
+<p><strong>Data to capture</strong>:</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+  <span class="nl">screen</span><span class="p">:</span> <span class="dl">"</span><span class="s2">integration</span><span class="dl">"</span><span class="p">,</span>
+  <span class="nx">timestamp</span><span class="p">:</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">(),</span>
+  <span class="nx">memory_encoding</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nl">location</span><span class="p">:</span> <span class="dl">"</span><span class="s2">medicine cabinet</span><span class="dl">"</span><span class="p">,</span>
+    <span class="nx">prediction</span><span class="p">:</span> <span class="dl">"</span><span class="s2">blue pill</span><span class="dl">"</span><span class="p">,</span>
+    <span class="nx">actual</span><span class="p">:</span> <span class="dl">"</span><span class="s2">white pill</span><span class="dl">"</span><span class="p">,</span>
+    <span class="nx">reason</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Dr. Chen switched to extended release</span><span class="dl">"</span>
+  <span class="p">},</span>
+  <span class="nx">full_sequence_encoded</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="screen-6-confirmation--timeline">Screen 6: Confirmation &amp; Timeline</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌─────────────────────────────────────────┐
+│  ← Home                          [×]    │
+├─────────────────────────────────────────┤
+│                                         │
+│   ✓ Memory Saved!                       │
+│                                         │
+│   Your medication change has been       │
+│   recorded with full context.           │
+│                                         │
+│   ─────────────────────────────────     │
+│                                         │
+│   📅 YOUR MEDICATION TIMELINE            │
+│                                         │
+│   Today, 8:15 AM                        │
+│   ✓ Metformin XR 750mg (white)          │
+│   📍 Medicine cabinet                   │
+│   🔄 Changed from blue pill             │
+│                                         │
+│   ─────────────────────────────────     │
+│   Changed on Jan 15, 2025               │
+│   ─────────────────────────────────     │
+│                                         │
+│   Jan 14, 8:10 AM                       │
+│   Metformin 500mg (blue)                │
+│   📍 Medicine cabinet                   │
+│                                         │
+│                                         │
+│   [View Full History]  [Done]           │
+│                                         │
+└─────────────────────────────────────────┘
+</code></pre></div></div>
+
+<p><strong>Interaction</strong>: Click “Done” → Go to Screen 7 (Jump to 1 week later)</p>
+
+<hr />
+
+<h3 id="screen-7-transition-card-1-week-later">Screen 7: Transition Card (1 Week Later)</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌─────────────────────────────────────────┐
+│                                         │
+│         ⏰                               │
+│                                         │
+│   ONE WEEK LATER...                     │
+│                                         │
+│   Sarah has been taking the white       │
+│   pill all week using MedShift's        │
+│   memory-strengthening system.          │
+│                                         │
+│   Let's test if she remembers the       │
+│   change...                             │
+│                                         │
+│         [Continue to Test]              │
+│                                         │
+└─────────────────────────────────────────┘
+</code></pre></div></div>
+
+<p><strong>Interaction</strong>: Click “Continue to Test” → Go to Screen 8</p>
+
+<hr />
+
+<h3 id="screen-8-memory-test---part-1">Screen 8: Memory Test - Part 1</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌─────────────────────────────────────────┐
+│                                  [×]    │
+├─────────────────────────────────────────┤
+│                                         │
+│   MEMORY CHECK                          │
+│                                         │
+│   What medication do you take in        │
+│   the morning?                          │
+│                                         │
+│   ┌───────────────────────────────┐     │
+│   │ White pill - Metformin XR     │     │
+│   │                               │     │
+│   └───────────────────────────────┘     │
+│                                         │
+│         [Submit Answer]                 │
+│                                         │
+│                                         │
+│                                         │
+│                                         │
+│                                         │
+│                                         │
+│  ───────────────────────────────────    │
+│  This tests if Sarah remembers her      │
+│  CURRENT medication                     │
+└─────────────────────────────────────────┘
+</code></pre></div></div>
+
+<p><strong>Interactions</strong>:</p>
+<ul>
+  <li>User types in text field (demo: auto-fill “White pill - Metformin XR”)</li>
+  <li>Click “Submit Answer” → Go to Screen 9</li>
+</ul>
+
+<p><strong>Data to capture</strong>:</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+  <span class="nl">screen</span><span class="p">:</span> <span class="dl">"</span><span class="s2">test_current_med</span><span class="dl">"</span><span class="p">,</span>
+  <span class="nx">timestamp</span><span class="p">:</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">(),</span>
+  <span class="nx">user_answer</span><span class="p">:</span> <span class="dl">"</span><span class="s2">White pill - Metformin XR</span><span class="dl">"</span><span class="p">,</span>
+  <span class="nx">correct</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="screen-9-memory-test---part-2-change-detection">Screen 9: Memory Test - Part 2 (Change Detection)</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌─────────────────────────────────────────┐
+│  ← Back                          [×]    │
+├─────────────────────────────────────────┤
+│                                         │
+│   ✓ Correct!                            │
+│                                         │
+│   Did this medication change            │
+│   recently?                             │
+│                                         │
+│   ○ Yes                                 │
+│   ○ No                                  │
+│                                         │
+│                                         │
+│         [Submit Answer]                 │
+│                                         │
+│                                         │
+│                                         │
+│                                         │
+│                                         │
+│  ───────────────────────────────────    │
+│  This tests CHANGE DETECTION -          │
+│  does Sarah remember that her           │
+│  medication changed?                    │
+└─────────────────────────────────────────┘
+</code></pre></div></div>
+
+<p><strong>Interaction</strong>: Select “Yes” → Click “Submit Answer” → Go to Screen 10</p>
+
+<p><strong>Data to capture</strong>:</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+  <span class="nl">screen</span><span class="p">:</span> <span class="dl">"</span><span class="s2">test_change_detection</span><span class="dl">"</span><span class="p">,</span>
+  <span class="nx">timestamp</span><span class="p">:</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">(),</span>
+  <span class="nx">detected_change</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="screen-10-memory-test---part-3-change-recollection">Screen 10: Memory Test - Part 3 (Change Recollection)</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌─────────────────────────────────────────┐
+│  ← Back                          [×]    │
+├─────────────────────────────────────────┤
+│                                         │
+│   ✓ Correct! It did change.             │
+│                                         │
+│   What was it before?                   │
+│                                         │
+│   ┌───────────────────────────────┐     │
+│   │ Blue pill - Metformin 500mg   │     │
+│   │                               │     │
+│   └───────────────────────────────┘     │
+│                                         │
+│         [Submit Answer]                 │
+│                                         │
+│                                         │
+│                                         │
+│                                         │
+│                                         │
+│  ───────────────────────────────────    │
+│  This tests CHANGE RECOLLECTION -       │
+│  does Sarah remember WHAT it was        │
+│  before?                                │
+└─────────────────────────────────────────┘
+</code></pre></div></div>
+
+<p><strong>Interaction</strong>: Type answer → Click “Submit Answer” → Go to Screen 11</p>
+
+<p><strong>Data to capture</strong>:</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+  <span class="nl">screen</span><span class="p">:</span> <span class="dl">"</span><span class="s2">test_change_recollection</span><span class="dl">"</span><span class="p">,</span>
+  <span class="nx">timestamp</span><span class="p">:</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">(),</span>
+  <span class="nx">user_answer</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Blue pill - Metformin 500mg</span><span class="dl">"</span><span class="p">,</span>
+  <span class="nx">correct</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="nx">full_recollection</span><span class="p">:</span> <span class="kc">true</span> <span class="c1">// remembered current + change + previous</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="screen-11-results--explanation">Screen 11: Results &amp; Explanation</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌─────────────────────────────────────────┐
+│                                  [×]    │
+├─────────────────────────────────────────┤
+│                                         │
+│   ✓ PERFECT! You remembered             │
+│     everything correctly.               │
+│                                         │
+│   ✅ Current medication: White pill     │
+│   ✅ It changed: Yes                    │
+│   ✅ Previous medication: Blue pill     │
+│                                         │
+│   ─────────────────────────────────     │
+│                                         │
+│   WHY THIS MATTERS:                     │
+│                                         │
+│   Because you have a complete memory    │
+│   of the change, you're much less       │
+│   likely to:                            │
+│   • Take the old medication by mistake  │
+│   • Forget which pill is current        │
+│   • Be confused at the pharmacy         │
+│                                         │
+│   ─────────────────────────────────     │
+│                                         │
+│   🧠 THE SCIENCE:                       │
+│                                         │
+│   Research shows that "recursive        │
+│   memory encoding" - remembering the    │
+│   old, the new, AND the change -        │
+│   creates PROACTIVE FACILITATION:       │
+│   Old memory helps rather than hurts.   │
+│                                         │
+│   [Learn More] [Restart Demo]           │
+│                                         │
+└─────────────────────────────────────────┘
+</code></pre></div></div>
+
+<p><strong>Interactions</strong>:</p>
+<ul>
+  <li>Click “Learn More” → Go to Screen 12 (Research explanation)</li>
+  <li>Click “Restart Demo” → Go to Screen 0</li>
+</ul>
+
+<hr />
+
+<h3 id="screen-12-research-background">Screen 12: Research Background</h3>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌─────────────────────────────────────────┐
+│  ← Back                          [×]    │
+├─────────────────────────────────────────┤
+│                                         │
+│   📚 RESEARCH BACKGROUND                │
+│                                         │
+│   MedShift is based on Event Memory     │
+│   Retrieval and Comparison (EMRC)       │
+│   theory from cognitive neuroscience    │
+│                                         │
+│   Key Paper:                            │
+│   Wahlheim &amp; Zacks (2024)               │
+│   "Memory updating and the structure    │
+│   of event representations"             │
+│   Trends in Cognitive Sciences          │
+│                                         │
+│   ─────────────────────────────────     │
+│                                         │
+│   KEY FINDINGS:                         │
+│                                         │
+│   ✓ Retrieving old memories BEFORE      │
+│     new events strengthens updating     │
+│                                         │
+│   ✓ Making explicit predictions         │
+│     creates prediction errors that      │
+│     improve memory                      │
+│                                         │
+│   ✓ Encoding the full change sequence   │
+│     prevents interference               │
+│                                         │
+│   ✓ "Recursive representations"         │
+│     turn interference into facilitation │
+│                                         │
+│   [View Full Paper] [Back to Demo]      │
+│                                         │
+└─────────────────────────────────────────┘
+</code></pre></div></div>
+
+<p><strong>Interaction</strong>: Click “Back to Demo” → Go to Screen 0</p>
+
+<hr />
+
+<h2 id="technical-specifications-for-implementation">Technical Specifications for Implementation</h2>
+
+<h3 id="data-structure">Data Structure</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Global state for demo</span>
+<span class="kd">const</span> <span class="nx">demoState</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">user</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Sarah</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">age</span><span class="p">:</span> <span class="mi">68</span>
+  <span class="p">},</span>
+  
+  <span class="na">oldMedication</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Metformin</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">dosage</span><span class="p">:</span> <span class="dl">"</span><span class="s2">500mg</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">appearance</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Blue oval pill</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">imageUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">./assets/blue-pill.png</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">startDate</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2023-01-01</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">endDate</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2025-01-14</span><span class="dl">"</span>
+  <span class="p">},</span>
+  
+  <span class="na">newMedication</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Metformin XR</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">dosage</span><span class="p">:</span> <span class="dl">"</span><span class="s2">750mg</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">appearance</span><span class="p">:</span> <span class="dl">"</span><span class="s2">White extended-release pill</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">imageUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">./assets/white-pill.png</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">startDate</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2025-01-15</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">changeReason</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Extended release for better blood sugar control</span><span class="dl">"</span>
+  <span class="p">},</span>
+  
+  <span class="na">interactions</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">retrieval</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>     <span class="c1">// Will store {timestamp, location, success}</span>
+    <span class="na">prediction</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>    <span class="c1">// Will store {timestamp, predicted, confirmed}</span>
+    <span class="na">predictionError</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span> <span class="c1">// Will store {timestamp, acknowledged}</span>
+    <span class="na">integration</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>   <span class="c1">// Will store {timestamp, reason, fullSequence}</span>
+    <span class="na">test</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">currentMed</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>  <span class="c1">// Will store {answer, correct}</span>
+      <span class="na">changeDetection</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+      <span class="na">changeRecollection</span><span class="p">:</span> <span class="kc">null</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  
+  <span class="na">currentScreen</span><span class="p">:</span> <span class="mi">0</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h3 id="screen-navigation">Screen Navigation</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">screens</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="dl">"</span><span class="s2">landing</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">reminder</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">retrieval</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">prediction</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">predictionError</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">integration</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">confirmation</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">weekLater</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">testCurrent</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">testChange</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">testRecollection</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">results</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">research</span><span class="dl">"</span>
+<span class="p">];</span>
+
+<span class="kd">function</span> <span class="nx">goToScreen</span><span class="p">(</span><span class="nx">screenIndex</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">demoState</span><span class="p">.</span><span class="nx">currentScreen</span> <span class="o">=</span> <span class="nx">screenIndex</span><span class="p">;</span>
+  <span class="nx">renderScreen</span><span class="p">(</span><span class="nx">screens</span><span class="p">[</span><span class="nx">screenIndex</span><span class="p">]);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="styling-guidelines">Styling Guidelines</h3>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">/* Color palette */</span>
+<span class="nd">:root</span> <span class="p">{</span>
+  <span class="py">--primary-blue</span><span class="p">:</span> <span class="m">#4A90E2</span><span class="p">;</span>
+  <span class="py">--success-green</span><span class="p">:</span> <span class="m">#7ED321</span><span class="p">;</span>
+  <span class="py">--warning-orange</span><span class="p">:</span> <span class="m">#F5A623</span><span class="p">;</span>
+  <span class="py">--error-red</span><span class="p">:</span> <span class="m">#D0021B</span><span class="p">;</span>
+  <span class="py">--text-dark</span><span class="p">:</span> <span class="m">#333333</span><span class="p">;</span>
+  <span class="py">--text-light</span><span class="p">:</span> <span class="m">#666666</span><span class="p">;</span>
+  <span class="py">--bg-light</span><span class="p">:</span> <span class="m">#F8F9FA</span><span class="p">;</span>
+  <span class="py">--border-gray</span><span class="p">:</span> <span class="m">#E1E4E8</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c">/* Card styling */</span>
+<span class="nc">.demo-card</span> <span class="p">{</span>
+  <span class="nl">max-width</span><span class="p">:</span> <span class="m">400px</span><span class="p">;</span>
+  <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span> <span class="nb">auto</span><span class="p">;</span>
+  <span class="nl">padding</span><span class="p">:</span> <span class="m">24px</span><span class="p">;</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="n">var</span><span class="p">(</span><span class="n">--border-gray</span><span class="p">);</span>
+  <span class="nl">border-radius</span><span class="p">:</span> <span class="m">12px</span><span class="p">;</span>
+  <span class="nl">background</span><span class="p">:</span> <span class="no">white</span><span class="p">;</span>
+  <span class="nl">box-shadow</span><span class="p">:</span> <span class="m">0</span> <span class="m">2px</span> <span class="m">8px</span> <span class="n">rgba</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0.1</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c">/* Pill images */</span>
+<span class="nc">.pill-image</span> <span class="p">{</span>
+  <span class="nl">width</span><span class="p">:</span> <span class="m">120px</span><span class="p">;</span>
+  <span class="nl">height</span><span class="p">:</span> <span class="m">120px</span><span class="p">;</span>
+  <span class="nl">margin</span><span class="p">:</span> <span class="m">16px</span> <span class="nb">auto</span><span class="p">;</span>
+  <span class="nl">display</span><span class="p">:</span> <span class="nb">block</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c">/* Science callout box */</span>
+<span class="nc">.science-box</span> <span class="p">{</span>
+  <span class="nl">background</span><span class="p">:</span> <span class="n">var</span><span class="p">(</span><span class="n">--bg-light</span><span class="p">);</span>
+  <span class="nl">border-left</span><span class="p">:</span> <span class="m">4px</span> <span class="nb">solid</span> <span class="n">var</span><span class="p">(</span><span class="n">--primary-blue</span><span class="p">);</span>
+  <span class="nl">padding</span><span class="p">:</span> <span class="m">12px</span><span class="p">;</span>
+  <span class="nl">margin-top</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+  <span class="nl">font-size</span><span class="p">:</span> <span class="m">0.9em</span><span class="p">;</span>
+  <span class="nl">color</span><span class="p">:</span> <span class="n">var</span><span class="p">(</span><span class="n">--text-light</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="image-requirements">Image Requirements</h3>
+
+<p><strong>Pill Images Needed</strong> (can use placeholders or generate):</p>
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">blue-pill.png</code> - Blue oval pill</li>
+  <li><code class="language-plaintext highlighter-rouge">white-pill.png</code> - White round pill</li>
+</ol>
+
+<p><strong>Icons Needed</strong>:</p>
+<ul>
+  <li>Bell icon (🔔)</li>
+  <li>Warning icon (⚠️)</li>
+  <li>Checkmark icon (✓)</li>
+  <li>Brain icon (🧠)</li>
+  <li>Calendar icon (📅)</li>
+  <li>Location pin icon (📍)</li>
+  <li>Clock icon (⏰)</li>
+</ul>
+
+<h3 id="responsive-behavior">Responsive Behavior</h3>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">/* Mobile-first design */</span>
+<span class="k">@media</span> <span class="p">(</span><span class="n">max-width</span><span class="p">:</span> <span class="m">768px</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nc">.demo-card</span> <span class="p">{</span>
+    <span class="nl">max-width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+    <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span> <span class="m">16px</span><span class="p">;</span>
+    <span class="nl">padding</span><span class="p">:</span> <span class="m">16px</span><span class="p">;</span>
+  <span class="p">}</span>
+  
+  <span class="nc">.pill-image</span> <span class="p">{</span>
+    <span class="nl">width</span><span class="p">:</span> <span class="m">100px</span><span class="p">;</span>
+    <span class="nl">height</span><span class="p">:</span> <span class="m">100px</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="analyticstracking-optional">Analytics/Tracking (Optional)</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">trackInteraction</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// For demo purposes, just console.log</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Demo Event:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+  
+  <span class="c1">// In production, would send to analytics:</span>
+  <span class="c1">// analytics.track(event, data);</span>
+<span class="p">}</span>
+
+<span class="c1">// Example usage:</span>
+<span class="nx">trackInteraction</span><span class="p">(</span><span class="dl">"</span><span class="s2">retrieval_complete</span><span class="dl">"</span><span class="p">,</span> <span class="p">{</span>
+  <span class="na">location</span><span class="p">:</span> <span class="dl">"</span><span class="s2">medicine_cabinet</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">timestamp</span><span class="p">:</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="implementation-checklist">Implementation Checklist</h2>
+
+<h3 id="phase-1-basic-structure">Phase 1: Basic Structure</h3>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />HTML page with basic structure</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />CSS styling for cards and buttons</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Screen navigation system</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All 13 screens with static content</li>
+</ul>
+
+<h3 id="phase-2-interactivity">Phase 2: Interactivity</h3>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Button click handlers</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Form input handling (text fields, radio buttons)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />State management for tracking user journey</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Screen transitions</li>
+</ul>
+
+<h3 id="phase-3-polish">Phase 3: Polish</h3>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Pill images (placeholder or real)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Icons</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Animations/transitions between screens</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Responsive design testing</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Science explanation boxes</li>
+</ul>
+
+<h3 id="phase-4-deployment">Phase 4: Deployment</h3>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Host on GitHub Pages, Netlify, or Vercel</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Add meta tags for social sharing</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Test on mobile devices</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Add “Download concept PDF” option</li>
+</ul>
+
+<hr />
+
+<h2 id="sample-html-structure">Sample HTML Structure</h2>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, initial-scale=1.0"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;title&gt;</span>MedShift Demo - Evidence-Based Medication Memory<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">"styles.css"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- Screens will render here --&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+  
+  <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"demo-state.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"screens.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"app.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="next-steps-for-llm-agent">Next Steps for LLM Agent</h2>
+
+<p><strong>To implement this demo, please:</strong></p>
+
+<ol>
+  <li>Create <code class="language-plaintext highlighter-rouge">index.html</code> with the basic structure</li>
+  <li>Create <code class="language-plaintext highlighter-rouge">styles.css</code> with the styling specifications above</li>
+  <li>Create <code class="language-plaintext highlighter-rouge">app.js</code> with screen rendering and navigation logic</li>
+  <li>Implement all 13 screens with exact text and layout as specified</li>
+  <li>Add interactive elements (buttons, form inputs)</li>
+  <li>Make it mobile-responsive</li>
+  <li>Add smooth transitions between screens</li>
+</ol>
+
+<p><strong>Priority</strong>: Focus on screens 0-6 first (the main intervention flow), then add screens 7-11 (testing), then screen 12 (research).</p>
+
+<p><strong>Hosting</strong>: Deploy to a static site host (GitHub Pages, Netlify, Vercel) for easy sharing.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+
+
+      </footer>
+
+      
+
+      
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+<a href="/sitemap/">Sitemap</a>
+<!-- end custom footer snippets -->
+
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+      <li><a href="http://github.com/sophiexingsu"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    <li><a href="http://localhost:4000/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2026 Sophie(Xing) Su. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/academicpages/academicpages.github.io">AcademicPages</a>, a fork of <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/main.min.js"></script>
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  </body>
+</html>
+

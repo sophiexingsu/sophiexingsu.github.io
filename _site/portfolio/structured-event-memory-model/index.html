@@ -1,0 +1,929 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>Structured Event Memory Model: A Computational Framework - Sophie(Xing) Su’s Personal Website</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en-US">
+<meta property="og:site_name" content="Sophie(Xing) Su's Personal Website">
+<meta property="og:title" content="Structured Event Memory Model: A Computational Framework">
+
+
+  <link rel="canonical" href="http://localhost:4000/portfolio/structured-event-memory-model/">
+  <meta property="og:url" content="http://localhost:4000/portfolio/structured-event-memory-model/">
+
+
+
+  <meta property="og:description" content="Python 3 + TensorFlow 2+ implementation of the SEM cognitive model for event memory research">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2022-01-01T00:00:00-08:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Sophie(Xing) Su",
+      "url" : "http://localhost:4000",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Sophie(Xing) Su's Personal Website Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+    
+
+<!-- start custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="57x57" href="http://localhost:4000/images/apple-touch-icon-57x57.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="60x60" href="http://localhost:4000/images/apple-touch-icon-60x60.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="76x76" href="http://localhost:4000/images/apple-touch-icon-76x76.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="120x120" href="http://localhost:4000/images/apple-touch-icon-120x120.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="152x152" href="http://localhost:4000/images/apple-touch-icon-152x152.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:4000/images/apple-touch-icon-180x180.png?v=M44lzPylqQ">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-32x32.png?v=M44lzPylqQ" sizes="32x32">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/android-chrome-192x192.png?v=M44lzPylqQ" sizes="192x192">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-96x96.png?v=M44lzPylqQ" sizes="96x96">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-16x16.png?v=M44lzPylqQ" sizes="16x16">
+<link rel="manifest" href="http://localhost:4000/images/manifest.json?v=M44lzPylqQ">
+<link rel="mask-icon" href="http://localhost:4000/images/safari-pinned-tab.svg?v=M44lzPylqQ" color="#000000">
+<link rel="shortcut icon" href="/images/favicon.ico?v=M44lzPylqQ">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="msapplication-TileImage" content="http://localhost:4000/images/mstile-144x144.png?v=M44lzPylqQ">
+<meta name="msapplication-config" content="http://localhost:4000/images/browserconfig.xml?v=M44lzPylqQ">
+<meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" href="http://localhost:4000/assets/css/academicons.css"/>
+
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+<!-- Custom CSS for consistent fonts -->
+<style>
+/* Ensure consistent font family across all elements on the front page */
+body, .page__content, .page__content p, .page__content li, .page__content h1, .page__content h2, .page__content h3, .page__content h4, .page__content h5, .page__content h6 {
+  font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif !important;
+}
+
+/* Consistent line heights for better visual harmony */
+.page__content p, .page__content li {
+  line-height: 1.6 !important;
+}
+
+/* Ensure headings have consistent font weight and spacing */
+.page__content h1, .page__content h2, .page__content h3, .page__content h4, .page__content h5, .page__content h6 {
+  font-weight: 600 !important;
+  margin-top: 1.5em !important;
+  margin-bottom: 0.5em !important;
+}
+
+/* Override figure captions to use consistent sans-serif font */
+figcaption {
+  font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif !important;
+}
+
+/* Ensure consistent font size for main content */
+.page__content {
+  font-size: 16px !important;
+}
+
+/* Consistent styling for bold text */
+.page__content strong, .page__content b {
+  font-weight: 600 !important;
+}
+</style>
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="http://localhost:4000/">Sophie(Xing) Su's Personal Website</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/publications/">Publications</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/portfolio/">Research Projects</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/year-archive/">Blog</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/cv/">CV</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="http://localhost:4000/images/1559750279003.jpeg" class="author__avatar" alt="Sophie(Xing) Su ">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Sophie(Xing) Su </h3>
+    <p class="author__bio">WUSTL PBS Grad,Haskins, Cornell</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Saint Louis, Missouri</li>
+      
+      
+        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Washington University in Saint Louis</li>
+      
+      
+      
+        <li><a href="mailto:sophiesu1996@gmail.com"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i> Email</a></li>
+      
+      
+       
+      
+        <li><a href="https://twitter.com/sophiejoesu"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+        <li><a href="https://github.com/sophiexingsu"><i class="fab fa-fw fa-github" aria-hidden="true"></i> Github</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+        <li><a href="https://scholar.google.com/citations?user=L4EIOIYAAAAJ&hl=en""><i class="fas fa-fw fa-graduation-cap"></i> Google Scholar</a></li>
+      
+      
+        <li><a href="https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"><i class="ai ai-pubmed-square ai-fw"></i> PubMed</a></li>
+      
+      
+        <li><a href="https://orcid.org/0000-0002-1026-6940"><i class="ai ai-orcid-square ai-fw"></i> ORCID</a></li>
+      
+      
+      
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page research-project" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Structured Event Memory Model: A Computational Framework">
+    <meta itemprop="description" content="Python 3 + TensorFlow 2+ implementation of the SEM cognitive model for event memory research">
+    <meta itemprop="datePublished" content="January 01, 2022">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">Structured Event Memory Model: A Computational Framework
+</h1>
+
+          
+          
+            <div class="project-meta-bar">
+              
+                <span class="project-status project-status--published">Published</span>
+              
+
+              
+                <span class="project-date">
+                  <i class="fa fa-calendar" aria-hidden="true"></i>
+                  January 2022
+                </span>
+              
+
+              
+                <span class="project-github">
+                  <i class="fab fa-github" aria-hidden="true"></i>
+                  1 Repository
+                </span>
+              
+            </div>
+          
+
+          
+          
+            
+
+
+
+
+<div class="tech-stack">
+  <div class="tech-badges">
+    
+      
+        <span class="tech-badge tech-badge--language">Python</span>
+      
+    
+
+    
+      
+        <span class="tech-badge tech-badge--framework">TensorFlow</span>
+      
+    
+
+    
+      
+        <span class="tech-badge tech-badge--tool">Google Colab</span>
+      
+        <span class="tech-badge tech-badge--tool">Neural Networks</span>
+      
+        <span class="tech-badge tech-badge--tool">Cognitive Modeling</span>
+      
+    
+  </div>
+</div>
+
+
+          
+
+          
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        
+
+        
+        <h2 id="overview">Overview</h2>
+
+<p><strong>SEM2</strong> is a modernized Python 3 + TensorFlow 2+ implementation of the <strong>Structured Event Memory (SEM)</strong> model, a neuro-symbolic cognitive architecture for simulating how people organize and retrieve event memories.</p>
+
+<p>This repository provides:</p>
+<ul>
+  <li>Updated implementation compatible with TensorFlow 2.3.1+</li>
+  <li>Google Colab tutorials for easy experimentation</li>
+  <li>Extensible framework for event cognition research</li>
+  <li>Documentation and examples for researchers</li>
+</ul>
+
+<h2 id="what-is-the-structured-event-memory-model">What is the Structured Event Memory Model?</h2>
+
+<p>The <strong>Structured Event Memory (SEM)</strong> model, developed by Franklin et al. (2020), is a computational cognitive architecture that simulates:</p>
+
+<ol>
+  <li><strong>Event Segmentation</strong>: How continuous experience is parsed into discrete events</li>
+  <li><strong>Memory Encoding</strong>: How event representations are stored in long-term memory</li>
+  <li><strong>Memory Retrieval</strong>: How events are retrieved based on cues</li>
+  <li><strong>Temporal Context</strong>: How temporal relationships between events are encoded</li>
+</ol>
+
+<h3 id="key-features-of-sem">Key Features of SEM</h3>
+
+<p><strong>Neuro-Symbolic Architecture</strong>:</p>
+<ul>
+  <li>Combines neural network learning with symbolic structure</li>
+  <li>Distributed representations + discrete event boundaries</li>
+</ul>
+
+<p><strong>Hierarchical Organization</strong>:</p>
+<ul>
+  <li>Events organized hierarchically (sub-events within events)</li>
+  <li>Captures nested structure of complex activities</li>
+</ul>
+
+<p><strong>Temporal Context Model</strong>:</p>
+<ul>
+  <li>Gradually drifting context representation</li>
+  <li>Captures temporal contiguity effects in memory</li>
+</ul>
+
+<p><strong>Prediction-Based Segmentation</strong>:</p>
+<ul>
+  <li>Event boundaries triggered by prediction errors</li>
+  <li>Aligns with Event Segmentation Theory</li>
+</ul>
+
+<h2 id="original-sem-model-franklin-et-al-2020">Original SEM Model (Franklin et al., 2020)</h2>
+
+<p>The original SEM model demonstrated:</p>
+
+<ul>
+  <li><strong>Event segmentation</strong>: Model detects boundaries when prediction error increases</li>
+  <li><strong>Boundary advantage</strong>: Better memory for information at event boundaries</li>
+  <li><strong>Temporal clustering</strong>: Events closer in time are more confusable</li>
+  <li><strong>Hierarchical recall</strong>: Coarse event structure retrieved before fine details</li>
+</ul>
+
+<p><strong>Publication</strong>:
+Franklin, N. T., Norman, K. A., Ranganath, C., Zacks, J. M., &amp; Gershman, S. J. (2020). Structured Event Memory: A neuro-symbolic model of event cognition. <em>Psychological Review, 127</em>(3), 327-361.</p>
+
+<h2 id="sem2-modernization-contributions">SEM2: Modernization Contributions</h2>
+
+<p>The original SEM implementation used TensorFlow 1.x, which is no longer supported. <strong>SEM2</strong> provides:</p>
+
+<h3 id="1-tensorflow-2-compatibility">1. TensorFlow 2+ Compatibility</h3>
+<ul>
+  <li>Updated to TensorFlow 2.3.1+</li>
+  <li>Uses modern TensorFlow API (no <code class="language-plaintext highlighter-rouge">tf.Session</code>, <code class="language-plaintext highlighter-rouge">tf.placeholder</code>)</li>
+  <li>Eager execution by default</li>
+  <li>Compatible with current Python 3.x versions</li>
+</ul>
+
+<h3 id="2-improved-usability">2. Improved Usability</h3>
+<ul>
+  <li>Modular code structure</li>
+  <li>Clear documentation</li>
+  <li>Google Colab tutorials (run in browser, no installation)</li>
+  <li>Example datasets included</li>
+</ul>
+
+<h3 id="3-extended-functionality">3. Extended Functionality</h3>
+<ul>
+  <li>Flexible input formats</li>
+  <li>Visualization tools for model predictions</li>
+  <li>Parameter sweeps for sensitivity analysis</li>
+  <li>Integration with common neuroimaging data formats</li>
+</ul>
+
+<h2 id="model-architecture">Model Architecture</h2>
+
+<h3 id="core-components">Core Components</h3>
+
+<h4 id="1-event-segmentation-module">1. Event Segmentation Module</h4>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">EventSegmenter</span><span class="p">:</span>
+    <span class="s">"""
+    Detects event boundaries based on prediction error
+
+    Input: Sequence of feature vectors
+    Output: Event boundary probabilities
+    """</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="o">=</span><span class="mi">128</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">lstm</span> <span class="o">=</span> <span class="n">LSTM</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">predictor</span> <span class="o">=</span> <span class="n">Dense</span><span class="p">(</span><span class="n">input_dim</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">segment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">):</span>
+        <span class="c1"># Predict next feature
+</span>        <span class="n">predictions</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">lstm</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+        <span class="c1"># Compute prediction error
+</span>        <span class="n">error</span> <span class="o">=</span> <span class="n">compute_error</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">features</span><span class="p">)</span>
+        <span class="c1"># Threshold for boundaries
+</span>        <span class="n">boundaries</span> <span class="o">=</span> <span class="n">error</span> <span class="o">&gt;</span> <span class="n">threshold</span>
+        <span class="k">return</span> <span class="n">boundaries</span>
+</code></pre></div></div>
+
+<h4 id="2-memory-encoding-module">2. Memory Encoding Module</h4>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MemoryEncoder</span><span class="p">:</span>
+    <span class="s">"""
+    Encodes event representations into long-term memory
+
+    Combines:
+    - Content features (what happened)
+    - Temporal context (when it happened)
+    """</span>
+    <span class="k">def</span> <span class="nf">encode_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">event_rep</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">content_encoder</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+        <span class="n">temporal_rep</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">context_encoder</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">concatenate</span><span class="p">([</span><span class="n">event_rep</span><span class="p">,</span> <span class="n">temporal_rep</span><span class="p">])</span>
+</code></pre></div></div>
+
+<h4 id="3-temporal-context-module">3. Temporal Context Module</h4>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">TemporalContext</span><span class="p">:</span>
+    <span class="s">"""
+    Gradually drifting context representation
+
+    Models temporal contiguity:
+    - Context changes slowly over time
+    - Rapid change at event boundaries
+    """</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context_dim</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">drift_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="n">context_dim</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">drift_rate</span> <span class="o">=</span> <span class="n">drift_rate</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_boundary</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">event_boundary</span><span class="p">:</span>
+            <span class="c1"># Large context shift at boundaries
+</span>            <span class="bp">self</span><span class="p">.</span><span class="n">context</span> <span class="o">+=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">context</span><span class="p">))</span> <span class="o">*</span> <span class="mf">0.5</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Gradual drift
+</span>            <span class="bp">self</span><span class="p">.</span><span class="n">context</span> <span class="o">+=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">context</span><span class="p">))</span> <span class="o">*</span> <span class="bp">self</span><span class="p">.</span><span class="n">drift_rate</span>
+</code></pre></div></div>
+
+<h4 id="4-memory-retrieval-module">4. Memory Retrieval Module</h4>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MemoryRetriever</span><span class="p">:</span>
+    <span class="s">"""
+    Retrieves events based on cues
+
+    Uses attention mechanism over stored events
+    """</span>
+    <span class="k">def</span> <span class="nf">retrieve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cue</span><span class="p">,</span> <span class="n">memory_store</span><span class="p">):</span>
+        <span class="c1"># Compute similarity between cue and stored events
+</span>        <span class="n">similarities</span> <span class="o">=</span> <span class="n">cosine_similarity</span><span class="p">(</span><span class="n">cue</span><span class="p">,</span> <span class="n">memory_store</span><span class="p">)</span>
+        <span class="c1"># Retrieve most similar events
+</span>        <span class="n">retrieved_events</span> <span class="o">=</span> <span class="n">memory_store</span><span class="p">[</span><span class="n">similarities</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">retrieved_events</span>
+</code></pre></div></div>
+
+<h2 id="applications-in-research">Applications in Research</h2>
+
+<h3 id="1-modeling-event-segmentation-data">1. Modeling Event Segmentation Data</h3>
+
+<p>Fit SEM to human segmentation data:</p>
+<ul>
+  <li>Predict boundary locations from feature sequences</li>
+  <li>Compare model vs. human segmentation agreement</li>
+  <li>Identify features driving segmentation</li>
+</ul>
+
+<h3 id="2-simulating-memory-experiments">2. Simulating Memory Experiments</h3>
+
+<p>Simulate classic memory phenomena:</p>
+<ul>
+  <li><strong>Boundary advantage</strong>: Better memory at event boundaries</li>
+  <li><strong>Temporal clustering</strong>: Confusions for temporally proximate events</li>
+  <li><strong>Hierarchical effects</strong>: Coarse-to-fine recall</li>
+</ul>
+
+<h3 id="3-testing-cognitive-theories">3. Testing Cognitive Theories</h3>
+
+<p>Test competing theories:</p>
+<ul>
+  <li><strong>Incremental vs. global updating</strong>: Modify context update rules</li>
+  <li><strong>Predictive processing</strong>: Vary prediction error sensitivity</li>
+  <li><strong>Hierarchical structure</strong>: Add multiple temporal scales</li>
+</ul>
+
+<h2 id="google-colab-tutorials">Google Colab Tutorials</h2>
+
+<p>The SEM2 repository includes interactive Colab notebooks:</p>
+
+<h3 id="tutorial-1-basic-event-segmentation">Tutorial 1: Basic Event Segmentation</h3>
+<ul>
+  <li>Load example data</li>
+  <li>Run segmentation</li>
+  <li>Visualize predicted boundaries vs. ground truth</li>
+</ul>
+
+<h3 id="tutorial-2-memory-encoding-and-retrieval">Tutorial 2: Memory Encoding and Retrieval</h3>
+<ul>
+  <li>Simulate event memory encoding</li>
+  <li>Test cued recall</li>
+  <li>Analyze temporal clustering effects</li>
+</ul>
+
+<h3 id="tutorial-3-parameter-sensitivity">Tutorial 3: Parameter Sensitivity</h3>
+<ul>
+  <li>Sweep key parameters (drift rate, boundary threshold)</li>
+  <li>Plot model behavior</li>
+  <li>Identify optimal parameter ranges</li>
+</ul>
+
+<h3 id="tutorial-4-custom-applications">Tutorial 4: Custom Applications</h3>
+<ul>
+  <li>Load your own data</li>
+  <li>Customize model architecture</li>
+  <li>Export predictions for further analysis</li>
+</ul>
+
+<p><strong>Access Tutorials</strong>: <a href="https://github.com/sophiexingsu/SEM2/tree/main/tutorials">SEM2 Colab Notebooks</a></p>
+
+<h2 id="installation-and-usage">Installation and Usage</h2>
+
+<h3 id="quick-start-google-colab">Quick Start (Google Colab)</h3>
+
+<p>No installation required! Open a Colab notebook and run:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Clone repository
+</span><span class="err">!</span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">sophiexingsu</span><span class="o">/</span><span class="n">SEM2</span><span class="p">.</span><span class="n">git</span>
+<span class="o">%</span><span class="n">cd</span> <span class="n">SEM2</span>
+
+<span class="c1"># Install dependencies
+</span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="p">.</span><span class="n">txt</span>
+
+<span class="c1"># Run example
+</span><span class="kn">from</span> <span class="nn">sem2</span> <span class="kn">import</span> <span class="n">EventSegmenter</span>
+<span class="n">segmenter</span> <span class="o">=</span> <span class="n">EventSegmenter</span><span class="p">()</span>
+<span class="n">boundaries</span> <span class="o">=</span> <span class="n">segmenter</span><span class="p">.</span><span class="n">segment</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="local-installation">Local Installation</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Clone repository</span>
+git clone https://github.com/sophiexingsu/SEM2.git
+<span class="nb">cd </span>SEM2
+
+<span class="c"># Create virtual environment</span>
+python <span class="nt">-m</span> venv venv
+<span class="nb">source </span>venv/bin/activate  <span class="c"># On Windows: venv\Scripts\activate</span>
+
+<span class="c"># Install dependencies</span>
+pip <span class="nb">install</span> <span class="nt">-r</span> requirements.txt
+
+<span class="c"># Run tests</span>
+pytest tests/
+</code></pre></div></div>
+
+<h2 id="repository-structure">Repository Structure</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SEM2/
+├── sem2/
+│   ├── __init__.py
+│   ├── segmentation.py      # Event segmentation module
+│   ├── memory.py             # Memory encoding/retrieval
+│   ├── context.py            # Temporal context model
+│   ├── utils.py              # Helper functions
+│   └── visualization.py      # Plotting functions
+├── tutorials/
+│   ├── 01_basic_segmentation.ipynb
+│   ├── 02_memory_simulation.ipynb
+│   ├── 03_parameter_sweep.ipynb
+│   └── 04_custom_application.ipynb
+├── examples/
+│   ├── example_data/         # Sample datasets
+│   └── example_scripts/      # Example usage scripts
+├── tests/
+│   └── test_*.py             # Unit tests
+├── requirements.txt
+├── README.md
+└── LICENSE
+</code></pre></div></div>
+
+<h2 id="citation">Citation</h2>
+
+<p>If you use SEM2 in your research, please cite:</p>
+
+<p><strong>Original SEM Model</strong>:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Franklin, N. T., Norman, K. A., Ranganath, C., Zacks, J. M., &amp; Gershman, S. J. (2020).
+Structured Event Memory: A neuro-symbolic model of event cognition.
+Psychological Review, 127(3), 327-361.
+</code></pre></div></div>
+
+<p><strong>SEM2 Implementation</strong>:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Su, S. (2022). SEM2: Python 3 + TensorFlow 2+ implementation of Structured Event Memory.
+GitHub: https://github.com/sophiexingsu/SEM2
+</code></pre></div></div>
+
+<h2 id="related-projects">Related Projects</h2>
+
+<ul>
+  <li><a href="/portfolio/incremental-global-updating/">Incremental vs. Global Updating</a>: Testing updating dynamics in event models</li>
+  <li><a href="/portfolio/gaze-entropy-event-boundaries/">Gaze Entropy &amp; Event Boundaries</a>: Empirical event segmentation research</li>
+  <li><a href="/portfolio/predictive-looking/">Predictive Looking</a>: Prediction errors and event boundaries</li>
+</ul>
+
+<h2 id="contributions-welcome">Contributions Welcome</h2>
+
+<p>SEM2 is an open-source project. Contributions are welcome:</p>
+
+<ul>
+  <li>Bug fixes and improvements</li>
+  <li>New tutorials and examples</li>
+  <li>Extensions to the model architecture</li>
+  <li>Documentation improvements</li>
+</ul>
+
+<p>See <a href="https://github.com/sophiexingsu/SEM2/blob/main/CONTRIBUTING.md">Contributing Guidelines</a></p>
+
+<hr />
+
+<p><strong>Keywords</strong>: Computational Modeling, Event Memory, Neural Networks, TensorFlow, Cognitive Architecture, Event Segmentation, Temporal Context, Neuro-Symbolic Models, Python, SEM</p>
+
+
+        
+        
+
+        
+        
+          <h2>Code & Resources</h2>
+          <div class="github-repos">
+            
+              
+
+
+
+<div class="code-repository">
+  <div class="repo-header">
+    <i class="fab fa-github"></i>
+    <h3>SEM2</h3>
+  </div>
+
+  
+  <p class="repo-description">Python 3 port of SEM model updated to TensorFlow 2.3.1+</p>
+  
+
+  
+  <div class="repo-languages">
+    
+      
+        <span class="language-badge">Python</span>
+      
+    
+  </div>
+  
+
+  <a href="https://github.com/sophiexingsu/SEM2" class="repo-link" target="_blank" rel="noopener noreferrer">
+    <i class="fas fa-external-link-alt"></i> View Repository
+  </a>
+</div>
+
+            
+          </div>
+        
+
+        
+        
+          <h2>Publications</h2>
+          <div class="project-publications">
+            
+              <div class="publication-item">
+                <h3 class="publication-title">Structured Event Memory: A neuro-symbolic model of event cognition (Franklin et al., 2020)</h3>
+                <p class="publication-venue">
+                  <em>Psychological Review</em>
+                  
+                   <span class="publication-type">[paper]</span>
+                </p>
+                
+                  <a href="https://psycnet.apa.org/record/2020-15074-001" class="btn btn--primary btn--small">
+                    <i class="fas fa-file-pdf"></i> Download
+                  </a>
+                
+                
+              </div>
+            
+          </div>
+        
+
+        
+        
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="http://localhost:4000/tags/#cognitive-architecture" class="page__taxonomy-item" rel="tag">cognitive-architecture</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#computational-modeling" class="page__taxonomy-item" rel="tag">computational-modeling</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#event-memory" class="page__taxonomy-item" rel="tag">event-memory</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#neural-networks" class="page__taxonomy-item" rel="tag">neural-networks</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#sem" class="page__taxonomy-item" rel="tag">SEM</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#tensorflow" class="page__taxonomy-item" rel="tag">tensorflow</a>
+    
+    </span>
+  </p>
+
+
+
+
+      </footer>
+
+      
+
+<section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=http://localhost:4000/portfolio/structured-event-memory-model/" class="btn btn--twitter" title="Share on Twitter"><i class="fab fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/portfolio/structured-event-memory-model/" class="btn btn--facebook" title="Share on Facebook"><i class="fab fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/portfolio/structured-event-memory-model/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fab fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+      
+      
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="#" class="pagination--pager disabled">Previous</a>
+    
+    
+      <a href="http://localhost:4000/portfolio/action-segmentation-memory/" class="pagination--pager" title="How Action Performance Influences Segmentation and Memory
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <aside class="sidebar__right sticky">
+      <nav class="toc">
+        <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> Project Overview</h4></header>
+        <!-- Table of contents placeholder -->
+<!-- If you don't need a TOC, leave this file empty or remove the include from the layout. -->
+
+      </nav>
+    </aside>
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+<a href="/sitemap/">Sitemap</a>
+<!-- end custom footer snippets -->
+
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+      <li><a href="http://github.com/sophiexingsu"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    <li><a href="http://localhost:4000/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2026 Sophie(Xing) Su. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/academicpages/academicpages.github.io">AcademicPages</a>, a fork of <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/main.min.js"></script>
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  </body>
+</html>
+

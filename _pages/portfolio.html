@@ -1,14 +1,61 @@
 ---
 layout: archive
-title: "Portfolio"
+title: "Research Projects"
 permalink: /portfolio/
 author_profile: true
+
+feature_row:
+  - image_path: /files/projects/gaze-mental-representations.gif
+    alt: "Mental Representations from Gaze"
+    title: "Mental Representations from Gaze"
+    excerpt: "Using CLIP vision-language models to decode semantic content from eye-tracking data"
+    url: "/portfolio/gaze-mental-representations/"
+    btn_label: "Learn More"
+    btn_class: "btn--primary"
+  - image_path: /files/projects/predictive-looking.gif
+    alt: "Predictive Looking Errors"
+    title: "Predictive Looking Errors"
+    excerpt: "Published in Journal of Experimental Psychology: General (2025)"
+    url: "/portfolio/predictive-looking/"
+    btn_label: "Read Paper"
+    btn_class: "btn--success"
+  - image_path: /files/projects/incremental-global-updating.gif
+    alt: "Incremental vs Global Updating"
+    title: "Incremental vs. Global Updating"
+    excerpt: "Dissertation project using fMRI and computational modeling"
+    url: "/portfolio/incremental-global-updating/"
+    btn_label: "View Project"
+    btn_class: "btn--info"
 ---
 
 {% include base_path %}
 
+<p>My research investigates how people perceive, segment, and remember ongoing events using eye-tracking, fMRI, and computational modeling. I combine behavioral experiments with machine learning approaches (vision-language models, neural networks) to understand the cognitive and neural mechanisms underlying event cognition.</p>
 
-{% for post in site.portfolio %}
-  {% include archive-single.html %}
-{% endfor %}
+<p>Below are my current and completed research projects, showcasing computational sophistication, methodological rigor, and a coherent research program on event perception and memory.</p>
+
+<h2>Featured Projects</h2>
+{% include feature_row %}
+
+<h2>All Research Projects</h2>
+<div class="grid__wrapper">
+  {% for post in site.portfolio %}
+    {% unless post.category == "other" %}
+      {% include archive-single.html type="grid" %}
+    {% endunless %}
+  {% endfor %}
+</div>
+
+<hr style="margin: 3em 0;">
+
+<h2>Other Projects</h2>
+<p>Applied research and translational work demonstrating how cognitive science findings can be translated into practical tools and applications.</p>
+
+<div class="grid__wrapper">
+  {% for post in site.portfolio %}
+    {% if post.category == "other" %}
+      {% include archive-single.html type="grid" %}
+    {% endif %}
+  {% endfor %}
+</div>
 

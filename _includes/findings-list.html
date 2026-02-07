@@ -1,0 +1,16 @@
+{% comment %}
+  Key Findings List
+  Parameters: findings (array)
+{% endcomment %}
+
+{% assign findings = include.findings | default: page.findings %}
+
+{% if findings %}
+<div class="findings-list">
+  <ul>
+    {% for finding in findings %}
+      <li>{{ finding }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}

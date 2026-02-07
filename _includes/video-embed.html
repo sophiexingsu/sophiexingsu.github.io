@@ -1,0 +1,21 @@
+{% comment %}
+  Video Embed (YouTube/Vimeo)
+  Parameters: url, title, aspect_ratio
+{% endcomment %}
+
+{% assign video = include.video %}
+
+<div class="video-embed">
+  {% if video.title %}
+    <h3 class="video-title">{{ video.title }}</h3>
+  {% endif %}
+
+  <div class="video-frame" {% if video.aspect_ratio %}style="padding-bottom: {{ video.aspect_ratio }};"{% endif %}>
+    <iframe src="{{ video.url }}"
+            title="{{ video.title | default: 'Video' }}"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+    </iframe>
+  </div>
+</div>

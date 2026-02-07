@@ -23,6 +23,8 @@
             <img src=
               {% if f.image_path contains "://" %}
                 "{{ f.image_path }}"
+              {% elsif f.image_path contains "/files/" %}
+                "{{ f.image_path | prepend: base_path }}"
               {% else %}
                 "{{ f.image_path | prepend: "/images/" | prepend: base_path }}"
               {% endif %}

@@ -1,0 +1,505 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>Human Movement Analysis Dashboard - Sophie(Xing) Su’s Personal Website</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en-US">
+<meta property="og:site_name" content="Sophie(Xing) Su's Personal Website">
+<meta property="og:title" content="Human Movement Analysis Dashboard">
+
+
+  <link rel="canonical" href="http://localhost:4000/files/projects/movement-dashboard/README/">
+  <meta property="og:url" content="http://localhost:4000/files/projects/movement-dashboard/README/">
+
+
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Sophie(Xing) Su",
+      "url" : "http://localhost:4000",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Sophie(Xing) Su's Personal Website Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+    
+
+<!-- start custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="57x57" href="http://localhost:4000/images/apple-touch-icon-57x57.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="60x60" href="http://localhost:4000/images/apple-touch-icon-60x60.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="76x76" href="http://localhost:4000/images/apple-touch-icon-76x76.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="120x120" href="http://localhost:4000/images/apple-touch-icon-120x120.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="152x152" href="http://localhost:4000/images/apple-touch-icon-152x152.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:4000/images/apple-touch-icon-180x180.png?v=M44lzPylqQ">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-32x32.png?v=M44lzPylqQ" sizes="32x32">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/android-chrome-192x192.png?v=M44lzPylqQ" sizes="192x192">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-96x96.png?v=M44lzPylqQ" sizes="96x96">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-16x16.png?v=M44lzPylqQ" sizes="16x16">
+<link rel="manifest" href="http://localhost:4000/images/manifest.json?v=M44lzPylqQ">
+<link rel="mask-icon" href="http://localhost:4000/images/safari-pinned-tab.svg?v=M44lzPylqQ" color="#000000">
+<link rel="shortcut icon" href="/images/favicon.ico?v=M44lzPylqQ">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="msapplication-TileImage" content="http://localhost:4000/images/mstile-144x144.png?v=M44lzPylqQ">
+<meta name="msapplication-config" content="http://localhost:4000/images/browserconfig.xml?v=M44lzPylqQ">
+<meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" href="http://localhost:4000/assets/css/academicons.css"/>
+
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+<!-- Custom CSS for consistent fonts -->
+<style>
+/* Ensure consistent font family across all elements on the front page */
+body, .page__content, .page__content p, .page__content li, .page__content h1, .page__content h2, .page__content h3, .page__content h4, .page__content h5, .page__content h6 {
+  font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif !important;
+}
+
+/* Consistent line heights for better visual harmony */
+.page__content p, .page__content li {
+  line-height: 1.6 !important;
+}
+
+/* Ensure headings have consistent font weight and spacing */
+.page__content h1, .page__content h2, .page__content h3, .page__content h4, .page__content h5, .page__content h6 {
+  font-weight: 600 !important;
+  margin-top: 1.5em !important;
+  margin-bottom: 0.5em !important;
+}
+
+/* Override figure captions to use consistent sans-serif font */
+figcaption {
+  font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif !important;
+}
+
+/* Ensure consistent font size for main content */
+.page__content {
+  font-size: 16px !important;
+}
+
+/* Consistent styling for bold text */
+.page__content strong, .page__content b {
+  font-weight: 600 !important;
+}
+</style>
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="http://localhost:4000/">Sophie(Xing) Su's Personal Website</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/publications/">Publications</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/portfolio/">Research Projects</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/year-archive/">Blog</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/cv/">CV</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="http://localhost:4000/images/1559750279003.jpeg" class="author__avatar" alt="Sophie(Xing) Su ">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Sophie(Xing) Su </h3>
+    <p class="author__bio">WUSTL PBS Grad,Haskins, Cornell</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Saint Louis, Missouri</li>
+      
+      
+        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Washington University in Saint Louis</li>
+      
+      
+      
+        <li><a href="mailto:sophiesu1996@gmail.com"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i> Email</a></li>
+      
+      
+       
+      
+        <li><a href="https://twitter.com/sophiejoesu"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+        <li><a href="https://github.com/sophiexingsu"><i class="fab fa-fw fa-github" aria-hidden="true"></i> Github</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+        <li><a href="https://scholar.google.com/citations?user=L4EIOIYAAAAJ&hl=en""><i class="fas fa-fw fa-graduation-cap"></i> Google Scholar</a></li>
+      
+      
+        <li><a href="https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"><i class="ai ai-pubmed-square ai-fw"></i> PubMed</a></li>
+      
+      
+        <li><a href="https://orcid.org/0000-0002-1026-6940"><i class="ai ai-orcid-square ai-fw"></i> ORCID</a></li>
+      
+      
+      
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Human Movement Analysis Dashboard">
+    
+    
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">Human Movement Analysis Dashboard
+</h1>
+          
+        
+        
+        
+        
+             
+        
+    
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <h1 id="human-movement-analysis-dashboard">Human Movement Analysis Dashboard</h1>
+
+<p>A static web dashboard for visualizing pose estimation and movement analysis data. This dashboard runs entirely in the browser and can be hosted on GitHub Pages.</p>
+
+<h2 id="live-demo">Live Demo</h2>
+
+<p>Once deployed, the dashboard will be available at:
+<code class="language-plaintext highlighter-rouge">https://sophiexingsu.github.io/files/projects/movement-dashboard/</code></p>
+
+<h2 id="features">Features</h2>
+
+<ul>
+  <li><strong>Skeleton Visualization</strong>: Animated playback of body joint positions</li>
+  <li><strong>Joint Position Charts</strong>: Track joint movements over time with Plotly.js</li>
+  <li><strong>Movement Timeline</strong>: Visualize movement intensity throughout the action</li>
+  <li><strong>Trajectory Plots</strong>: See how joints move through 2D space</li>
+</ul>
+
+<h2 id="files">Files</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>movement-dashboard/
+├── index.html              # Main dashboard (static HTML/JS)
+├── data/                   # Pre-processed JSON data
+│   ├── index.json          # Data structure index
+│   └── study2/             # Study data
+│       └── [participant]/  # Participant folders
+│           └── [action].json
+├── preprocess_simple.py    # Script to generate JSON from CSVs
+├── preprocess_data.py      # Full preprocessing (requires pandas)
+└── README.md
+</code></pre></div></div>
+
+<h2 id="how-it-works">How It Works</h2>
+
+<p>The original Python Dash dashboard required a server to run. This version:</p>
+
+<ol>
+  <li><strong>Pre-processes data</strong>: Converts CSV pose data to JSON files</li>
+  <li><strong>Runs in browser</strong>: Uses Plotly.js (same charts as Dash, but client-side)</li>
+  <li><strong>No server needed</strong>: Works on static hosting like GitHub Pages</li>
+</ol>
+
+<h2 id="adding-more-data">Adding More Data</h2>
+
+<p>To add more data to the dashboard:</p>
+
+<ol>
+  <li>Run the preprocessing script locally:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 preprocess_simple.py
+</code></pre></div>    </div>
+  </li>
+  <li>Or use the full script (requires pandas):
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 preprocess_data.py <span class="nt">--max-participants</span> 10 <span class="nt">--max-actions</span> 10
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>The scripts will read from the original data location and create JSON files in <code class="language-plaintext highlighter-rouge">./data/</code></p>
+  </li>
+  <li>Commit the new JSON files and push to GitHub</li>
+</ol>
+
+<h2 id="customization">Customization</h2>
+
+<h3 id="adding-more-studies">Adding More Studies</h3>
+
+<p>Edit <code class="language-plaintext highlighter-rouge">preprocess_simple.py</code> to include additional studies:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">study</span> <span class="ow">in</span> <span class="p">[</span><span class="s">'study1'</span><span class="p">,</span> <span class="s">'study2'</span><span class="p">,</span> <span class="s">'study3'</span><span class="p">,</span> <span class="s">'study4'</span><span class="p">]:</span>
+</code></pre></div></div>
+
+<h3 id="changing-data-limits">Changing Data Limits</h3>
+
+<p>Adjust the slicing in the preprocessing script:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">[:3]</code> for participants</li>
+  <li><code class="language-plaintext highlighter-rouge">[:5]</code> for actions per participant</li>
+  <li><code class="language-plaintext highlighter-rouge">[:50]</code> for frames per action</li>
+</ul>
+
+<h2 id="deployment-to-github-pages">Deployment to GitHub Pages</h2>
+
+<p>The files are already in the correct location. To deploy:</p>
+
+<ol>
+  <li>Commit all files including the <code class="language-plaintext highlighter-rouge">data/</code> folder:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add files/projects/movement-dashboard/
+git commit <span class="nt">-m</span> <span class="s2">"Add movement analysis dashboard"</span>
+git push
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Ensure GitHub Pages is enabled in your repository settings</p>
+  </li>
+  <li>The dashboard will be available at your GitHub Pages URL</li>
+</ol>
+
+<h2 id="technical-notes">Technical Notes</h2>
+
+<ul>
+  <li>Data is sampled (every 5th frame) to reduce file sizes</li>
+  <li>JSON files are limited to 50 time points for performance</li>
+  <li>Plotly.js is loaded from CDN for faster page loads</li>
+  <li>Bootstrap 5 is used for styling</li>
+</ul>
+
+<h2 id="original-dashboard">Original Dashboard</h2>
+
+<p>The original Dash-based dashboard (<code class="language-plaintext highlighter-rouge">movement-analysis-dashboard-python.py</code>) requires:</p>
+<ul>
+  <li>Python with Dash, Plotly, OpenCV, MediaPipe</li>
+  <li>Local access to video files and CSV data</li>
+  <li>A running Python server</li>
+</ul>
+
+<p>This static version provides the same visualizations without those requirements.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+
+
+      </footer>
+
+      
+
+      
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+<a href="/sitemap/">Sitemap</a>
+<!-- end custom footer snippets -->
+
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+      <li><a href="http://github.com/sophiexingsu"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    <li><a href="http://localhost:4000/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2026 Sophie(Xing) Su. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/academicpages/academicpages.github.io">AcademicPages</a>, a fork of <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/main.min.js"></script>
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  </body>
+</html>
+

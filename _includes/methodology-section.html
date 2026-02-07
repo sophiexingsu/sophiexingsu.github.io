@@ -1,0 +1,19 @@
+{% comment %}
+  Collapsible Methodology Section
+  Parameters: title, content, collapsed
+{% endcomment %}
+
+{% assign collapsed = include.collapsed | default: true %}
+{% assign title = include.title | default: "Methodology" %}
+
+<div class="methodology-section">
+  <div class="methodology-header" onclick="this.parentElement.querySelector('.methodology-content').classList.toggle('show'); this.querySelector('.toggle-icon').classList.toggle('open');">
+    <h3>{{ title }}</h3>
+    <span class="toggle-icon{% unless collapsed %} open{% endunless %}">
+      <i class="fas fa-chevron-down"></i>
+    </span>
+  </div>
+  <div class="methodology-content{% unless collapsed %} show{% endunless %}">
+    {{ include.content }}
+  </div>
+</div>

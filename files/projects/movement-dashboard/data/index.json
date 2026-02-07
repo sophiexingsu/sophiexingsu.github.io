@@ -1,0 +1,38 @@
+{
+  "study2": {
+    "participants": {
+      "5ef981cf234db67251c1e0d7": {
+        "actions": [
+          "brush hands off",
+          "brush off hands",
+          "dig a hole in the planter box",
+          "dig a hole with the trowel in the planter box",
+          "dig another hole",
+          "exit to the right",
+          "move plant tray with small plants over",
+          "move trowel again",
+          "move trowel to ground",
+          "pick short plant"
+        ]
+      },
+      "65a038f02fb72900ba2653fc": {
+        "actions": [
+          "brush hands off",
+          "brush off hands",
+          "dig a hole in the planter box",
+          "dig a hole with the trowel in the planter box",
+          "dig another hole"
+        ]
+      },
+      "65e1f75ab3efd22e847cfbf0": {
+        "actions": [
+          "brush hands off",
+          "brush off hands",
+          "dig a hole in the planter box",
+          "dig a hole with the trowel in the planter box",
+          "dig another hole"
+        ]
+      }
+    }
+  }
+}

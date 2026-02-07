@@ -33,9 +33,26 @@
 @import "page";
 @import "archive";
 @import "sidebar";
+@import "research-projects";
 
 @import "vendor/font-awesome/fontawesome";
 @import "vendor/font-awesome/solid";
 @import "vendor/font-awesome/brands";
 @import "vendor/magnific-popup/magnific-popup";
 @import "print";
+
+/* Custom: Make feature row wider on homepage */
+.page__inner-wrap .feature__wrapper {
+  margin-left: -5%;
+  margin-right: -5%;
+  width: 110%;
+  max-width: none;
+}
+
+@media (min-width: 64em) {
+  .page__inner-wrap .feature__wrapper {
+    margin-left: -15%;
+    margin-right: -15%;
+    width: 130%;
+  }
+}

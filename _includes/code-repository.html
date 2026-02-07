@@ -1,0 +1,31 @@
+{% comment %}
+  GitHub Repository Card
+  Parameters: repo_name, repo_url, description, languages
+{% endcomment %}
+
+{% assign repo = include.repo %}
+
+<div class="code-repository">
+  <div class="repo-header">
+    <i class="fab fa-github"></i>
+    <h3>{{ repo.name }}</h3>
+  </div>
+
+  {% if repo.description %}
+  <p class="repo-description">{{ repo.description }}</p>
+  {% endif %}
+
+  {% if repo.languages %}
+  <div class="repo-languages">
+    {% if repo.languages.size > 0 %}
+      {% for language in repo.languages %}
+        <span class="language-badge">{{ language }}</span>
+      {% endfor %}
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <a href="{{ repo.url }}" class="repo-link" target="_blank" rel="noopener noreferrer">
+    <i class="fas fa-external-link-alt"></i> View Repository
+  </a>
+</div>

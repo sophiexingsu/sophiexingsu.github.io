@@ -1,107 +1,67 @@
 ---
 permalink: /
-title: "Sophie Su"
+title: "Sophie Xing Su"
 excerpt: "Cognitive scientist studying how people build and update mental representations"
 author_profile: true
-redirect_from: 
+redirect_from:
   - /about/
   - /about.html
+
+feature_row:
+  - image_path: /files/projects/movement-dashboard/thumbnail.svg
+    alt: "Movement Analysis Dashboard"
+    title: "Movement Analysis Dashboard"
+    excerpt: "Interactive visualization for pose estimation and pantomimed action recognition research. **Try the live demo!**"
+    url: "/portfolio/movement-analysis-dashboard/"
+    btn_label: "Launch Demo"
+    btn_class: "btn--warning"
+  - image_path: /files/projects/gaze-mental-representations.gif
+    alt: "Mental Representations from Gaze"
+    title: "Mental Representations from Gaze"
+    excerpt: "Using CLIP vision-language models to decode semantic content from eye-tracking data during naturalistic movie viewing"
+    url: "/portfolio/gaze-mental-representations/"
+    btn_label: "Explore Project"
+    btn_class: "btn--primary"
+  - image_path: /files/projects/predictive-looking.gif
+    alt: "Predictive Looking Errors"
+    title: "Predictive Looking & Event Segmentation"
+    excerpt: "How prediction errors drive event segmentation. Published in *JEP: General* (2025)"
+    url: "/portfolio/predictive-looking/"
+    btn_label: "Read Paper"
+    btn_class: "btn--success"
 ---
 
-# Sophie Su
+{% include base_path %}
 
-I am an ABD PhD student in Psychology at Washington University in St. Louis, working with Dr. Jeff Zacks.  
-My research investigates **how people build, maintain, and update mental representations of ongoing events** during naturalistic perception.
+# Welcome 👋
 
-I combine **behavioral experiments, eye-tracking, computational modeling, and neuroimaging** to study whether mental models update **incrementally** or **globally**, and what triggers those updates.
+I am a Cognitive Science Researcher who received my PhD from WashU, working with Dr. Jeff Zacks. My research investigates how people build, maintain, and update mental representations of ongoing events during naturalistic perception. I combine behavioral experiments, eye-tracking, computational modeling, and neuroimaging to understand the cognitive and neural mechanisms underlying this process.
 
----
-
-## Research Program  
-### How Do Mental Models Update During Continuous Experience?
-
-Humans continuously predict what will happen next—while reading, watching movies, or observing everyday actions.  
-My research asks:
-
-- **What information is represented in mental event models?**
-- **What triggers updates to those representations?**
-- **Are updates local (incremental) or system-wide (global)?**
-- **Can we infer internal updating mechanisms from gaze behavior?**
-
-Across projects, I treat **eye movements as a real-time behavioral window** into dynamic cognitive representations.
-
----
-
-## Current Projects
-
-### 🧠 Project 1: Inferring Mental Representations from Gaze Patterns
-
-**Core Question**  
-Can we recover the *content* of people’s mental models by analyzing where and when they look?
-
-**Approach**  
-I combine high-frequency eye-tracking with **vision–language model embeddings (CLIP)** extracted from movie frames to predict gaze distributions during naturalistic viewing.
-
-![gaze heatmap overlayed on actor's performance](./files/output.gif)
-
-**Key Findings**
-- Inverting movie frames preserves low-level visual statistics but disrupts semantic structure
-- Semantic disruption reduces alignment between CLIP embeddings and action descriptions
-- Gaze prediction accuracy drops substantially for inverted scenes
-
-**Interpretation**  
-Viewers’ gaze patterns are guided by **high-level semantic representations**, not just visual salience.
-
-📄 *Output:*  
-[Vision–Language Model Derived Action Semantics Shape Gaze During Movie Viewing](/files/VSS2025_Sophie_Su_CLIP_Gaze.pdf)
-
-**Ongoing Work**  
-Extending this framework to test how **event structure, prediction error, and hierarchy** modulate gaze.
 
 ---
 
-### 🔍 Project 2: Predictive Looking Errors and Event Segmentation
+## Featured Research Projects
+<div style="text-align: center; margin: 2em 0;">
+  <a href="/portfolio/" class="btn btn--large btn--inverse">View All Research Projects →</a>
+</div>
 
-**Core Question**  
-How do prediction errors shape how people segment continuous experience into events?
 
-**Approach**  
-Using everyday activity videos, I analyze **anticipatory eye movements** and relate prediction failures to computational model error signals.
+{% include feature_row %}
 
-**Key Findings**
-- Viewers anticipate actors’ hand movements up to **9 seconds in advance**
-- Prediction errors align closely with **event boundaries**
-- Gaze-based prediction error mirrors computational model error
-
-**Interpretation**  
-Event segmentation is driven by **prediction failure**, not passive perception.
-
-📄 *Publication:*  
-Predictive Looking and Predictive Looking Errors in Everyday Activities  
-*Journal of Experimental Psychology: General*  
-[Read the paper](https://psycnet.apa.org/record/2026-84598-001)
-
-**Ongoing Work**  
-Testing whether prediction errors trigger **incremental** updates or **global restructuring** of mental models.
 
 ---
 
-### 🧩 Project 3: Incremental vs. Global Updating of Event Representations
+## Research Program
 
-**Core Question**  
-When something changes in an event, does the mind update *only what changed* or *everything at once*?
+My research program investigates the cognitive and neural mechanisms underlying event perception and memory. I focus on three interconnected questions:
 
-**Approach**  
-I use:
-- Controlled reading and memory paradigms  
-- Computational representations of situation models  
-- Eye-tracking and neuroimaging data  
+1. **How do mental representations guide attention?** Using vision-language models (CLIP) and eye-tracking to decode semantic content from gaze patterns
 
-to compare **incremental updating**, **global updating**, and **hierarchical hybrid models**.
+2. **What triggers event segmentation?** Analyzing how prediction errors drive the parsing of continuous experience into discrete events
 
-**Current Status**
-- Dissertation project (data collection and modeling in progress)
-- Manuscript in preparation
+3. **How are mental models updated?** Testing whether event representations are updated incrementally or globally when prediction errors occur
+
+These projects combine computational modeling, eye-tracking, fMRI, and behavioral experiments to build a unified theory of event cognition.
 
 ---
 
@@ -121,24 +81,13 @@ to compare **incremental updating**, **global updating**, and **hierarchical hyb
 
 ---
 
-## Background (Brief)
-
-- **PhD (ABD), Psychology** — Washington University in St. Louis  
-  Advisor: Dr. Jeff Zacks  
-- Graduate Certificate in **Quantitative Data Analysis**  
-- Cognitive, Computational, & Systems Neuroscience Pathway  
-- **B.A. Psychology & Economics** — Cornell University  
-
-Previously:
-- Imaging genetics research on dyslexia in **Nicole Landi’s Lab** (Haskins)
-- Undergraduate research with **Khena Swallow** (Cornell)
-- Neuromatch Academy: Student (2020), TA (2021)
-
 ---
 
 ## Outside the Lab
 
-I write essays in both [Chinese](/files/wechat.bmp) and English and bake cakes that double as small-scale science experiments.  
-You can find my baking [portfolio here](/portfolio/).
+I write essays in both [Chinese](/files/wechat.bmp) and English and bake cakes that double as small-scale science experiments.
+You can contact me via <a href="mailto:xingsu1996&#64;gmail.com">xingsu1996&#64;gmail.com</a>
+
+
 
 ---

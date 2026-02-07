@@ -1,0 +1,32 @@
+{% comment %}
+  Related Projects Grid
+  Parameters: projects (array of project slugs or objects)
+{% endcomment %}
+
+{% include base_path %}
+{% assign related = include.projects | default: page.related_projects %}
+
+{% if related %}
+<div class="related-projects-grid">
+  {% for project_ref in related %}
+    {% comment %}Find the project in the portfolio collection{% endcomment %}
+    {% for portfolio_item in site.portfolio %}
+      {% if portfolio_item.slug == project_ref or portfolio_item.url contains project_ref %}
+        <a href="{{ base_path }}{{ portfolio_item.url }}" class="related-project-card">
+          {% if portfolio_item.header.teaser %}
+            <img src="{{ portfolio_item.header.teaser | prepend: base_path }}"
+                 alt="{{ portfolio_item.title }}"
+                 class="card-image">
+          {% endif %}
+
+          <h4 class="card-title">{{ portfolio_item.title }}</h4>
+
+          {% if portfolio_item.excerpt %}
+            <p class="card-excerpt">{{ portfolio_item.excerpt | markdownify | strip_html | truncate: 100 }}</p>
+          {% endif %}
+        </a>
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+</div>
+{% endif %}

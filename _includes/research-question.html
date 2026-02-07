@@ -1,0 +1,13 @@
+{% comment %}
+  Research Question Highlight
+  Parameters: question, icon, style
+{% endcomment %}
+
+{% assign question = include.question | default: page.research_question %}
+{% assign style = include.style | default: "info" %}
+
+{% if question %}
+<div class="research-question research-question--{{ style }}">
+  <p>{{ question | markdownify | remove: "<p>" | remove: "</p>" }}</p>
+</div>
+{% endif %}

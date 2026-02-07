@@ -1,0 +1,835 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>Inferring Mental Representations from Gaze Using Vision-Language Models - Sophie(Xing) Su’s Personal Website</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en-US">
+<meta property="og:site_name" content="Sophie(Xing) Su's Personal Website">
+<meta property="og:title" content="Inferring Mental Representations from Gaze Using Vision-Language Models">
+
+
+  <link rel="canonical" href="http://localhost:4000/portfolio/gaze-mental-representations/">
+  <meta property="og:url" content="http://localhost:4000/portfolio/gaze-mental-representations/">
+
+
+
+  <meta property="og:description" content="Using CLIP embeddings to decode the semantic content of mental models from eye-tracking data during naturalistic viewing">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2025-01-01T00:00:00-08:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Sophie(Xing) Su",
+      "url" : "http://localhost:4000",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Sophie(Xing) Su's Personal Website Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+    
+
+<!-- start custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="57x57" href="http://localhost:4000/images/apple-touch-icon-57x57.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="60x60" href="http://localhost:4000/images/apple-touch-icon-60x60.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="76x76" href="http://localhost:4000/images/apple-touch-icon-76x76.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="120x120" href="http://localhost:4000/images/apple-touch-icon-120x120.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="152x152" href="http://localhost:4000/images/apple-touch-icon-152x152.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:4000/images/apple-touch-icon-180x180.png?v=M44lzPylqQ">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-32x32.png?v=M44lzPylqQ" sizes="32x32">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/android-chrome-192x192.png?v=M44lzPylqQ" sizes="192x192">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-96x96.png?v=M44lzPylqQ" sizes="96x96">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-16x16.png?v=M44lzPylqQ" sizes="16x16">
+<link rel="manifest" href="http://localhost:4000/images/manifest.json?v=M44lzPylqQ">
+<link rel="mask-icon" href="http://localhost:4000/images/safari-pinned-tab.svg?v=M44lzPylqQ" color="#000000">
+<link rel="shortcut icon" href="/images/favicon.ico?v=M44lzPylqQ">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="msapplication-TileImage" content="http://localhost:4000/images/mstile-144x144.png?v=M44lzPylqQ">
+<meta name="msapplication-config" content="http://localhost:4000/images/browserconfig.xml?v=M44lzPylqQ">
+<meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" href="http://localhost:4000/assets/css/academicons.css"/>
+
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+<!-- Custom CSS for consistent fonts -->
+<style>
+/* Ensure consistent font family across all elements on the front page */
+body, .page__content, .page__content p, .page__content li, .page__content h1, .page__content h2, .page__content h3, .page__content h4, .page__content h5, .page__content h6 {
+  font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif !important;
+}
+
+/* Consistent line heights for better visual harmony */
+.page__content p, .page__content li {
+  line-height: 1.6 !important;
+}
+
+/* Ensure headings have consistent font weight and spacing */
+.page__content h1, .page__content h2, .page__content h3, .page__content h4, .page__content h5, .page__content h6 {
+  font-weight: 600 !important;
+  margin-top: 1.5em !important;
+  margin-bottom: 0.5em !important;
+}
+
+/* Override figure captions to use consistent sans-serif font */
+figcaption {
+  font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif !important;
+}
+
+/* Ensure consistent font size for main content */
+.page__content {
+  font-size: 16px !important;
+}
+
+/* Consistent styling for bold text */
+.page__content strong, .page__content b {
+  font-weight: 600 !important;
+}
+</style>
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="http://localhost:4000/">Sophie(Xing) Su's Personal Website</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/publications/">Publications</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/portfolio/">Research Projects</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/year-archive/">Blog</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/cv/">CV</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="http://localhost:4000/images/1559750279003.jpeg" class="author__avatar" alt="Sophie(Xing) Su ">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Sophie(Xing) Su </h3>
+    <p class="author__bio">WUSTL PBS Grad,Haskins, Cornell</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Saint Louis, Missouri</li>
+      
+      
+        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Washington University in Saint Louis</li>
+      
+      
+      
+        <li><a href="mailto:sophiesu1996@gmail.com"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i> Email</a></li>
+      
+      
+       
+      
+        <li><a href="https://twitter.com/sophiejoesu"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+        <li><a href="https://github.com/sophiexingsu"><i class="fab fa-fw fa-github" aria-hidden="true"></i> Github</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+        <li><a href="https://scholar.google.com/citations?user=L4EIOIYAAAAJ&hl=en""><i class="fas fa-fw fa-graduation-cap"></i> Google Scholar</a></li>
+      
+      
+        <li><a href="https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"><i class="ai ai-pubmed-square ai-fw"></i> PubMed</a></li>
+      
+      
+        <li><a href="https://orcid.org/0000-0002-1026-6940"><i class="ai ai-orcid-square ai-fw"></i> ORCID</a></li>
+      
+      
+      
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page research-project" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Inferring Mental Representations from Gaze Using Vision-Language Models">
+    <meta itemprop="description" content="Using CLIP embeddings to decode the semantic content of mental models from eye-tracking data during naturalistic viewing">
+    <meta itemprop="datePublished" content="January 01, 2025">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">Inferring Mental Representations from Gaze Using Vision-Language Models
+</h1>
+
+          
+          
+            <div class="project-meta-bar">
+              
+                <span class="project-status project-status--ongoing">Ongoing</span>
+              
+
+              
+                <span class="project-date">
+                  <i class="fa fa-calendar" aria-hidden="true"></i>
+                  January 2025
+                </span>
+              
+
+              
+            </div>
+          
+
+          
+          
+            
+
+
+
+
+<div class="tech-stack">
+  <div class="tech-badges">
+    
+      
+        <span class="tech-badge tech-badge--language">Python</span>
+      
+    
+
+    
+      
+        <span class="tech-badge tech-badge--framework">CLIP</span>
+      
+        <span class="tech-badge tech-badge--framework">PyTorch</span>
+      
+    
+
+    
+      
+        <span class="tech-badge tech-badge--tool">Eye-tracking</span>
+      
+        <span class="tech-badge tech-badge--tool">Vision-Language Models</span>
+      
+        <span class="tech-badge tech-badge--tool">Deep Learning</span>
+      
+    
+  </div>
+</div>
+
+
+          
+
+          
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        
+
+        
+        <h2 id="research-question">Research Question</h2>
+
+<div class="research-question research-question--info">
+  <p>Can we recover the <em>content</em> of people’s mental models by analyzing where and when they look during naturalistic perception?
+</p>
+</div>
+
+<h2 id="overview">Overview</h2>
+
+<p>This project combines <strong>high-frequency eye-tracking</strong> with <strong>vision-language model embeddings (CLIP)</strong> to infer the semantic content of viewers’ mental representations during naturalistic movie viewing. By analyzing how gaze patterns align with CLIP-derived semantic features, I test whether gaze is guided by high-level semantic representations or low-level visual features.</p>
+
+<p><img src="../files/output.gif" alt="Gaze heatmap overlayed on actor's performance" /></p>
+
+<h2 id="theoretical-motivation">Theoretical Motivation</h2>
+
+<p>Traditional approaches to understanding visual attention focus on <strong>low-level visual features</strong> (contrast, motion, saliency). However, recent work suggests that gaze during naturalistic tasks is guided by:</p>
+
+<ul>
+  <li><strong>Task goals</strong> and action predictions</li>
+  <li><strong>Semantic understanding</strong> of the scene</li>
+  <li><strong>Mental models</strong> of “what is happening”</li>
+</ul>
+
+<p><strong>Vision-language models</strong> like CLIP learn joint embeddings of images and text, capturing semantic content. If gaze is semantically guided, then:</p>
+
+<ol>
+  <li>Gaze distributions should align with CLIP embeddings</li>
+  <li>Disrupting semantic structure (e.g., inverting frames) should reduce gaze prediction accuracy</li>
+  <li>CLIP embeddings should predict gaze better than low-level visual features</li>
+</ol>
+
+<h2 id="clip-vision-language-models">CLIP: Vision-Language Models</h2>
+
+<h3 id="what-is-clip">What is CLIP?</h3>
+
+<p><strong>CLIP</strong> (Contrastive Language-Image Pre-training) is a neural network trained to:</p>
+<ul>
+  <li>Map images and text descriptions into a shared embedding space</li>
+  <li>Learn semantic relationships between visual and linguistic content</li>
+  <li>Generalize to new images and descriptions without fine-tuning</li>
+</ul>
+
+<h3 id="why-clip-for-gaze-analysis">Why CLIP for Gaze Analysis?</h3>
+
+<p>CLIP embeddings capture:</p>
+<ul>
+  <li><strong>Object identities</strong> (“person”, “cup”, “table”)</li>
+  <li><strong>Action semantics</strong> (“pouring”, “reaching”, “picking up”)</li>
+  <li><strong>Scene context</strong> (“kitchen”, “living room”)</li>
+</ul>
+
+<p>If viewers’ gaze is guided by semantic understanding, CLIP embeddings should predict where people look.</p>
+
+<h2 id="methodology">Methodology</h2>
+
+<h3 id="experimental-design">Experimental Design</h3>
+
+<p><strong>Stimuli</strong>:</p>
+<ul>
+  <li>Naturalistic movie clips showing everyday activities</li>
+  <li>Two conditions:
+    <ol>
+      <li><strong>Upright</strong>: Normal viewing</li>
+      <li><strong>Inverted</strong>: Frames inverted 180° (preserves low-level features, disrupts semantics)</li>
+    </ol>
+  </li>
+</ul>
+
+<p><strong>Eye-Tracking</strong>:</p>
+<ul>
+  <li>High-frequency eye-tracking (500 Hz)</li>
+  <li>Fixations aggregated into gaze density maps per frame</li>
+</ul>
+
+<p><strong>CLIP Embedding Extraction</strong>:</p>
+<ul>
+  <li>Each video frame → CLIP image embedding (512-dimensional vector)</li>
+  <li>Action descriptions (e.g., “person pouring water”) → CLIP text embedding</li>
+  <li>Compute cosine similarity between image and text embeddings</li>
+</ul>
+
+<h3 id="analysis-pipeline">Analysis Pipeline</h3>
+
+<h4 id="1-gaze-clip-alignment">1. Gaze-CLIP Alignment</h4>
+
+<p>For each frame:</p>
+<ol>
+  <li>Extract CLIP image embedding <code class="language-plaintext highlighter-rouge">E_img</code></li>
+  <li>Generate gaze density map <code class="language-plaintext highlighter-rouge">G(x, y)</code></li>
+  <li>Extract CLIP embeddings for image patches at high-gaze locations</li>
+  <li>Compute alignment: Correlation between gaze density and CLIP embedding similarity to action labels</li>
+</ol>
+
+<h4 id="2-gaze-prediction-model">2. Gaze Prediction Model</h4>
+
+<p>Train a model to predict gaze distributions from CLIP embeddings:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Gaze(x, y) = f(CLIP(frame), CLIP(action_label))
+</code></pre></div></div>
+
+<p>Compare prediction accuracy:</p>
+<ul>
+  <li><strong>Upright condition</strong>: Semantics intact</li>
+  <li><strong>Inverted condition</strong>: Semantics disrupted</li>
+</ul>
+
+<h4 id="3-semantic-disruption-analysis">3. Semantic Disruption Analysis</h4>
+
+<p>Quantify semantic disruption by inversion:</p>
+<ul>
+  <li>Compute CLIP text-image similarity for action descriptions</li>
+  <li>Compare upright vs. inverted frames</li>
+  <li>Expect: Lower similarity for inverted frames</li>
+</ul>
+
+<h3 id="python-implementation">Python Implementation</h3>
+
+<p>Key analysis steps implemented in Python:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">clip</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+
+<span class="c1"># Load CLIP model
+</span><span class="n">model</span><span class="p">,</span> <span class="n">preprocess</span> <span class="o">=</span> <span class="n">clip</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="s">"ViT-B/32"</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s">"cuda"</span><span class="p">)</span>
+
+<span class="c1"># Extract image embedding
+</span><span class="k">def</span> <span class="nf">get_clip_embedding</span><span class="p">(</span><span class="n">image_path</span><span class="p">):</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">Image</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="n">image_path</span><span class="p">)).</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="n">to</span><span class="p">(</span><span class="s">"cuda"</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="n">image_features</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">encode_image</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">image_features</span>
+
+<span class="c1"># Compute text-image similarity
+</span><span class="k">def</span> <span class="nf">compute_similarity</span><span class="p">(</span><span class="n">image_features</span><span class="p">,</span> <span class="n">text_descriptions</span><span class="p">):</span>
+    <span class="n">text_tokens</span> <span class="o">=</span> <span class="n">clip</span><span class="p">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">text_descriptions</span><span class="p">).</span><span class="n">to</span><span class="p">(</span><span class="s">"cuda"</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="n">text_features</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">encode_text</span><span class="p">(</span><span class="n">text_tokens</span><span class="p">)</span>
+
+    <span class="c1"># Normalize features
+</span>    <span class="n">image_features</span> <span class="o">=</span> <span class="n">image_features</span> <span class="o">/</span> <span class="n">image_features</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">text_features</span> <span class="o">=</span> <span class="n">text_features</span> <span class="o">/</span> <span class="n">text_features</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="c1"># Cosine similarity
+</span>    <span class="n">similarity</span> <span class="o">=</span> <span class="p">(</span><span class="n">image_features</span> <span class="o">@</span> <span class="n">text_features</span><span class="p">.</span><span class="n">T</span><span class="p">).</span><span class="n">squeeze</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">similarity</span>
+</code></pre></div></div>
+
+<h2 id="key-findings">Key Findings</h2>
+
+<h3 id="1-gaze-is-semantically-guided">1. Gaze is Semantically Guided</h3>
+
+<ul>
+  <li>Gaze distributions align with CLIP embeddings of action-relevant regions</li>
+  <li>Alignment stronger than with low-level saliency models</li>
+  <li>Effect holds across different movie types (cooking, social, object manipulation)</li>
+</ul>
+
+<h3 id="2-inversion-disrupts-semantic-structure">2. Inversion Disrupts Semantic Structure</h3>
+
+<ul>
+  <li><strong>Upright frames</strong>: High CLIP text-image similarity for action descriptions</li>
+  <li><strong>Inverted frames</strong>: Lower similarity, despite identical low-level statistics</li>
+  <li>Inversion preserves contrast, edges, motion energy but disrupts semantic content</li>
+</ul>
+
+<h3 id="3-gaze-prediction-accuracy-drops-for-inverted-scenes">3. Gaze Prediction Accuracy Drops for Inverted Scenes</h3>
+
+<ul>
+  <li><strong>Upright</strong>: Gaze predicted with ~70% accuracy using CLIP embeddings</li>
+  <li><strong>Inverted</strong>: Accuracy drops to ~55% (chance ~50%)</li>
+  <li>Low-level features (contrast, motion) do not show this difference</li>
+</ul>
+
+<h3 id="4-individual-differences">4. Individual Differences</h3>
+
+<ul>
+  <li>Viewers with higher semantic alignment show:
+    <ul>
+      <li>Better action prediction (predictive looking)</li>
+      <li>More consistent event segmentation</li>
+      <li>Stronger CLIP-gaze correlation</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="interpretation">Interpretation</h2>
+
+<p>These findings demonstrate that:</p>
+
+<ol>
+  <li><strong>Gaze is guided by high-level semantic representations</strong>, not just visual salience</li>
+  <li><strong>CLIP embeddings capture the semantic content</strong> that guides attention</li>
+  <li><strong>Semantic disruption</strong> (via inversion) impairs gaze prediction, even with intact low-level features</li>
+  <li><strong>Mental models drive gaze</strong>: Viewers look where their semantic understanding predicts relevant information</li>
+</ol>
+
+<h2 id="vss-2025-poster">VSS 2025 Poster</h2>
+
+<p>This work was presented at <strong>Vision Sciences Society (VSS) 2025</strong>:</p>
+
+<p><strong>Vision–Language Model Derived Action Semantics Shape Gaze During Movie Viewing</strong></p>
+
+<p><a href="/files/VSS2025_Sophie_Su_CLIP_Gaze.pdf">Download Poster (PDF)</a></p>
+
+<h2 id="ongoing-extensions">Ongoing Extensions</h2>
+
+<h3 id="1-hierarchical-semantic-representations">1. Hierarchical Semantic Representations</h3>
+
+<p>Test whether gaze aligns with different levels of semantic abstraction:</p>
+<ul>
+  <li><strong>Low-level</strong>: Object features (“red”, “round”)</li>
+  <li><strong>Mid-level</strong>: Object categories (“cup”, “hand”)</li>
+  <li><strong>High-level</strong>: Actions and goals (“pouring”, “preparing breakfast”)</li>
+</ul>
+
+<h3 id="2-event-structure-and-hierarchy">2. Event Structure and Hierarchy</h3>
+
+<p>Relate CLIP-based gaze analysis to event segmentation:</p>
+<ul>
+  <li>Do semantic shifts in CLIP space predict event boundaries?</li>
+  <li>Are event boundaries marked by semantic prediction errors?</li>
+</ul>
+
+<h3 id="3-predictive-gaze-modeling">3. Predictive Gaze Modeling</h3>
+
+<p>Extend to predict <strong>future gaze</strong> based on:</p>
+<ul>
+  <li>Current CLIP embeddings</li>
+  <li>Action context from previous frames</li>
+  <li>Viewer-specific semantic biases</li>
+</ul>
+
+<h3 id="4-fmri-integration">4. fMRI Integration</h3>
+
+<p>Relate CLIP embeddings to brain activity:</p>
+<ul>
+  <li>Do CLIP embeddings predict activity in semantic processing regions (e.g., ventral temporal cortex)?</li>
+  <li>Does gaze-CLIP alignment correlate with neural response patterns?</li>
+</ul>
+
+<h2 id="technical-details">Technical Details</h2>
+
+<h3 id="clip-model-variants-tested">CLIP Model Variants Tested</h3>
+<ul>
+  <li><strong>ViT-B/32</strong>: Standard vision transformer</li>
+  <li><strong>RN50x16</strong>: ResNet-50 with higher capacity</li>
+  <li><strong>ViT-L/14</strong>: Larger vision transformer</li>
+</ul>
+
+<p>Best results with <strong>ViT-B/32</strong> (balance of accuracy and computational efficiency).</p>
+
+<h3 id="hyperparameters">Hyperparameters</h3>
+<ul>
+  <li>Embedding dimension: 512</li>
+  <li>Frame sampling: 3 fps (sufficient for action semantics)</li>
+  <li>Gaze aggregation window: 1 second</li>
+  <li>Cosine similarity threshold: 0.3 for action alignment</li>
+</ul>
+
+<h2 id="related-projects">Related Projects</h2>
+
+<ul>
+  <li><a href="/portfolio/predictive-looking/">Predictive Looking</a>: How gaze predictions fail at event boundaries</li>
+  <li><a href="/portfolio/gaze-entropy-event-boundaries/">Gaze Entropy &amp; Event Boundaries</a>: Proactive gaze control before boundaries</li>
+  <li><a href="/portfolio/incremental-global-updating/">Incremental vs. Global Updating</a>: How mental models are updated</li>
+</ul>
+
+<h2 id="code-availability">Code Availability</h2>
+
+<p>Analysis code will be made available on GitHub upon publication.</p>
+
+<hr />
+
+<p><strong>Keywords</strong>: CLIP, Vision-Language Models, Eye-tracking, Mental Representations, Semantic Guidance, Deep Learning, Naturalistic Perception, Attention</p>
+
+
+        
+        
+
+        
+        
+
+        
+        
+          <h2>Publications</h2>
+          <div class="project-publications">
+            
+              <div class="publication-item">
+                <h3 class="publication-title">Vision–Language Model Derived Action Semantics Shape Gaze During Movie Viewing</h3>
+                <p class="publication-venue">
+                  <em>VSS 2025</em>
+                  
+                   <span class="publication-type">[poster]</span>
+                </p>
+                
+                  <a href="/files/VSS2025_Sophie_Su_CLIP_Gaze.pdf" class="btn btn--primary btn--small">
+                    <i class="fas fa-file-pdf"></i> Download
+                  </a>
+                
+                
+              </div>
+            
+          </div>
+        
+
+        
+        
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="http://localhost:4000/tags/#clip" class="page__taxonomy-item" rel="tag">CLIP</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#deep-learning" class="page__taxonomy-item" rel="tag">deep-learning</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#eye-tracking" class="page__taxonomy-item" rel="tag">eye-tracking</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#mental-representations" class="page__taxonomy-item" rel="tag">mental-representations</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#semantics" class="page__taxonomy-item" rel="tag">semantics</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#vision-language-models" class="page__taxonomy-item" rel="tag">vision-language-models</a>
+    
+    </span>
+  </p>
+
+
+
+
+      </footer>
+
+      
+
+<section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=http://localhost:4000/portfolio/gaze-mental-representations/" class="btn btn--twitter" title="Share on Twitter"><i class="fab fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/portfolio/gaze-mental-representations/" class="btn btn--facebook" title="Share on Facebook"><i class="fab fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/portfolio/gaze-mental-representations/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fab fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+      
+      
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="http://localhost:4000/portfolio/movement-analysis-dashboard/" class="pagination--pager" title="Human Movement Analysis Dashboard
+">Previous</a>
+    
+    
+      <a href="http://localhost:4000/portfolio/medshift-app-demo/" class="pagination--pager" title="MedShift: Research-Based Medication Memory App
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <aside class="sidebar__right sticky">
+      <nav class="toc">
+        <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> Project Overview</h4></header>
+        <!-- Table of contents placeholder -->
+<!-- If you don't need a TOC, leave this file empty or remove the include from the layout. -->
+
+      </nav>
+    </aside>
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+<a href="/sitemap/">Sitemap</a>
+<!-- end custom footer snippets -->
+
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+      <li><a href="http://github.com/sophiexingsu"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    <li><a href="http://localhost:4000/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2026 Sophie(Xing) Su. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/academicpages/academicpages.github.io">AcademicPages</a>, a fork of <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/main.min.js"></script>
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  </body>
+</html>
+

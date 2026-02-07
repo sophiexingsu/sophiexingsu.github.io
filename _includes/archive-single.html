@@ -33,6 +33,11 @@
         <a href="{{ base_path }}{{ post.url }}" rel="permalink">{{ title }}</a>
       {% endif %}
     </h2>
+
+    {% comment %}<!-- Portfolio/Research Project Status Badge -->{% endcomment %}
+    {% if post.collection == 'portfolio' and post.status %}
+      <span class="project-status project-status--{{ post.status | slugify }}">{{ post.status }}</span>
+    {% endif %}
     
     {% if post.read_time %}
       <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> {% include read-time.html %}</p>
@@ -46,10 +51,34 @@
          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Published:" }}</strong> <time datetime="{{ post.date | default: "1900-01-01" | date_to_xmlschema }}">{{ post.date | default: "1900-01-01" | date: "%B %d, %Y" }}</time></p>
         {% endif %}
 
+    {% comment %}<!-- Tech Stack for Portfolio Items -->{% endcomment %}
+    {% if post.collection == 'portfolio' and post.tech_stack %}
+      <div class="archive__item-tech">
+        {% if post.tech_stack.languages %}
+          {% for language in post.tech_stack.languages limit:3 %}
+            <span class="tech-badge tech-badge--language">{{ language }}</span>
+          {% endfor %}
+        {% endif %}
+        {% if post.tech_stack.frameworks %}
+          {% for framework in post.tech_stack.frameworks limit:2 %}
+            <span class="tech-badge tech-badge--framework">{{ framework }}</span>
+          {% endfor %}
+        {% endif %}
+      </div>
+    {% endif %}
+
     {% if post.excerpt and site.read_more != 'enabled' %}
     <p class="archive__item-excerpt" itemprop="description">{{ post.excerpt | markdownify }}</p>
     {% elsif post.excerpt and site.read_more == 'enabled' %}
     <p class="archive__item-excerpt" itemprop="description"><p>{{ post.excerpt | markdownify | remove: '<p>' | remove: '</p>' }}<strong><a href="{{ base_path }}{{ post.url }}" rel="permalink"> Read more</a></strong></p></p>
+    {% endif %}
+
+    {% comment %}<!-- GitHub Repository Info for Portfolio -->{% endcomment %}
+    {% if post.collection == 'portfolio' and post.github_repos %}
+      <p class="archive__item-meta">
+        <i class="fab fa-github" aria-hidden="true"></i>
+        {{ post.github_repos.size }} {% if post.github_repos.size == 1 %}Repository{% else %}Repositories{% endif %}
+      </p>
     {% endif %}
     
     {% if post.citation and post.paperurl %}
