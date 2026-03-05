@@ -34,8 +34,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 /* Header */
 header { background: var(--primary); color: white; padding: 12px 20px; display: flex;
   align-items: center; gap: 16px; box-shadow: var(--shadow-md); position: sticky; top: 0; z-index: 100; }
-header .logo { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+header .logo { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; display:flex; align-items:center; gap:9px; }
 header .logo span { color: #60a5fa; }
+header .logo svg { flex-shrink:0; }
 header .conference { font-size: 13px; color: #93c5fd; }
 header .conference strong { color: white; font-size: 14px; }
 header .spacer { flex: 1; }
@@ -392,7 +393,22 @@ code-block { display: block; background: #1e293b; color: #e2e8f0; padding: 10px;
 <div class="modal-overlay" id="welcomeModal">
   <div class="modal-box">
     <div class="modal-hero">
-      <h1>Conf<span>Plan</span> · CNS 2026</h1>
+      <h1 style="display:flex;align-items:center;justify-content:center;gap:12px">
+        <svg width="42" height="42" viewBox="0 0 28 28" aria-hidden="true">
+          <circle cx="14" cy="5"  r="2.2" fill="rgba(255,255,255,0.25)"/>
+          <circle cx="23" cy="5"  r="2.2" fill="rgba(255,255,255,0.25)"/>
+          <circle cx="5"  cy="14" r="2.2" fill="rgba(255,255,255,0.25)"/>
+          <circle cx="23" cy="14" r="2.2" fill="rgba(255,255,255,0.25)"/>
+          <circle cx="5"  cy="23" r="2.2" fill="rgba(255,255,255,0.25)"/>
+          <circle cx="14" cy="23" r="2.2" fill="rgba(255,255,255,0.25)"/>
+          <polyline points="5,5 14,14 23,23" stroke="#fbbf24" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.2"/>
+          <polyline points="5,5 14,14 23,23" stroke="#fbbf24" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="5"  cy="5"  r="3.2" fill="#fbbf24"/>
+          <circle cx="14" cy="14" r="3.5" fill="#fbbf24"/>
+          <circle cx="23" cy="23" r="3.2" fill="#fbbf24"/>
+        </svg>
+        <span>Conf<span>Plan</span> · CNS 2026</span>
+      </h1>
       <p>Intelligent schedule optimizer for the Cognitive Neuroscience Society Annual Meeting · Vancouver, March 7–10</p>
     </div>
     <div class="modal-body">
@@ -435,7 +451,27 @@ code-block { display: block; background: #1e293b; color: #e2e8f0; padding: 10px;
 <body>
 
 <header>
-  <div class="logo">Conf<span>Plan</span></div>
+  <div class="logo">
+    <!-- 3×3 session grid · gold path = your optimal schedule -->
+    <svg width="30" height="30" viewBox="0 0 28 28" aria-hidden="true">
+      <!-- unselected session slots -->
+      <circle cx="14" cy="5"  r="2.2" fill="rgba(255,255,255,0.22)"/>
+      <circle cx="23" cy="5"  r="2.2" fill="rgba(255,255,255,0.22)"/>
+      <circle cx="5"  cy="14" r="2.2" fill="rgba(255,255,255,0.22)"/>
+      <circle cx="23" cy="14" r="2.2" fill="rgba(255,255,255,0.22)"/>
+      <circle cx="5"  cy="23" r="2.2" fill="rgba(255,255,255,0.22)"/>
+      <circle cx="14" cy="23" r="2.2" fill="rgba(255,255,255,0.22)"/>
+      <!-- glow behind optimal path -->
+      <polyline points="5,5 14,14 23,23" stroke="#fbbf24" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+      <!-- optimal schedule path -->
+      <polyline points="5,5 14,14 23,23" stroke="#fbbf24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- selected sessions -->
+      <circle cx="5"  cy="5"  r="3.2" fill="#fbbf24"/>
+      <circle cx="14" cy="14" r="3.5" fill="#fbbf24"/>
+      <circle cx="23" cy="23" r="3.2" fill="#fbbf24"/>
+    </svg>
+    Conf<span>Plan</span>
+  </div>
   <div class="conference">
     <strong>CNS 2026 Annual Meeting</strong><br>
     <span>JW Marriott Parq Vancouver · March 7–10, 2026</span>
