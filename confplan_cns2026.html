@@ -292,6 +292,8 @@ code-block { display: block; background: #1e293b; color: #e2e8f0; padding: 10px;
 .poster-entry .poster-score { float:right; font-size:10px; font-weight:700; margin-top:1px; }
 .poster-entry.high .poster-score { color:var(--high); }
 .poster-entry.medium .poster-score { color:var(--med); }
+.poster-star { background:none; border:none; cursor:pointer; font-size:13px; padding:0 3px 0 0; color:#cbd5e1; line-height:1; vertical-align:middle; flex-shrink:0; }
+.poster-star:hover, .poster-star.starred { color:#f59e0b; }
 .poster-filter-bar { padding:6px 0 8px; display:flex; gap:6px; align-items:center; }
 .poster-filter-btn { padding:3px 8px; border:1px solid var(--border); border-radius:4px; background:var(--bg);
   font-size:11px; color:var(--text-muted); cursor:pointer; }
@@ -533,7 +535,7 @@ code-block { display: block; background: #1e293b; color: #e2e8f0; padding: 10px;
 
         <div class="profile-section">
           <label>Research Abstract</label>
-          <textarea class="profile-textarea" id="profileAbstract" rows="5" oninput="debouncedRecompute()" placeholder="Paste your research abstract or describe your interests — keywords will be extracted automatically…"></textarea>
+          <textarea class="profile-textarea" id="profileAbstract" rows="5" oninput="debouncedExtract()" placeholder="Paste your research abstract or describe your interests — keywords will be extracted automatically…"></textarea>
         </div>
 
         <div class="profile-section">
@@ -2049,6 +2051,7 @@ const PRESETS = {
 let userKeywords = [];
 let activeKeywords = new Set();
 let selectedSessions = new Set();
+let selectedPosters = new Map(); // posterId -> {title, speaker, sessionId, day, start, end, room}
 let currentSort = "time";
 let currentDay = 0;
 
@@ -2243,7 +2246,10 @@ function renderSessionCard(s) {
         const kws   = t.relevantKws && t.relevantKws.length
           ? `<div style="margin-top:3px;display:flex;flex-wrap:wrap;gap:2px">${t.relevantKws.map(k=>`<span class="match-kw">${k}</span>`).join('')}</div>` : '';
         const abs   = t.abstract ? `<div class="poster-abstract-body">${t.abstract}${kws}</div>` : '';
+        const esc_title = t.title.replace(/'/g,"\\'"), esc_spk = t.speaker.replace(/'/g,"\\'");
+        const starred = selectedPosters.has(t.id);
         return `<div class="poster-entry ${t._lbl}" data-poster-lbl="${t._lbl}" onclick="this.classList.toggle('expanded')">
+          <button id="pstar_${t.id}" class="poster-star${starred?' starred':''}" onclick="event.stopPropagation();togglePoster('${s.id}','${t.id}','${esc_title}','${esc_spk}')">${starred?'★':'☆'}</button>
           ${pct}<span class="talk-num">${t.id}</span>
           <span class="talk-title">${icon}${t.title}</span>
           — <span class="talk-speaker">${t.speaker}</span>${topic}
@@ -2301,10 +2307,26 @@ function toggleSession(id) {
   renderCurrentDay();
 }
 
+function togglePoster(sessionId, posterId, title, speaker) {
+  if (selectedPosters.has(posterId)) {
+    selectedPosters.delete(posterId);
+  } else {
+    const s = SESSIONS.find(x => x.id === sessionId);
+    if (s) selectedPosters.set(posterId, {title, speaker, sessionId, day: s.day, start: s.start, end: s.end, room: s.room});
+  }
+  const btn = document.getElementById('pstar_' + posterId);
+  if (btn) {
+    const starred = selectedPosters.has(posterId);
+    btn.classList.toggle('starred', starred);
+    btn.textContent = starred ? '★' : '☆';
+  }
+  updateStats();
+}
+
 function renderMySchedule() {
   const body = document.getElementById('myScheduleBody');
-  if (selectedSessions.size === 0) {
-    body.innerHTML = '<div class="my-schedule-empty">No sessions selected yet.<br>Click "+ Add" on sessions to build your schedule.</div>';
+  if (selectedSessions.size === 0 && selectedPosters.size === 0) {
+    body.innerHTML = '<div class="my-schedule-empty">No sessions selected yet.<br>Click "+ Add" on sessions or ☆ on posters to build your schedule.</div>';
     return;
   }
 
@@ -2314,10 +2336,13 @@ function renderMySchedule() {
     const s = SESSIONS.find(x => x.id === id);
     if (s) byDay[s.day].push(s);
   }
+  // merge starred posters keyed by day
+  const postersByDay = [[], [], [], []];
+  for (const [pid, p] of selectedPosters) postersByDay[p.day].push({...p, id: pid});
 
   let html = '';
   for (let d = 0; d < 4; d++) {
-    if (byDay[d].length === 0) continue;
+    if (byDay[d].length === 0 && postersByDay[d].length === 0) continue;
     byDay[d].sort((a, b) => a.start.localeCompare(b.start));
     html += `<div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--text-muted);margin:8px 0 4px;border-top:1px solid var(--border);padding-top:8px">${days[d]}</div>`;
     for (const s of byDay[d]) {
@@ -2326,6 +2351,15 @@ function renderMySchedule() {
         <span class="si-remove" onclick="toggleSession('${s.id}')">×</span>
         <div class="si-title">${s.title.length > 50 ? s.title.slice(0,50)+'…' : s.title}</div>
         <div class="si-meta"><span>${s.start}–${s.end}</span><span>${s.room}</span></div>
+      </div>`;
+    }
+    postersByDay[d].sort((a,b) => a.start.localeCompare(b.start));
+    for (const p of postersByDay[d]) {
+      const esc_id = p.id.replace(/'/g,"\\'"), esc_t = p.title.replace(/'/g,"\\'"), esc_sp = p.speaker.replace(/'/g,"\\'");
+      html += `<div class="sched-item" style="border-left:2px solid #f59e0b;padding-left:6px">
+        <span class="si-remove" onclick="togglePoster('${p.sessionId}','${esc_id}','${esc_t}','${esc_sp}')">×</span>
+        <div class="si-title">★ ${p.title.length > 48 ? p.title.slice(0,48)+'…' : p.title}</div>
+        <div class="si-meta"><span>${p.start}–${p.end} · ${p.id}</span><span>${p.room}</span></div>
       </div>`;
     }
   }
@@ -2356,7 +2390,7 @@ function renderTopPicks() {
 }
 
 function updateStats() {
-  document.getElementById('selectedCount').textContent = selectedSessions.size;
+  document.getElementById('selectedCount').textContent = selectedSessions.size + selectedPosters.size;
   const highCount = SESSIONS.filter(s => relevanceLabel(computeScore(s).score) === 'high').length;
   document.getElementById('highCount').textContent = highCount;
 }
@@ -2435,10 +2469,18 @@ function updateKeywordsFromText() {
   renderKeywordChips();
 }
 
+// debouncedRecompute: called by keyword toggle/remove/add — re-renders only, no re-extraction
 let recomputeTimer = null;
 function debouncedRecompute() {
   clearTimeout(recomputeTimer);
-  recomputeTimer = setTimeout(() => { updateKeywordsFromText(); renderCurrentDay(); }, 600);
+  recomputeTimer = setTimeout(() => renderCurrentDay(), 400);
+}
+
+// debouncedExtract: called by textarea oninput — re-extracts keywords then re-renders
+let extractTimer = null;
+function debouncedExtract() {
+  clearTimeout(extractTimer);
+  extractTimer = setTimeout(() => { updateKeywordsFromText(); renderCurrentDay(); }, 800);
 }
 
 // ==================== INLINE EDIT ====================
@@ -2562,13 +2604,24 @@ function exportText() {
     if (s) byDay[s.day].push(s);
   }
 
+  const postersByDay = [[], [], [], []];
+  for (const [pid, p] of selectedPosters) postersByDay[p.day].push({...p, id: pid});
+
   let text = "CNS 2026 — My Schedule\nVancouver, BC\n" + "=".repeat(50) + "\n\n";
   for (let d = 0; d < 4; d++) {
-    if (byDay[d].length === 0) continue;
+    if (byDay[d].length === 0 && postersByDay[d].length === 0) continue;
     text += `${days[d]}\n${"-".repeat(40)}\n`;
     byDay[d].sort((a, b) => a.start.localeCompare(b.start));
     for (const s of byDay[d]) {
       text += `${s.start}–${s.end}  [${s.room}]\n${s.title}\n${s.chair || ''}\n\n`;
+    }
+    postersByDay[d].sort((a,b) => a.start.localeCompare(b.start));
+    if (postersByDay[d].length > 0) {
+      text += `Starred Posters:\n`;
+      for (const p of postersByDay[d]) {
+        text += `  ★ [${p.id}] ${p.title} — ${p.speaker}\n`;
+      }
+      text += '\n';
     }
   }
 
@@ -2596,6 +2649,19 @@ function exportICS() {
       `SUMMARY:${s.title}`,
       `LOCATION:${s.room} - JW Marriott Parq Vancouver`,
       `DESCRIPTION:${s.subtitle || ''} ${s.chair ? '| ' + s.chair : ''}`,
+      "END:VEVENT");
+  }
+  for (const [pid, p] of selectedPosters) {
+    const dt = dateMap[p.day];
+    const startT = p.start.replace(':','') + "00";
+    const endT = p.end.replace(':','') + "00";
+    lines.push("BEGIN:VEVENT",
+      `UID:poster-${pid}@cns2026`,
+      `DTSTART:${dt}T${startT}`,
+      `DTEND:${dt}T${endT}`,
+      `SUMMARY:[Poster ${pid}] ${p.title}`,
+      `LOCATION:${p.room} - JW Marriott Parq Vancouver`,
+      `DESCRIPTION:${p.speaker}`,
       "END:VEVENT");
   }
   lines.push("END:VCALENDAR");
