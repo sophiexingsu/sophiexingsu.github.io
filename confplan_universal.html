@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ConfPlan Universal — Intelligent Conference Schedule Optimizer</title>
+<style>
+:root {
+  --primary:#1a3a5c; --primary-light:#2d5a8e; --accent:#e84444;
+  --high:#16a34a; --high-bg:#dcfce7; --high-border:#86efac;
+  --med:#ca8a04; --med-bg:#fef9c3; --med-border:#fde047;
+  --low:#6b7280; --low-bg:#f3f4f6; --low-border:#d1d5db;
+  --bg:#f0f4f8; --card:#ffffff; --border:#e2e8f0;
+  --text:#1e293b; --text-muted:#64748b;
+  --shadow:0 1px 3px rgba(0,0,0,.1); --shadow-md:0 4px 6px rgba(0,0,0,.1);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;}
+
+/* ── Wizard Bar ── */
+#wizardBar{background:var(--primary);padding:10px 24px;display:flex;align-items:center;gap:8px;position:sticky;top:0;z-index:200;box-shadow:var(--shadow-md);}
+.wiz-logo{display:flex;align-items:center;gap:8px;font-size:18px;font-weight:700;color:white;letter-spacing:-.5px;margin-right:20px;}
+.wiz-logo span{color:#60a5fa;}
+.wiz-logo svg{flex-shrink:0;}
+.wiz-steps{display:flex;align-items:center;gap:6px;}
+.wiz-step{padding:5px 14px;border-radius:20px;font-size:12px;font-weight:600;color:#93c5fd;border:1px solid rgba(255,255,255,.2);cursor:default;transition:all .2s;}
+.wiz-step.active{background:#fbbf24;color:#1a3a5c;border-color:#fbbf24;}
+.wiz-step.done{background:rgba(255,255,255,.15);color:white;cursor:pointer;}
+.wiz-step.done:hover{background:rgba(255,255,255,.25);}
+.wiz-sep{color:#60a5fa;font-size:14px;}
+.wiz-spacer{flex:1;}
+.btn-start-over{padding:5px 12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);color:#93c5fd;border-radius:5px;cursor:pointer;font-size:11px;font-weight:600;}
+.btn-start-over:hover{background:rgba(255,255,255,.2);color:white;}
+
+/* ── Step panels ── */
+.step-panel{max-width:780px;margin:40px auto;padding:0 20px 60px;}
+
+/* ── Drop Zone ── */
+.drop-zone{border:2px dashed var(--border);border-radius:16px;padding:56px 40px;text-align:center;cursor:pointer;transition:all .2s;background:var(--card);}
+.drop-zone:hover,.drop-zone.drag-over{border-color:var(--primary-light);background:#eff6ff;}
+.drop-zone-icon{font-size:52px;margin-bottom:14px;}
+.drop-zone h2{font-size:20px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.drop-zone p{font-size:13px;color:var(--text-muted);margin-bottom:20px;}
+.btn-file{padding:10px 24px;background:var(--primary);color:white;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:700;transition:background .15s;}
+.btn-file:hover{background:var(--primary-light);}
+.btn-file-sm{padding:7px 16px;background:var(--bg);border:1px solid var(--border);color:var(--text-muted);border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;margin-top:8px;}
+
+/* ── Cards / Panels ── */
+.u-card{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:14px;}
+.u-card-header{background:var(--primary);color:white;padding:10px 16px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;}
+.u-card-body{padding:16px;}
+
+/* ── Parse mode toggle ── */
+.parse-mode-row{display:flex;gap:8px;margin:12px 0 4px;}
+.parse-mode-btn{flex:1;padding:8px 6px;border:1px solid var(--border);border-radius:7px;background:var(--bg);cursor:pointer;font-size:12px;font-weight:600;color:var(--text-muted);text-align:center;transition:all .15s;}
+.parse-mode-btn:hover{border-color:var(--primary-light);color:var(--primary);}
+.parse-mode-btn.active{background:var(--primary);color:white;border-color:var(--primary);}
+
+/* ── Progress ── */
+.progress-wrap{margin:12px 0;}
+.progress-label{font-size:12px;color:var(--text-muted);margin-bottom:5px;}
+.progress-bar{height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,#2d5a8e,#7c3aed);border-radius:3px;transition:width .25s;}
+.log-box{background:#f8fafc;border:1px solid var(--border);border-radius:6px;padding:10px 12px;font-size:11px;color:var(--text-muted);max-height:120px;overflow-y:auto;font-family:monospace;margin-top:8px;}
+
+/* ── Session Editor ── */
+.editor-summary{font-size:13px;color:var(--text-muted);margin-bottom:12px;padding:10px 14px;background:#eff6ff;border-radius:8px;border:1px solid #bfdbfe;}
+.editor-summary strong{color:var(--primary);}
+.session-edit-card{background:var(--card);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden;}
+.sec-header{padding:10px 12px;background:#f8fafc;border-bottom:1px solid var(--border);display:flex;gap:8px;align-items:center;cursor:pointer;}
+.sec-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:2px 8px;border-radius:10px;background:#dbeafe;color:#1e40af;}
+.sec-badge.poster{background:#dcfce7;color:#166534;}
+.sec-badge.keynote{background:#fef3c7;color:#92400e;}
+.sec-badge.symposium{background:#ede9fe;color:#5b21b6;}
+.sec-title-display{flex:1;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sec-meta{font-size:11px;color:var(--text-muted);}
+.btn-del{padding:3px 8px;background:#fef2f2;border:1px solid #fca5a5;color:#b91c1c;border-radius:4px;cursor:pointer;font-size:11px;font-weight:600;flex-shrink:0;}
+.sec-fields{padding:10px 12px;display:none;}
+.sec-fields.open{display:block;}
+.field-row{display:flex;gap:8px;align-items:center;margin-bottom:7px;}
+.field-row label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);min-width:50px;flex-shrink:0;}
+.field-inp{flex:1;border:1px solid var(--border);border-radius:5px;padding:5px 8px;font-size:12px;font-family:inherit;color:var(--text);}
+.field-inp:focus{outline:none;border-color:var(--primary-light);}
+.field-sel{border:1px solid var(--border);border-radius:5px;padding:5px 6px;font-size:11px;font-family:inherit;}
+.talks-count{font-size:11px;color:var(--text-muted);margin-top:4px;}
+.btn-add-session{width:100%;margin-top:4px;padding:8px;border:2px dashed var(--border);background:transparent;border-radius:7px;cursor:pointer;font-size:12px;color:var(--text-muted);font-weight:600;transition:all .15s;}
+.btn-add-session:hover{border-color:var(--primary-light);color:var(--primary);background:#eff6ff;}
+
+/* ── Big action buttons ── */
+.btn-primary{padding:11px 28px;background:var(--primary);color:white;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:700;transition:background .15s;}
+.btn-primary:hover:not(:disabled){background:var(--primary-light);}
+.btn-primary:disabled{background:#94a3b8;cursor:not-allowed;}
+.btn-secondary{padding:11px 20px;background:var(--bg);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text-muted);}
+.btn-secondary:hover{background:var(--border);}
+.action-row{display:flex;gap:10px;margin-top:20px;align-items:center;}
+
+/* ── Cost box ── */
+.cost-box{background:#f0fdf4;border:1px solid #86efac;border-radius:6px;padding:10px 12px;font-size:12px;color:#15803d;margin:10px 0;}
+
+/* ── API key input ── */
+.api-key-input{width:100%;border:1px solid var(--border);border-radius:5px;padding:7px 10px;font-size:12px;font-family:monospace;color:var(--text);margin-top:6px;}
+.api-key-input:focus{outline:none;border-color:var(--primary-light);}
+
+/* ── Status ── */
+.status-msg{font-size:12px;color:var(--text-muted);line-height:1.5;margin-top:6px;}
+.status-msg.ok{color:var(--high);}
+.status-msg.err{color:#b91c1c;}
+
+/* ═══════════════════════════════════════════════
+   STEP 3 — SCHEDULE (mirrors CNS2026 version)
+═══════════════════════════════════════════════ */
+header.s3{background:var(--primary);color:white;padding:12px 20px;display:flex;align-items:center;gap:16px;box-shadow:var(--shadow-md);}
+header.s3 .logo{font-size:20px;font-weight:700;letter-spacing:-.5px;display:flex;align-items:center;gap:8px;}
+header.s3 .logo span{color:#60a5fa;}
+header.s3 .conf-name{font-size:13px;color:#93c5fd;}
+header.s3 .conf-name strong{color:white;font-size:14px;}
+header.s3 .spacer{flex:1;}
+header.s3 .stats{font-size:12px;color:#93c5fd;text-align:right;}
+header.s3 .stats strong{color:#fbbf24;}
+
+.tab-nav{background:var(--primary-light);padding:0 20px;display:flex;gap:4px;border-bottom:3px solid rgba(0,0,0,.2);}
+.tab-btn{padding:10px 18px;cursor:pointer;border:none;background:transparent;color:#93c5fd;font-size:13px;font-weight:500;border-bottom:3px solid transparent;margin-bottom:-3px;transition:all .15s;}
+.tab-btn:hover{color:white;background:rgba(255,255,255,.08);}
+.tab-btn.active{color:white;border-bottom-color:#fbbf24;}
+
+.main-layout{display:grid;grid-template-columns:270px 1fr 270px;gap:14px;padding:14px 20px;max-width:1400px;margin:0 auto;}
+@media(max-width:1100px){.main-layout{grid-template-columns:230px 1fr 230px;}}
+@media(max-width:900px){.main-layout{grid-template-columns:1fr;}}
+
+.panel{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;box-shadow:var(--shadow);}
+.panel-header{background:var(--primary);color:white;padding:10px 14px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;}
+.panel-body{padding:14px;}
+
+/* Profile */
+.profile-avatar{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#1a3a5c,#7c3aed);display:flex;align-items:center;justify-content:center;color:white;font-size:18px;font-weight:800;border:3px solid #e2e8f0;flex-shrink:0;}
+.profile-name-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.profile-name-info{flex:1;min-width:0;}
+.profile-name-display{font-weight:700;font-size:14px;}
+.profile-inst-display{font-size:11px;color:var(--text-muted);}
+.profile-section{margin-top:10px;}
+.profile-section label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);display:block;margin-bottom:5px;}
+.profile-textarea{width:100%;border:1px solid var(--border);border-radius:6px;padding:8px;font-size:12px;line-height:1.5;color:var(--text);resize:vertical;min-height:80px;font-family:inherit;}
+.profile-textarea:focus{outline:none;border-color:var(--primary-light);}
+.keyword-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+.chip{background:#dbeafe;color:#1e40af;border-radius:20px;padding:2px 8px 2px 10px;font-size:11px;font-weight:500;cursor:pointer;border:1px solid #93c5fd;display:inline-flex;align-items:center;gap:4px;transition:all .12s;}
+.chip:hover{background:#bfdbfe;}
+.chip.active{background:var(--primary);color:white;border-color:var(--primary);}
+.chip .chip-x{font-size:13px;line-height:1;opacity:.7;}
+.chip .chip-x:hover{opacity:1;color:#ef4444;}
+.add-kw-row{display:flex;gap:5px;margin-top:8px;}
+.add-kw-input{flex:1;border:1px solid var(--border);border-radius:5px;padding:5px 8px;font-size:12px;font-family:inherit;}
+.add-kw-input:focus{outline:none;border-color:var(--primary-light);}
+.add-kw-btn{padding:5px 10px;background:var(--primary);color:white;border:none;border-radius:5px;cursor:pointer;font-size:13px;font-weight:700;}
+.profile-actions{display:flex;gap:5px;margin-top:10px;}
+.btn-recompute{flex:1;padding:8px;background:var(--primary);color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;font-weight:700;}
+.btn-recompute:hover{background:var(--primary-light);}
+
+/* Scoring method */
+.score-method-tabs{display:flex;gap:4px;margin-bottom:10px;}
+.score-tab{flex:1;padding:5px 2px;border:1px solid var(--border);border-radius:5px;background:var(--bg);cursor:pointer;font-size:11px;font-weight:600;color:var(--text-muted);text-align:center;transition:all .15s;}
+.score-tab:hover{border-color:var(--primary-light);color:var(--primary);}
+.score-tab.active{background:var(--primary);color:white;border-color:var(--primary);}
+.score-panel-s{display:none;}
+.score-panel-s.active{display:block;}
+.score-status{font-size:11px;color:var(--text-muted);margin-top:6px;line-height:1.5;}
+.score-status.success{color:var(--high);}
+.score-status.error{color:#b91c1c;}
+.btn-run{width:100%;margin-top:8px;padding:7px;background:#0891b2;color:white;border:none;border-radius:5px;cursor:pointer;font-size:12px;font-weight:700;}
+.btn-run:hover:not(:disabled){background:#0e7490;}
+.btn-run:disabled{background:#94a3b8;cursor:not-allowed;}
+.active-method-badge{font-size:10px;text-align:center;margin-top:8px;color:var(--text-muted);}
+.active-method-badge strong{color:var(--primary);}
+
+/* Session cards */
+.day-header{font-size:16px;font-weight:700;color:var(--primary);margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:8px;}
+.day-badge{background:var(--primary);color:white;border-radius:5px;padding:2px 10px;font-size:12px;}
+.sort-bar{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
+.sort-bar label{font-size:12px;font-weight:600;color:var(--text-muted);}
+.sort-btn{padding:4px 10px;border:1px solid var(--border);background:var(--bg);border-radius:5px;cursor:pointer;font-size:11px;color:var(--text-muted);}
+.sort-btn:hover,.sort-btn.active{background:var(--primary);color:white;border-color:var(--primary);}
+.filter-check{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text-muted);cursor:pointer;}
+.time-group{margin-bottom:16px;}
+.time-group-header{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:6px;padding-left:4px;display:flex;align-items:center;gap:6px;}
+.time-group-header::before{content:'';display:inline-block;width:3px;height:12px;background:#f97316;border-radius:2px;}
+.parallel-label{font-size:10px;background:#fef3c7;color:#92400e;border-radius:3px;padding:1px 6px;font-weight:700;}
+.session-card{background:var(--card);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;box-shadow:var(--shadow);overflow:hidden;transition:transform .15s;}
+.session-card:hover{transform:translateY(-1px);box-shadow:var(--shadow-md);}
+.session-card.selected{border-color:var(--primary-light);box-shadow:0 0 0 2px rgba(45,90,142,.2);}
+.session-card.high{border-left:4px solid var(--high);}
+.session-card.medium{border-left:4px solid var(--med);}
+.session-card.low{border-left:4px solid var(--low);}
+.sc-header{padding:10px 12px 8px;display:flex;gap:10px;align-items:flex-start;cursor:pointer;}
+.sc-time{min-width:80px;font-size:11px;font-weight:700;color:var(--text-muted);margin-top:2px;}
+.sc-time .room{font-weight:400;color:#94a3b8;}
+.sc-main{flex:1;min-width:0;}
+.sc-type{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:3px;}
+.sc-title{font-size:13px;font-weight:700;line-height:1.3;margin-bottom:2px;}
+.sc-speaker{font-size:12px;color:var(--text-muted);}
+.sc-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;min-width:68px;}
+.relevance-badge{border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;display:flex;align-items:center;gap:4px;}
+.relevance-badge.high{background:var(--high-bg);color:var(--high);border:1px solid var(--high-border);}
+.relevance-badge.medium{background:var(--med-bg);color:var(--med);border:1px solid var(--med-border);}
+.relevance-badge.low{background:var(--low-bg);color:var(--low);border:1px solid var(--low-border);}
+.relevance-badge::before{content:'●';font-size:8px;}
+.btn-add{padding:5px 12px;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--bg);color:var(--text-muted);transition:all .15s;white-space:nowrap;}
+.btn-add:hover{background:var(--primary);color:white;border-color:var(--primary);}
+.btn-add.added{background:var(--primary);color:white;border-color:var(--primary);}
+.sc-expand{padding:0 12px 10px;border-top:1px solid #f1f5f9;background:#f8fafc;}
+.sc-expand.hidden{display:none;}
+.sc-abstract{font-size:12px;color:var(--text-muted);line-height:1.6;margin-top:8px;}
+.sc-talks{margin-top:8px;}
+.sc-talk{padding:4px 0;border-bottom:1px solid #e2e8f0;font-size:12px;}
+.sc-talk:last-child{border-bottom:none;}
+.sc-talk .talk-num{color:var(--primary-light);font-weight:700;margin-right:4px;}
+.sc-talk .talk-title{font-weight:600;}
+.sc-talk .talk-speaker{color:var(--text-muted);}
+.sc-talk .talk-relevance{float:right;font-size:10px;font-weight:700;}
+.sc-talk .talk-relevance.high{color:var(--high);}
+.sc-talk .talk-relevance.medium{color:var(--med);}
+.sc-match-reasons{margin-top:8px;background:#eff6ff;border-radius:5px;padding:8px;font-size:11px;color:#1d4ed8;border:1px solid #bfdbfe;}
+.sc-match-keywords{display:flex;flex-wrap:wrap;gap:3px;margin-top:4px;}
+.match-kw{background:#dbeafe;border-radius:3px;padding:1px 6px;font-size:10px;}
+
+/* Poster entries */
+.poster-entry{display:block;padding:6px 0;border-bottom:1px solid #e2e8f0;font-size:12px;cursor:pointer;}
+.poster-entry:last-child{border-bottom:none;}
+.poster-entry .talk-num{display:inline-block;min-width:36px;color:var(--primary-light);font-weight:700;}
+.poster-entry .talk-title{font-weight:600;}
+.poster-entry .talk-speaker{color:var(--text-muted);}
+.poster-entry .poster-topic{display:inline-block;font-size:10px;background:#f0f4f8;color:var(--text-muted);border-radius:3px;padding:1px 5px;margin-left:4px;}
+.poster-entry .poster-abstract-body{font-size:11px;color:var(--text-muted);line-height:1.6;margin-top:5px;padding:6px 8px;background:#f8fafc;border-left:3px solid var(--border);border-radius:0 4px 4px 0;display:none;}
+.poster-entry.expanded .poster-abstract-body{display:block;}
+.poster-entry.high .talk-title{color:var(--high);}
+.poster-entry.medium .talk-title{color:var(--med);}
+.poster-entry .poster-score{float:right;font-size:10px;font-weight:700;margin-top:1px;}
+.poster-entry.high .poster-score{color:var(--high);}
+.poster-entry.medium .poster-score{color:var(--med);}
+.poster-filter-bar{padding:6px 0 8px;display:flex;gap:6px;align-items:center;}
+.poster-filter-btn{padding:3px 8px;border:1px solid var(--border);border-radius:4px;background:var(--bg);font-size:11px;color:var(--text-muted);cursor:pointer;}
+.poster-filter-btn:hover,.poster-filter-btn.active{background:var(--primary);color:white;border-color:var(--primary);}
+.poster-count{font-size:11px;color:var(--text-muted);margin-left:auto;}
+
+/* My Schedule */
+.sched-item{padding:8px 0;border-bottom:1px solid var(--border);}
+.sched-item:last-child{border-bottom:none;}
+.sched-item .si-title{font-size:12px;font-weight:600;line-height:1.3;margin-bottom:2px;}
+.sched-item .si-meta{font-size:11px;color:var(--text-muted);}
+.sched-item .si-remove{float:right;cursor:pointer;color:#ef4444;font-size:16px;line-height:1;}
+.export-bar{padding:10px 14px;border-top:1px solid var(--border);display:flex;gap:6px;}
+.btn-export{flex:1;padding:6px;border:1px solid var(--border);background:var(--bg);border-radius:5px;cursor:pointer;font-size:11px;font-weight:600;color:var(--text-muted);}
+.btn-export:hover{background:var(--primary);color:white;border-color:var(--primary);}
+
+/* Legend */
+.legend{display:flex;gap:12px;align-items:center;font-size:11px;flex-wrap:wrap;}
+.legend-item{display:flex;align-items:center;gap:4px;}
+.legend-dot{width:10px;height:10px;border-radius:50%;}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.7);z-index:1000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.modal-overlay.hidden{display:none;}
+.modal-box{background:white;border-radius:16px;max-width:600px;width:92%;box-shadow:0 25px 50px rgba(0,0,0,.4);overflow:hidden;}
+.modal-hero{background:linear-gradient(135deg,#1a3a5c 0%,#2d5a8e 60%,#7c3aed 100%);padding:24px 28px 18px;color:white;text-align:center;}
+.modal-hero h1{font-size:22px;font-weight:800;}
+.modal-hero h1 span{color:#93c5fd;}
+.modal-hero p{font-size:12px;color:#bfdbfe;margin-top:4px;}
+.modal-body{padding:20px 28px;}
+.modal-body h2{font-size:15px;font-weight:700;margin-bottom:5px;}
+.modal-body p{font-size:13px;color:var(--text-muted);margin-bottom:14px;line-height:1.5;}
+.modal-field{margin-bottom:12px;}
+.modal-field label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);display:block;margin-bottom:4px;}
+.modal-field input,.modal-field textarea{width:100%;border:1px solid var(--border);border-radius:7px;padding:8px 12px;font-size:13px;font-family:inherit;color:var(--text);}
+.modal-field textarea{resize:vertical;min-height:80px;line-height:1.5;}
+.modal-presets{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+.preset-btn{padding:5px 12px;border:1px solid var(--border);border-radius:20px;background:var(--bg);cursor:pointer;font-size:12px;font-weight:600;color:var(--text-muted);}
+.preset-btn:hover{border-color:var(--primary-light);color:var(--primary);}
+.preset-btn.selected{background:var(--primary);color:white;border-color:var(--primary);}
+.modal-footer{display:flex;gap:10px;margin-top:16px;}
+.modal-footer .btn-p{flex:1;padding:10px;background:var(--primary);color:white;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:700;}
+.modal-footer .btn-p:hover{background:var(--primary-light);}
+.modal-footer .btn-s{padding:10px 16px;background:var(--bg);color:var(--text-muted);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.session-card{animation:fadeIn .2s ease;}
+</style>
+</head>
+<body>
+
+<!-- ══ Wizard Bar ══════════════════════════════════════════════════════════ -->
+<div id="wizardBar">
+  <div class="wiz-logo">
+    <svg width="26" height="26" viewBox="0 0 28 28" aria-hidden="true">
+      <circle cx="14" cy="5"  r="2.2" fill="rgba(255,255,255,0.22)"/>
+      <circle cx="23" cy="5"  r="2.2" fill="rgba(255,255,255,0.22)"/>
+      <circle cx="5"  cy="14" r="2.2" fill="rgba(255,255,255,0.22)"/>
+      <circle cx="23" cy="14" r="2.2" fill="rgba(255,255,255,0.22)"/>
+      <circle cx="5"  cy="23" r="2.2" fill="rgba(255,255,255,0.22)"/>
+      <circle cx="14" cy="23" r="2.2" fill="rgba(255,255,255,0.22)"/>
+      <polyline points="5,5 14,14 23,23" stroke="#fbbf24" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.18"/>
+      <polyline points="5,5 14,14 23,23" stroke="#fbbf24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="5"  cy="5"  r="3.2" fill="#fbbf24"/>
+      <circle cx="14" cy="14" r="3.5" fill="#fbbf24"/>
+      <circle cx="23" cy="23" r="3.2" fill="#fbbf24"/>
+    </svg>
+    Conf<span>Plan</span>
+  </div>
+  <div class="wiz-steps">
+    <div class="wiz-step active" id="wiz1">1 · Upload PDF</div>
+    <div class="wiz-sep">›</div>
+    <div class="wiz-step" id="wiz2">2 · Review Sessions</div>
+    <div class="wiz-sep">›</div>
+    <div class="wiz-step" id="wiz3">3 · Schedule</div>
+  </div>
+  <div class="wiz-spacer"></div>
+  <button class="btn-start-over" onclick="startOver()" id="startOverBtn" style="display:none">↩ Start Over</button>
+</div>
+
+<!-- ══ STEP 1: Upload ═════════════════════════════════════════════════════ -->
+<div id="step1Panel" class="step-panel">
+  <div class="u-card" style="margin-top:32px">
+    <div class="u-card-header">📄 Upload Conference PDF</div>
+    <div class="u-card-body">
+      <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()"
+           ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+        <div class="drop-zone-icon">📋</div>
+        <h2>Drop your conference PDF here</h2>
+        <p>Works with any abstract book, program schedule, or session guide</p>
+        <button class="btn-file" onclick="event.stopPropagation();document.getElementById('fileInput').click()">Choose PDF</button>
+        <br><button class="btn-file-sm" onclick="event.stopPropagation();showPasteMode()">✏️ Paste text instead</button>
+      </div>
+      <input type="file" id="fileInput" accept=".pdf" style="display:none" onchange="handleFileSelect(this.files[0])">
+
+      <!-- Paste mode fallback -->
+      <div id="pasteMode" style="display:none;margin-top:12px;">
+        <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);">Paste conference text</label>
+        <textarea id="pasteText" class="profile-textarea" style="min-height:140px;margin-top:6px" placeholder="Paste schedule / abstract book text here…"></textarea>
+        <button class="btn-primary" style="margin-top:8px;padding:8px 20px;font-size:13px" onclick="usePastedText()">Use This Text</button>
+      </div>
+
+      <div id="extractProgress" style="display:none">
+        <div class="progress-wrap">
+          <div class="progress-label" id="extractLabel">Extracting text…</div>
+          <div class="progress-bar"><div class="progress-fill" id="extractFill" style="width:0%"></div></div>
+        </div>
+        <div class="log-box" id="extractLog"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="u-card" id="parseConfigCard" style="display:none">
+    <div class="u-card-header">⚙️ Parse Settings</div>
+    <div class="u-card-body">
+      <div class="field-row" style="margin-bottom:12px">
+        <label style="min-width:130px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);">Conference name</label>
+        <input class="field-inp" id="confNameInput" placeholder="e.g. CNS 2026 Annual Meeting" value="">
+      </div>
+
+      <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);">Parsing method</label>
+      <div class="parse-mode-row">
+        <button class="parse-mode-btn active" id="pmAuto" onclick="setParseMode('auto',this)">🔍 Auto (Regex)<br><span style="font-size:10px;font-weight:400">instant, works for structured PDFs</span></button>
+        <button class="parse-mode-btn" id="pmLLM" onclick="setParseMode('llm',this)">🤖 LLM-Assisted<br><span style="font-size:10px;font-weight:400">GPT-4o-mini, handles any format</span></button>
+      </div>
+
+      <div id="llmKeySection" style="display:none">
+        <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);">OpenAI API Key</label>
+        <input type="password" class="api-key-input" id="parseApiKey" placeholder="sk-…" autocomplete="off">
+        <div class="cost-box" id="costEstimate" style="margin-top:8px;display:none"></div>
+      </div>
+
+      <div class="action-row">
+        <button class="btn-primary" id="btnParse" onclick="startParsing()">Parse Conference →</button>
+        <span class="status-msg" id="parseStatus"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ STEP 2: Review ════════════════════════════════════════════════════ -->
+<div id="step2Panel" class="step-panel" style="display:none">
+  <div class="u-card">
+    <div class="u-card-header">✅ Review Parsed Sessions</div>
+    <div class="u-card-body">
+      <div class="editor-summary" id="editorSummary"></div>
+      <div id="sessionEditorList"></div>
+      <button class="btn-add-session" onclick="addEmptySession()">+ Add session manually</button>
+    </div>
+  </div>
+  <div class="action-row">
+    <button class="btn-primary" onclick="proceedToSchedule()">Build My Schedule →</button>
+    <button class="btn-secondary" onclick="goToStep(1)">← Re-upload</button>
+    <span class="status-msg" id="step2Status"></span>
+  </div>
+</div>
+
+<!-- ══ STEP 3: Schedule ══════════════════════════════════════════════════ -->
+<div id="step3Panel" style="display:none">
+
+  <!-- Profile Modal -->
+  <div class="modal-overlay hidden" id="profileModal">
+    <div class="modal-box">
+      <div class="modal-hero">
+        <h1>Set Up Your <span>Research Profile</span></h1>
+        <p>ConfPlan ranks sessions by relevance to <em>your</em> specific research interests</p>
+      </div>
+      <div class="modal-body">
+        <h2>Tell us about your research</h2>
+        <p>Start from a preset or enter your own details.</p>
+        <div class="modal-field">
+          <label>Quick-start preset</label>
+          <div class="modal-presets" id="presetBtns">
+            <button class="preset-btn selected" onclick="loadPreset('sophie',this)">👩‍🔬 Event Cognition</button>
+            <button class="preset-btn" onclick="loadPreset('memory',this)">🧠 Memory</button>
+            <button class="preset-btn" onclick="loadPreset('attention',this)">🎯 Attention</button>
+            <button class="preset-btn" onclick="loadPreset('language',this)">🗣 Language</button>
+            <button class="preset-btn" onclick="loadPreset('computational',this)">💻 Computational</button>
+            <button class="preset-btn" onclick="loadPreset('blank',this)">✏️ Blank</button>
+          </div>
+        </div>
+        <div class="modal-field">
+          <label>Name</label>
+          <input type="text" id="modalName" placeholder="Your name" value="">
+        </div>
+        <div class="modal-field">
+          <label>Research abstract / interests</label>
+          <textarea id="modalAbstract" rows="4" placeholder="Paste your research abstract or describe your interests…"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-s" onclick="closeProfileModal()">Skip</button>
+          <button class="btn-p" onclick="applyModalProfile()">Build Schedule →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <header class="s3">
+    <div class="logo">
+      <svg width="26" height="26" viewBox="0 0 28 28" aria-hidden="true">
+        <circle cx="14" cy="5"  r="2.2" fill="rgba(255,255,255,.22)"/><circle cx="23" cy="5"  r="2.2" fill="rgba(255,255,255,.22)"/>
+        <circle cx="5"  cy="14" r="2.2" fill="rgba(255,255,255,.22)"/><circle cx="23" cy="14" r="2.2" fill="rgba(255,255,255,.22)"/>
+        <circle cx="5"  cy="23" r="2.2" fill="rgba(255,255,255,.22)"/><circle cx="14" cy="23" r="2.2" fill="rgba(255,255,255,.22)"/>
+        <polyline points="5,5 14,14 23,23" stroke="#fbbf24" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.18"/>
+        <polyline points="5,5 14,14 23,23" stroke="#fbbf24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="5" cy="5" r="3.2" fill="#fbbf24"/><circle cx="14" cy="14" r="3.5" fill="#fbbf24"/><circle cx="23" cy="23" r="3.2" fill="#fbbf24"/>
+      </svg>
+      Conf<span>Plan</span>
+    </div>
+    <div class="conf-name"><strong id="headerConfName">Conference</strong><br><span id="headerConfSub"></span></div>
+    <div class="wiz-spacer"></div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#16a34a"></div> High</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#ca8a04"></div> Medium</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#9ca3af"></div> Low</div>
+    </div>
+    <div class="stats"><span id="selectedCount">0</span> selected · <span id="highCount">0</span> <strong>high-match</strong></div>
+  </header>
+
+  <div class="tab-nav" id="tabNav"></div>
+
+  <div class="main-layout">
+    <!-- LEFT: Profile -->
+    <div>
+      <div class="panel">
+        <div class="panel-header" style="justify-content:space-between">
+          <span>🧠 Research Profile</span>
+          <button onclick="openProfileModal()" style="background:rgba(255,255,255,.15);border:none;color:white;border-radius:4px;padding:2px 8px;cursor:pointer;font-size:11px;font-weight:600">Switch</button>
+        </div>
+        <div class="panel-body">
+          <div class="profile-name-row">
+            <div class="profile-avatar" id="profileAvatar">?</div>
+            <div class="profile-name-info">
+              <div class="profile-name-display" id="profileNameDisplay">Researcher</div>
+              <div class="profile-inst-display" id="profileInstDisplay"></div>
+            </div>
+          </div>
+          <div class="profile-section">
+            <label>Research Abstract</label>
+            <textarea class="profile-textarea" id="profileAbstract" rows="5" oninput="debouncedRecompute()" placeholder="Describe your research interests…"></textarea>
+          </div>
+          <div class="profile-section">
+            <label>Keywords</label>
+            <div class="keyword-chips" id="keywordChips"></div>
+            <div class="add-kw-row">
+              <input class="add-kw-input" id="addKwInput" placeholder="Add keyword…" onkeydown="if(event.key==='Enter')addKeyword()">
+              <button class="add-kw-btn" onclick="addKeyword()">+</button>
+            </div>
+          </div>
+          <div class="profile-actions">
+            <button class="btn-recompute" onclick="recomputeAll()">↻ Recompute</button>
+          </div>
+          <div style="font-size:10px;color:var(--text-muted);text-align:center;margin-top:6px" id="methodLabel">🔍 TF-IDF scoring</div>
+        </div>
+      </div>
+
+      <!-- Scoring method panel -->
+      <div class="panel" style="margin-top:12px">
+        <div class="panel-header" style="background:#312e81">✨ Scoring Method</div>
+        <div class="panel-body">
+          <div class="score-method-tabs">
+            <button class="score-tab active" onclick="setScoringMode('tfidf',this)">TF-IDF</button>
+            <button class="score-tab" onclick="setScoringMode('embeddings',this)">Semantic</button>
+            <button class="score-tab" onclick="setScoringMode('openai',this)">OpenAI</button>
+          </div>
+          <div class="score-panel-s active" id="sp-tfidf"><div class="score-status">🔍 Keyword matching. Instant, no setup.</div></div>
+          <div class="score-panel-s" id="sp-embeddings">
+            <div class="score-status">🧬 <strong>all-MiniLM-L6-v2</strong> in your browser — no API key. ~25 MB download, cached.</div>
+            <button class="btn-run" id="btnRunEmb" onclick="runEmbeddings()">▶ Compute Embeddings</button>
+            <div class="progress-bar" id="embProgress" style="display:none"><div class="progress-fill" id="embFill" style="width:0%"></div></div>
+            <div class="score-status" id="embStatus"></div>
+          </div>
+          <div class="score-panel-s" id="sp-openai">
+            <div class="score-status">🤖 <strong>text-embedding-3-small</strong>. Key stays in browser. Est. &lt;$0.01.</div>
+            <input type="password" class="api-key-input" id="openaiEmbKey" placeholder="sk-…" autocomplete="off">
+            <button class="btn-run" id="btnRunOAI" onclick="runOpenAIEmb()">▶ Run OpenAI Embeddings</button>
+            <div class="score-status" id="oaiStatus"></div>
+          </div>
+          <div class="active-method-badge" id="activeMethodBadge">Active: <strong>TF-IDF</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CENTER: Schedule -->
+    <div>
+      <div class="sort-bar">
+        <label>Sort:</label>
+        <button class="sort-btn active" id="sortTime" onclick="setSort('time')">By Time</button>
+        <button class="sort-btn" id="sortRel" onclick="setSort('relevance')">By Relevance</button>
+        <label class="filter-check" style="margin-left:8px">
+          <input type="checkbox" id="filterHighOnly" onchange="renderCurrentDay()"> High only
+        </label>
+        <label class="filter-check">
+          <input type="checkbox" id="filterSelOnly" onchange="renderCurrentDay()"> Selected only
+        </label>
+      </div>
+      <div id="scheduleContainer"></div>
+    </div>
+
+    <!-- RIGHT: My Schedule -->
+    <div>
+      <div class="panel" id="mySchedulePanel">
+        <div class="panel-header">📅 My Schedule</div>
+        <div class="panel-body" id="myScheduleBody">
+          <div style="text-align:center;color:var(--text-muted);font-size:12px;padding:16px;line-height:1.6">No sessions selected.<br>Click "+ Add" to build your schedule.</div>
+        </div>
+        <div class="export-bar">
+          <button class="btn-export" onclick="exportText()">📄 Text</button>
+          <button class="btn-export" onclick="exportICS()">📆 .ICS</button>
+          <button class="btn-export" onclick="window.print()">🖨️ Print</button>
+        </div>
+      </div>
+      <div class="panel" style="margin-top:12px">
+        <div class="panel-header">⚡ Top Picks</div>
+        <div class="panel-body" id="topPicksPanel" style="font-size:12px;color:var(--text-muted)">Computing…</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════════════
+// APP STATE
+// ══════════════════════════════════════════════════════════════════
+let APP = {
+  step: 1,
+  pdfText: '',
+  pdfPages: [],
+  sessions: [],
+  days: [],           // [{index, label, isoDate}]
+  conferenceName: '',
+  parseMode: 'auto',
+  llmApiKey: '',
+  scoringMode: 'tfidf',
+  embeddingScores: new Map(),
+  selectedSessions: new Set(),
+  currentDayIdx: 0,
+  currentSort: 'time',
+  userKeywords: [],
+  activeKeywords: new Set(),
+  profileModalShown: false,
+};
+
+const PRESETS = {
+  sophie:{name:'Sophie Xing Su',inst:'Cognitive Science PhD · WashU',abstract:'My research investigates how people build, maintain, and update mental representations of ongoing events during naturalistic perception. I study event segmentation, prediction errors, eye tracking, CLIP vision-language models, fMRI, and computational modeling.',keywords:['event segmentation','event boundaries','event representations','situation model','prediction error','predictive processing','eye tracking','gaze','mental representations','naturalistic','fMRI','computational modeling','CLIP','vision-language','temporal','episodic memory','hippocampus','working memory','reactivation']},
+  memory:{name:'Memory Researcher',inst:'',abstract:'I study the neural and cognitive mechanisms of episodic memory encoding, consolidation, and retrieval. I am interested in hippocampal-cortical interactions, memory reactivation during sleep, and how temporal context organizes memories.',keywords:['episodic memory','hippocampus','memory encoding','memory retrieval','consolidation','reactivation','temporal context','sleep','long-term memory','fMRI','working memory']},
+  attention:{name:'Attention Researcher',inst:'',abstract:'My work focuses on selective and sustained attention, visual working memory, and how attention interacts with perception and memory.',keywords:['attention','sustained attention','visual working memory','selective attention','EEG','fMRI','attentional control','distraction','alpha oscillations']},
+  language:{name:'Language Researcher',inst:'',abstract:'I investigate the cognitive and neural bases of language comprehension and production, including sentence processing, semantic integration, and prediction.',keywords:['language','sentence processing','semantic','prediction','reading','speech','EEG','MEG','fMRI','comprehension']},
+  computational:{name:'Computational Neuroscientist',inst:'',abstract:'I develop computational and neural network models of cognition, including deep learning models of perception and reinforcement learning.',keywords:['computational modeling','neural network','deep learning','reinforcement learning','fMRI','decoding','population dynamics','neural representations','vision-language','machine learning']},
+  blank:{name:'',inst:'',abstract:'',keywords:[]},
+};
+
+// ══════════════════════════════════════════════════════════════════
+// STEP NAVIGATION
+// ══════════════════════════════════════════════════════════════════
+function goToStep(n) {
+  APP.step = n;
+  document.getElementById('step1Panel').style.display = n === 1 ? '' : 'none';
+  document.getElementById('step2Panel').style.display = n === 2 ? '' : 'none';
+  document.getElementById('step3Panel').style.display = n === 3 ? '' : 'none';
+  ['wiz1','wiz2','wiz3'].forEach((id, i) => {
+    const el = document.getElementById(id);
+    el.className = 'wiz-step' + (i + 1 === n ? ' active' : i + 1 < n ? ' done' : '');
+    if (i + 1 < n) el.onclick = () => goToStep(i + 1);
+  });
+  document.getElementById('startOverBtn').style.display = n > 1 ? '' : 'none';
+  if (n === 3 && !APP.profileModalShown) { APP.profileModalShown = true; openProfileModal(); }
+  if (n === 3) { renderDayTabs(); renderCurrentDay(); }
+}
+
+function startOver() {
+  if (!confirm('Start over? This will clear all parsed sessions.')) return;
+  APP.sessions = []; APP.days = []; APP.embeddingScores = new Map();
+  APP.selectedSessions = new Set(); APP.pdfText = ''; APP.profileModalShown = false;
+  document.getElementById('extractProgress').style.display = 'none';
+  document.getElementById('parseConfigCard').style.display = 'none';
+  document.getElementById('pasteMode').style.display = 'none';
+  goToStep(1);
+}
+
+// ══════════════════════════════════════════════════════════════════
+// STEP 1: PDF EXTRACTION
+// ══════════════════════════════════════════════════════════════════
+let pdfjsLib = null;
+
+async function loadPdfJs() {
+  if (pdfjsLib) return pdfjsLib;
+  const mod = await import('https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.min.mjs');
+  mod.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.worker.min.mjs';
+  pdfjsLib = mod;
+  return mod;
+}
+
+function handleDragOver(e) { e.preventDefault(); document.getElementById('dropZone').classList.add('drag-over'); }
+function handleDragLeave(e) { document.getElementById('dropZone').classList.remove('drag-over'); }
+function handleDrop(e) { e.preventDefault(); handleDragLeave(e); const f = e.dataTransfer.files[0]; if (f) handleFileSelect(f); }
+function handleFileSelect(file) { if (file) extractPdf(file); }
+
+async function extractPdf(file) {
+  const prog = document.getElementById('extractProgress');
+  const fill = document.getElementById('extractFill');
+  const label = document.getElementById('extractLabel');
+  const log = document.getElementById('extractLog');
+  prog.style.display = '';
+  log.textContent = '';
+  addLog(log, `Loading PDF.js…`);
+
+  try {
+    const lib = await loadPdfJs();
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await lib.getDocument({ data: arrayBuffer }).promise;
+    addLog(log, `PDF loaded: ${pdf.numPages} pages`);
+
+    const pages = [];
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      const text = reconstructReadingOrder(content.items);
+      pages.push(text);
+      fill.style.width = Math.round((i / pdf.numPages) * 100) + '%';
+      label.textContent = `Extracting page ${i} / ${pdf.numPages}…`;
+      if (i % 10 === 0) addLog(log, `  Page ${i} done (${text.length} chars)`);
+    }
+
+    APP.pdfText = pages.join('\n\n=== PAGE BREAK ===\n\n');
+    APP.pdfPages = pages;
+    addLog(log, `✓ Done — ${APP.pdfText.length.toLocaleString()} chars extracted`);
+    fill.style.width = '100%';
+    label.textContent = '✓ Extraction complete';
+
+    // Auto-detect conference name from first page
+    const firstPage = pages[0] || '';
+    const confGuess = firstPage.split('\n').find(l => l.trim().length > 10 && l.trim().length < 80 && /\d{4}/.test(l)) || '';
+    document.getElementById('confNameInput').value = confGuess.trim().slice(0, 80);
+
+    // Show parse config
+    document.getElementById('parseConfigCard').style.display = '';
+    // Show cost estimate
+    updateCostEstimate();
+  } catch (err) {
+    label.textContent = '✗ Extraction failed: ' + err.message;
+    addLog(log, '✗ Error: ' + err.message);
+    console.error(err);
+  }
+}
+
+function reconstructReadingOrder(items) {
+  if (!items.length) return '';
+  const LINE_TH = 3;
+  const sorted = [...items].sort((a, b) => {
+    const dy = b.transform[5] - a.transform[5];
+    if (Math.abs(dy) > LINE_TH) return dy;
+    return a.transform[4] - b.transform[4];
+  });
+  const lines = [];
+  let curLine = [];
+  let lastY = null;
+  for (const item of sorted) {
+    const y = Math.round(item.transform[5]);
+    if (lastY !== null && Math.abs(y - lastY) > LINE_TH) {
+      if (curLine.length) lines.push(curLine.join(' '));
+      curLine = [];
+    }
+    curLine.push(item.str);
+    lastY = y;
+  }
+  if (curLine.length) lines.push(curLine.join(' '));
+  return lines.join('\n');
+}
+
+function addLog(el, msg) { el.textContent += msg + '\n'; el.scrollTop = el.scrollHeight; }
+
+function showPasteMode() { document.getElementById('pasteMode').style.display = ''; }
+function usePastedText() {
+  APP.pdfText = document.getElementById('pasteText').value;
+  if (!APP.pdfText.trim()) { alert('Please paste some text first.'); return; }
+  APP.pdfPages = APP.pdfText.split('\n\n');
+  document.getElementById('parseConfigCard').style.display = '';
+  updateCostEstimate();
+}
+
+function setParseMode(mode, btn) {
+  APP.parseMode = mode;
+  document.getElementById('pmAuto').classList.toggle('active', mode === 'auto');
+  document.getElementById('pmLLM').classList.toggle('active', mode === 'llm');
+  document.getElementById('llmKeySection').style.display = mode === 'llm' ? '' : 'none';
+  updateCostEstimate();
+}
+
+function updateCostEstimate() {
+  const box = document.getElementById('costEstimate');
+  if (APP.parseMode !== 'llm') { box.style.display = 'none'; return; }
+  const tokens = Math.ceil(APP.pdfText.length / 4);
+  const cost = (tokens * 0.15 / 1_000_000).toFixed(4);
+  box.style.display = '';
+  box.innerHTML = `💡 Est. parse cost: ~${tokens.toLocaleString()} tokens → <strong>~$${cost}</strong> (GPT-4o-mini)`;
+}
+
+// ══════════════════════════════════════════════════════════════════
+// AUTO PARSER
+// ══════════════════════════════════════════════════════════════════
+function autoParseText(text) {
+  const lines = text.split('\n').map(l => l.trim());
+  const days = detectDays(lines);
+  const sessions = [];
+  let sessionIdx = 0;
+  let currentSess = null;
+  let currentBody = [];
+
+  const SESSION_ID_RE = /^([A-Z]{1,2}[-\s]?\d{1,4})\s*[-–:\.]\s*(.{5,})/;
+  const TIME_RE = /(\d{1,2}:\d{2})\s*(?:AM|PM)?\s*[-–—]\s*(\d{1,2}:\d{2})/i;
+  const SESSION_KW_RE = /\b(keynote|symposium|symposia|workshop|poster session|data blitz|invited|panel|plenary|session|seminar|tutorial)\b/i;
+  const DAY_RE = /\b(monday|tuesday|wednesday|thursday|friday|saturday|sunday|day\s+\d)\b/i;
+  const AUTHOR_RE = /@[a-z0-9.]+\.[a-z]{2,}|;\s*\d|university|institute|college|department/i;
+
+  function isSessionBoundary(line) {
+    if (!line || line.length < 4) return false;
+    if (SESSION_ID_RE.test(line)) return true;
+    if (TIME_RE.test(line) && line.length < 120) return true;
+    if (SESSION_KW_RE.test(line) && line.length < 100) return true;
+    return false;
+  }
+
+  function assignDay(lineIdx) {
+    let day = 0;
+    for (const d of days) { if (lineIdx >= d.lineIdx) day = d.index; else break; }
+    return day;
+  }
+
+  function flush() {
+    if (!currentSess || currentBody.join('').trim().length < 5) return;
+    const bodyText = currentBody.join(' ').replace(/\s+/g, ' ').trim();
+    // Extract abstract: body before talk list
+    const talkBoundary = bodyText.search(/\n?\s*\d+\.\s+[A-Z]|\n?\s*[A-Z]\d+\s+/);
+    const abstract = talkBoundary > 20 ? bodyText.slice(0, talkBoundary).slice(0, 800) : bodyText.slice(0, 800);
+    // Extract talks: numbered items or lines with "—" speaker attribution
+    const talks = extractTalks(bodyText);
+    sessions.push({
+      ...currentSess,
+      id: `s${sessionIdx}`,
+      abstract,
+      talks,
+      subtitle: '',
+      chair: extractChair(bodyText),
+    });
+    sessionIdx++;
+  }
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (!line) continue;
+    if (DAY_RE.test(line) && line.length < 60) continue; // day markers handled separately
+
+    if (isSessionBoundary(line)) {
+      flush();
+      currentBody = [];
+      const idMatch = SESSION_ID_RE.exec(line);
+      const timeMatch = TIME_RE.exec(line);
+      const title = idMatch ? idMatch[2].trim() : (timeMatch ? line.replace(TIME_RE, '').trim() : line);
+      const type = guessType(line);
+      currentSess = {
+        title: title.slice(0, 160),
+        type, typeLabel: TYPE_LABELS[type] || 'Session',
+        start: timeMatch ? normalizeTime(timeMatch[1]) : '',
+        end: timeMatch ? normalizeTime(timeMatch[2]) : '',
+        room: extractRoom(line + ' ' + (lines[i+1] || '')),
+        day: assignDay(i),
+      };
+    } else if (currentSess && !AUTHOR_RE.test(line)) {
+      currentBody.push(line);
+    }
+  }
+  flush();
+
+  // Group days
+  const daySet = [...new Set(sessions.map(s => s.day))].sort();
+  if (days.length > 0) {
+    APP.days = days.map(d => ({index: d.index, label: d.label}));
+  } else {
+    APP.days = daySet.map(d => ({index: d, label: daySet.length > 1 ? `Day ${d + 1}` : 'All Sessions'}));
+  }
+  if (APP.days.length === 0) APP.days = [{index: 0, label: 'Sessions'}];
+
+  return sessions;
+}
+
+function detectDays(lines) {
+  const DAY_PATTERNS = [
+    /\b(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b/i,
+    /\bday\s+(\d+)\b/i,
+    /\b(january|february|march|april|may|june|july|august|september|october|november|december)\s+(\d{1,2})/i,
+  ];
+  const days = [];
+  let dayIdx = 0;
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (DAY_PATTERNS.some(p => p.test(line)) && line.length < 80) {
+      const existing = days.find(d => d.label.toLowerCase() === line.trim().toLowerCase());
+      if (!existing) {
+        days.push({index: dayIdx++, label: line.trim().slice(0, 50), lineIdx: i});
+      }
+    }
+  }
+  return days;
+}
+
+const TYPE_MAP = {poster:'poster', symposium:'symposium', symposia:'symposium', keynote:'keynote', workshop:'workshop', 'data blitz':'data_blitz', invited:'invited_symposium', panel:'panel', plenary:'keynote'};
+const TYPE_LABELS = {poster:'Poster Session', symposium:'Symposium', keynote:'Keynote', workshop:'Workshop', data_blitz:'Data Blitz', invited_symposium:'Invited Symposium', panel:'Panel', other:'Session'};
+
+function guessType(line) {
+  const l = line.toLowerCase();
+  for (const [kw, type] of Object.entries(TYPE_MAP)) { if (l.includes(kw)) return type; }
+  return 'other';
+}
+function normalizeTime(t) {
+  if (!t) return '';
+  const m = t.match(/(\d{1,2}):(\d{2})/);
+  if (!m) return t;
+  return `${m[1].padStart(2,'0')}:${m[2]}`;
+}
+function extractRoom(text) {
+  const m = text.match(/\b(room|hall|salon|ballroom|auditorium|theater|theatre|gallery)\s+[\w\d\-]+/i);
+  return m ? m[0].trim() : '';
+}
+function extractChair(text) {
+  const m = text.match(/\b(chair|organizer|moderator|convener)[:\s]+([A-Z][a-z]+\s+[A-Z][a-z]+)/i);
+  return m ? m[2].trim() : '';
+}
+function extractTalks(text) {
+  const talks = [];
+  const lines = text.split(/\n/);
+  let talkNum = 0;
+  for (const line of lines) {
+    // "1. Title — Speaker" or "T1 Title — Speaker"
+    const m = line.match(/^(?:(\d+)[.\)]\s+|([A-Z]\d+)\s+)(.{5,}?)(?:\s*[-–—]\s*(.+))?$/);
+    if (m) {
+      talkNum++;
+      talks.push({
+        num: m[1] || m[2] || talkNum,
+        id: m[2] || String(talkNum),
+        title: (m[3] || '').trim().slice(0, 200),
+        speaker: (m[4] || '').trim().slice(0, 100),
+        abstract: '',
+        relevantKws: [],
+      });
+    }
+  }
+  return talks.slice(0, 30);
+}
+
+// ══════════════════════════════════════════════════════════════════
+// LLM PARSER (GPT-4o-mini)
+// ══════════════════════════════════════════════════════════════════
+function chunkText(text, maxChars = 18000, overlap = 500) {
+  const chunks = [];
+  let i = 0;
+  while (i < text.length) {
+    let end = Math.min(i + maxChars, text.length);
+    if (end < text.length) {
+      const breakAt = text.lastIndexOf('\n\n', end);
+      if (breakAt > i + maxChars / 2) end = breakAt;
+    }
+    chunks.push(text.slice(i, end));
+    i = end - overlap;
+  }
+  return chunks;
+}
+
+async function llmParseText(text, apiKey, statusEl) {
+  const chunks = chunkText(text);
+  const allSessions = [];
+  statusEl.textContent = `Sending ${chunks.length} chunk(s) to GPT-4o-mini…`;
+
+  for (let ci = 0; ci < chunks.length; ci++) {
+    statusEl.textContent = `Parsing chunk ${ci+1}/${chunks.length}…`;
+    const prompt = `You are a conference schedule parser. Extract all sessions from this text.
+Return ONLY a JSON array, no commentary. Each item:
+{"title":"...","type":"symposium|poster|talk|workshop|keynote|other","day":"...(Day 1 or Monday etc)","start":"HH:MM","end":"HH:MM","room":"...","chair":"...","abstract":"...(max 400 chars)","talks":[{"num":1,"title":"...","speaker":"...","abstract":"...(max 200 chars)"}]}
+Omit unknown fields. For poster sessions include individual poster entries as talks.
+
+TEXT:\n${chunks[ci]}`;
+
+    const resp = await fetch('https://api.openai.com/v1/chat/completions', {
+      method:'POST',
+      headers:{'Authorization':`Bearer ${apiKey}`,'Content-Type':'application/json'},
+      body: JSON.stringify({model:'gpt-4o-mini',messages:[{role:'user',content:prompt}],max_tokens:4000,response_format:{type:'json_object'}})
+    });
+    if (!resp.ok) { const e = await resp.json(); throw new Error(e.error?.message || `HTTP ${resp.status}`); }
+    const data = await resp.json();
+    try {
+      const raw = JSON.parse(data.choices[0].message.content);
+      const arr = Array.isArray(raw) ? raw : (raw.sessions || raw.data || Object.values(raw)[0] || []);
+      allSessions.push(...arr);
+    } catch(e) { console.warn('Chunk parse error', e); }
+  }
+
+  return deduplicateSessions(allSessions);
+}
+
+function deduplicateSessions(sessions) {
+  const seen = new Map();
+  for (const s of sessions) {
+    const key = (s.title || '').toLowerCase().replace(/[^a-z0-9]/g,'').slice(0, 40);
+    if (!seen.has(key) || (s.abstract || '').length > (seen.get(key).abstract || '').length) {
+      seen.set(key, s);
+    }
+  }
+  return [...seen.values()];
+}
+
+function normalizeParsedSessions(raw) {
+  // Collect unique day labels and assign indices
+  const dayLabels = [...new Set(raw.map(s => s.day || '').filter(Boolean))];
+  APP.days = dayLabels.length > 0
+    ? dayLabels.map((label, i) => ({index: i, label}))
+    : [{index: 0, label: 'All Sessions'}];
+  const dayMap = Object.fromEntries(APP.days.map(d => [d.label, d.index]));
+
+  return raw.map((s, i) => ({
+    id: `s${i}`,
+    title: (s.title || 'Untitled Session').slice(0, 200),
+    type: s.type || 'other',
+    typeLabel: TYPE_LABELS[s.type] || 'Session',
+    day: dayMap[s.day] ?? 0,
+    start: normalizeTime(s.start) || '',
+    end: normalizeTime(s.end) || '',
+    room: s.room || '',
+    chair: s.chair || '',
+    abstract: (s.abstract || '').slice(0, 800),
+    subtitle: s.subtitle || '',
+    talks: (s.talks || []).map((t, j) => ({
+      num: t.num || j + 1,
+      id: String(t.id || t.num || j + 1),
+      title: (t.title || '').slice(0, 200),
+      speaker: (t.speaker || '').slice(0, 100),
+      abstract: (t.abstract || '').slice(0, 400),
+      topic_area: t.topic_area || '',
+      relevantKws: [],
+    })),
+  }));
+}
+
+// ══════════════════════════════════════════════════════════════════
+// PARSE ORCHESTRATION
+// ══════════════════════════════════════════════════════════════════
+async function startParsing() {
+  const statusEl = document.getElementById('parseStatus');
+  const btn = document.getElementById('btnParse');
+  if (!APP.pdfText.trim()) { statusEl.textContent = '✗ Please upload a PDF or paste text first.'; return; }
+
+  APP.conferenceName = document.getElementById('confNameInput').value.trim() || 'Conference';
+  APP.llmApiKey = document.getElementById('parseApiKey').value.trim();
+  btn.disabled = true;
+  statusEl.className = 'status-msg';
+  statusEl.textContent = 'Parsing…';
+
+  try {
+    let rawSessions;
+    if (APP.parseMode === 'llm') {
+      if (!APP.llmApiKey.startsWith('sk-')) { throw new Error('Please enter a valid OpenAI API key'); }
+      rawSessions = await llmParseText(APP.pdfText, APP.llmApiKey, statusEl);
+      APP.sessions = normalizeParsedSessions(rawSessions);
+    } else {
+      rawSessions = autoParseText(APP.pdfText);
+      APP.sessions = rawSessions; // already normalized
+    }
+
+    if (APP.sessions.length === 0) throw new Error('No sessions detected. Try LLM mode or paste text manually.');
+    statusEl.className = 'status-msg ok';
+    statusEl.textContent = `✓ ${APP.sessions.length} sessions found`;
+    goToStep(2);
+    renderSessionEditor();
+  } catch (err) {
+    statusEl.className = 'status-msg err';
+    statusEl.textContent = '✗ ' + err.message;
+    console.error(err);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+// ══════════════════════════════════════════════════════════════════
+// STEP 2: SESSION EDITOR
+// ══════════════════════════════════════════════════════════════════
+function renderSessionEditor() {
+  const list = document.getElementById('sessionEditorList');
+  const summary = document.getElementById('editorSummary');
+  const days = APP.days;
+  const byDay = days.map(d => APP.sessions.filter(s => s.day === d.index));
+  summary.innerHTML = `<strong>${APP.sessions.length} sessions</strong> found across <strong>${days.length} day(s)</strong> — review and edit below, then click "Build My Schedule".`;
+
+  list.innerHTML = APP.sessions.map((s, i) => {
+    const badgeCls = {poster:'poster',keynote:'keynote',symposium:'symposium'}[s.type] || '';
+    return `<div class="session-edit-card">
+      <div class="sec-header" onclick="toggleEditCard(${i})">
+        <span class="sec-badge ${badgeCls}">${s.typeLabel}</span>
+        <span class="sec-title-display">${s.title}</span>
+        <span class="sec-meta">${s.start || ''} ${s.room ? '· ' + s.room : ''} · ${s.talks.length} talks</span>
+        <button class="btn-del" onclick="event.stopPropagation();deleteSession(${i})">✕</button>
+      </div>
+      <div class="sec-fields" id="ef_${i}">
+        <div class="field-row"><label>Title</label><input class="field-inp" value="${escHtml(s.title)}" onchange="updateSession(${i},'title',this.value)"></div>
+        <div class="field-row">
+          <label>Day</label>
+          <select class="field-sel" onchange="updateSession(${i},'day',+this.value)">
+            ${APP.days.map(d=>`<option value="${d.index}" ${d.index===s.day?'selected':''}>${d.label}</option>`).join('')}
+          </select>
+          <label style="margin-left:8px">Type</label>
+          <select class="field-sel" onchange="updateSession(${i},'type',this.value)">
+            ${['poster','symposium','keynote','workshop','talk','other'].map(t=>`<option value="${t}" ${t===s.type?'selected':''}>${TYPE_LABELS[t]||t}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field-row">
+          <label>Time</label>
+          <input class="field-inp" style="max-width:80px" value="${s.start}" placeholder="09:30" onchange="updateSession(${i},'start',this.value)">
+          <span style="padding:0 4px;color:var(--text-muted)">–</span>
+          <input class="field-inp" style="max-width:80px" value="${s.end}" placeholder="11:00" onchange="updateSession(${i},'end',this.value)">
+          <label style="margin-left:8px">Room</label>
+          <input class="field-inp" value="${escHtml(s.room)}" placeholder="Room name" onchange="updateSession(${i},'room',this.value)">
+        </div>
+        <div class="talks-count">${s.talks.length} talk/poster entries parsed</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleEditCard(i) {
+  const el = document.getElementById('ef_' + i);
+  if (el) el.classList.toggle('open');
+}
+function updateSession(i, field, value) { if (APP.sessions[i]) APP.sessions[i][field] = value; }
+function deleteSession(i) { APP.sessions.splice(i, 1); renderSessionEditor(); }
+function addEmptySession() {
+  APP.sessions.push({id:`s${Date.now()}`,title:'New Session',type:'other',typeLabel:'Session',day:0,start:'',end:'',room:'',chair:'',abstract:'',subtitle:'',talks:[]});
+  renderSessionEditor();
+}
+function escHtml(s) { return String(s || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+
+function proceedToSchedule() {
+  const status = document.getElementById('step2Status');
+  if (APP.sessions.length === 0) { status.textContent = '✗ No sessions to show.'; return; }
+  document.getElementById('headerConfName').textContent = APP.conferenceName;
+  document.getElementById('headerConfSub').textContent = `${APP.sessions.length} sessions · ${APP.days.length} day(s)`;
+  loadSavedProfile();
+  goToStep(3);
+}
+
+// ══════════════════════════════════════════════════════════════════
+// PROFILE
+// ══════════════════════════════════════════════════════════════════
+function loadPreset(key, btn) {
+  const p = PRESETS[key] || PRESETS.blank;
+  document.getElementById('modalName').value = p.name;
+  document.getElementById('modalAbstract').value = p.abstract;
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('selected'));
+  if (btn) btn.classList.add('selected');
+  window._pendingPresetKws = p.keywords;
+}
+function applyModalProfile() {
+  const name = document.getElementById('modalName').value.trim() || 'Researcher';
+  const abs = document.getElementById('modalAbstract').value.trim();
+  document.getElementById('profileNameDisplay').textContent = name;
+  document.getElementById('profileAvatar').textContent = name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+  document.getElementById('profileAbstract').value = abs;
+  if (window._pendingPresetKws) { APP.userKeywords = [...window._pendingPresetKws]; window._pendingPresetKws = null; }
+  APP.activeKeywords = new Set(APP.userKeywords);
+  renderKeywordChips();
+  closeProfileModal();
+  recomputeAll();
+}
+function openProfileModal() { document.getElementById('profileModal').classList.remove('hidden'); loadPreset('sophie', document.querySelector('.preset-btn')); }
+function closeProfileModal() { document.getElementById('profileModal').classList.add('hidden'); recomputeAll(); }
+function saveProfile() { try { localStorage.setItem('confplan_universal_profile', JSON.stringify({name:document.getElementById('profileNameDisplay').textContent, abstract:document.getElementById('profileAbstract').value, keywords:APP.userKeywords})); } catch(e){} }
+function loadSavedProfile() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('confplan_universal_profile') || 'null');
+    if (saved) { document.getElementById('profileNameDisplay').textContent = saved.name || 'Researcher'; document.getElementById('profileAvatar').textContent = (saved.name||'R').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase(); document.getElementById('profileAbstract').value = saved.abstract || ''; APP.userKeywords = saved.keywords || []; APP.activeKeywords = new Set(APP.userKeywords); renderKeywordChips(); }
+  } catch(e){}
+}
+
+function renderKeywordChips() {
+  const el = document.getElementById('keywordChips');
+  el.innerHTML = APP.userKeywords.map(kw => `<span class="chip ${APP.activeKeywords.has(kw)?'active':''}" onclick="toggleKeyword('${escHtml(kw)}')">${escHtml(kw)}<span class="chip-x" onclick="event.stopPropagation();removeKeyword('${escHtml(kw)}')">×</span></span>`).join('');
+}
+function toggleKeyword(kw) { if (APP.activeKeywords.has(kw)) APP.activeKeywords.delete(kw); else APP.activeKeywords.add(kw); renderKeywordChips(); recomputeAll(); }
+function removeKeyword(kw) { APP.userKeywords = APP.userKeywords.filter(k=>k!==kw); APP.activeKeywords.delete(kw); renderKeywordChips(); recomputeAll(); }
+function addKeyword() { const kw = document.getElementById('addKwInput').value.trim(); if (!kw || APP.userKeywords.includes(kw)) return; APP.userKeywords.push(kw); APP.activeKeywords.add(kw); document.getElementById('addKwInput').value = ''; renderKeywordChips(); recomputeAll(); }
+function recomputeAll() { saveProfile(); renderCurrentDay(); }
+let _recomputeTimer = null;
+function debouncedRecompute() { clearTimeout(_recomputeTimer); _recomputeTimer = setTimeout(recomputeAll, 500); }
+
+// ══════════════════════════════════════════════════════════════════
+// SCORING
+// ══════════════════════════════════════════════════════════════════
+function computeScore(session) {
+  if (APP.scoringMode !== 'tfidf' && APP.embeddingScores.has(session.id)) {
+    const e = APP.embeddingScores.get(session.id);
+    return {score: e.score, matchedKws: (e.reasons||[]).map(r=>({kw:r,score:1}))};
+  }
+  const profileWords = (document.getElementById('profileAbstract')||{}).value || '';
+  const titleText = session.title.toLowerCase();
+  const subtitleText = (session.subtitle||'').toLowerCase();
+  const abstractText = (session.abstract||'').toLowerCase();
+  const talkTitles = (session.talks||[]).map(t=>(t.title||'').toLowerCase()).join(' ');
+  let score = 0;
+  const matchedKws = [];
+  for (const kw of APP.activeKeywords) {
+    const re = new RegExp(kw.toLowerCase().replace(/[-\s]/g,'[\\s-]'), 'g');
+    const s = (titleText.match(re)||[]).length*4 + (subtitleText.match(re)||[]).length*3 + (talkTitles.match(re)||[]).length*2 + (abstractText.match(re)||[]).length;
+    if (s > 0) { score += s; matchedKws.push({kw, score:s}); }
+  }
+  const talkBonus = (session.type==='poster' ? (session.talks||[]).slice(0,10) : (session.talks||[])).reduce((sum,t) => sum + (t.relevantKws||[]).filter(k=>APP.activeKeywords.has(k)).length*2, 0);
+  return {score: Math.min((score+talkBonus)/35, 1.0), matchedKws: matchedKws.sort((a,b)=>b.score-a.score).slice(0,5)};
+}
+
+function scoreTalk(talk) {
+  let s = 0;
+  const tL = (talk.title||'').toLowerCase();
+  for (const kw of APP.activeKeywords) {
+    const re = new RegExp(kw.toLowerCase().replace(/[-\s]/g,'[\\s-]'),'g');
+    s += (tL.match(re)||[]).length*2;
+    if ((talk.relevantKws||[]).includes(kw)) s += 3;
+  }
+  return Math.min(s/12, 1.0);
+}
+
+function relevanceLabel(score) { return score>=0.45?'high':score>=0.18?'medium':'low'; }
+function relevanceText(score) { return Math.round(score*100)+'% match'; }
+
+// ── Embedding scoring ──────────────────────────────────────────
+function setScoringMode(mode, btn) {
+  APP.scoringMode = mode;
+  document.querySelectorAll('.score-tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.score-panel-s').forEach(p=>p.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const panel = document.getElementById('sp-' + mode);
+  if (panel) panel.classList.add('active');
+  const labels={tfidf:'TF-IDF',embeddings:'Sentence Embeddings',openai:'OpenAI text-embedding-3-small'};
+  document.getElementById('activeMethodBadge').innerHTML = `Active: <strong>${labels[mode]||mode}</strong>`;
+  renderCurrentDay();
+}
+function cosineSim(a,b) { let d=0,na=0,nb=0; for(let i=0;i<a.length;i++){d+=a[i]*b[i];na+=a[i]*a[i];nb+=b[i]*b[i];} return d/(Math.sqrt(na)*Math.sqrt(nb)+1e-9); }
+function sessionEmbedText(s) { const base=[s.title,s.subtitle,s.abstract].filter(Boolean).join(' '); const talks=(s.talks||[]).slice(0,s.type==='poster'?8:20).map(t=>t.title+(t.abstract?' '+t.abstract.slice(0,120):'')).join(' '); return (base+' '+talks).slice(0,900); }
+
+async function runEmbeddings() {
+  const btn=document.getElementById('btnRunEmb'), st=document.getElementById('embStatus'), pb=document.getElementById('embProgress'), pf=document.getElementById('embFill');
+  btn.disabled=true; btn.textContent='⏳ Loading model…'; pb.style.display=''; pf.style.width='0%';
+  st.className='score-status'; st.textContent='Downloading all-MiniLM-L6-v2 (~25MB, cached after first use)…';
+  try {
+    const {pipeline,env} = await import('https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2');
+    env.allowLocalModels=false;
+    const ext = await pipeline('feature-extraction','Xenova/all-MiniLM-L6-v2',{progress_callback:p=>{if(p.progress)pf.style.width=Math.round(p.progress*.3)+'%';}});
+    btn.textContent='⏳ Embedding sessions…';
+    const userOut = await ext(document.getElementById('profileAbstract').value,{pooling:'mean',normalize:true});
+    const userEmb = Array.from(userOut.data);
+    pf.style.width='33%';
+    const total = APP.sessions.length;
+    for (let i=0;i<total;i++) {
+      const s=APP.sessions[i];
+      const out=await ext(sessionEmbedText(s),{pooling:'mean',normalize:true});
+      const score=Math.max(0,Math.min(1,(cosineSim(userEmb,Array.from(out.data))-0.05)/0.55));
+      APP.embeddingScores.set(s.id,{score,reasons:['semantic match']});
+      pf.style.width=Math.round(33+(i+1)/total*67)+'%';
+      st.textContent=`Scoring ${i+1}/${total}…`;
+    }
+    st.className='score-status success'; st.textContent=`✓ ${total} sessions scored`;
+    btn.textContent='↻ Re-run'; btn.disabled=false;
+    APP.scoringMode='embeddings';
+    document.getElementById('activeMethodBadge').innerHTML='Active: <strong>Sentence Embeddings ✓</strong>';
+    renderCurrentDay();
+  } catch(err) { console.error(err); st.className='score-status error'; st.textContent='✗ '+err.message; btn.disabled=false; btn.textContent='▶ Retry'; }
+}
+
+async function runOpenAIEmb() {
+  const apiKey=(document.getElementById('openaiEmbKey').value||APP.llmApiKey).trim();
+  const btn=document.getElementById('btnRunOAI'), st=document.getElementById('oaiStatus');
+  if (!apiKey.startsWith('sk-')) { st.className='score-status error'; st.textContent='✗ Enter valid OpenAI key (sk-…)'; return; }
+  btn.disabled=true; btn.textContent='⏳ Embedding…'; st.className='score-status'; st.textContent='Sending to OpenAI…';
+  try {
+    const texts=[document.getElementById('profileAbstract').value,...APP.sessions.map(sessionEmbedText)];
+    const allEmb=[];
+    for (let i=0;i<texts.length;i+=100) {
+      st.textContent=`Embedding ${i}–${Math.min(i+100,texts.length)}/${texts.length}…`;
+      const resp=await fetch('https://api.openai.com/v1/embeddings',{method:'POST',headers:{'Authorization':`Bearer ${apiKey}`,'Content-Type':'application/json'},body:JSON.stringify({input:texts.slice(i,i+100),model:'text-embedding-3-small'})});
+      if (!resp.ok){const e=await resp.json();throw new Error(e.error?.message||`HTTP ${resp.status}`);}
+      const data=await resp.json();
+      data.data.sort((a,b)=>a.index-b.index);
+      allEmb.push(...data.data.map(d=>d.embedding));
+    }
+    const userEmb=allEmb[0];
+    APP.sessions.forEach((s,i)=>{const score=Math.max(0,Math.min(1,(cosineSim(userEmb,allEmb[i+1])-0.05)/0.55));APP.embeddingScores.set(s.id,{score,reasons:['OpenAI semantic']});});
+    st.className='score-status success'; st.textContent=`✓ ${APP.sessions.length} sessions scored`;
+    btn.textContent='↻ Re-run'; btn.disabled=false;
+    APP.scoringMode='openai';
+    document.getElementById('activeMethodBadge').innerHTML='Active: <strong>OpenAI text-embedding-3-small ✓</strong>';
+    renderCurrentDay();
+  } catch(err){console.error(err);st.className='score-status error';st.textContent='✗ '+err.message;btn.disabled=false;btn.textContent='▶ Retry';}
+}
+
+// ══════════════════════════════════════════════════════════════════
+// SCHEDULE RENDERING
+// ══════════════════════════════════════════════════════════════════
+function toMinutes(t) { const [h,m]=(t||'00:00').split(':').map(Number); return h*60+m; }
+function hasConflict(id) {
+  const s=APP.sessions.find(x=>x.id===id); if(!s||!s.start) return false;
+  for (const selId of APP.selectedSessions) {
+    if (selId===id) continue;
+    const o=APP.sessions.find(x=>x.id===selId); if(!o||o.day!==s.day||!o.start) continue;
+    if (toMinutes(s.start)<toMinutes(o.end||s.end) && toMinutes(s.end||s.start)<toMinutes(o.end||o.start)) return o;
+  }
+  return false;
+}
+
+function renderDayTabs() {
+  const nav=document.getElementById('tabNav');
+  if (APP.days.length <= 1) { nav.style.display='none'; return; }
+  nav.style.display='';
+  nav.innerHTML = APP.days.map((d,i)=>`<button class="tab-btn ${i===APP.currentDayIdx?'active':''}" onclick="showDay(${i})">${d.label}</button>`).join('');
+}
+function showDay(i) { APP.currentDayIdx=i; document.querySelectorAll('.tab-btn').forEach((b,j)=>b.classList.toggle('active',j===i)); renderCurrentDay(); }
+function setSort(t) { APP.currentSort=t; document.getElementById('sortTime').classList.toggle('active',t==='time'); document.getElementById('sortRel').classList.toggle('active',t==='relevance'); renderCurrentDay(); }
+
+function renderCurrentDay() {
+  if (APP.step !== 3) return;
+  const container=document.getElementById('scheduleContainer');
+  let sessions=APP.days.length>1 ? APP.sessions.filter(s=>s.day===APP.currentDayIdx) : APP.sessions;
+  sessions=sessions.map(s=>({...s,...computeScore(s)}));
+  if (document.getElementById('filterHighOnly')?.checked) sessions=sessions.filter(s=>relevanceLabel(s.score)==='high');
+  if (document.getElementById('filterSelOnly')?.checked) sessions=sessions.filter(s=>APP.selectedSessions.has(s.id));
+  if (APP.currentSort==='relevance') sessions.sort((a,b)=>b.score-a.score);
+  else sessions.sort((a,b)=>(a.start||'zz').localeCompare(b.start||'zz'));
+
+  const dayLabel = APP.days[APP.currentDayIdx]?.label || '';
+  let html = APP.days.length > 1 ? `<div class="day-header"><span class="day-badge">Day ${APP.currentDayIdx+1}</span>${dayLabel}</div>` : '';
+
+  if (APP.currentSort==='relevance') {
+    for (const s of sessions) html += renderSessionCard(s);
+  } else {
+    const times=[...new Set(sessions.map(s=>s.start||''))].sort();
+    for (const t of times) {
+      const group=sessions.filter(s=>(s.start||'')===(t));
+      const parallel=group.length>1;
+      html+=`<div class="time-group"><div class="time-group-header">${t||'Time TBD'} ${parallel?'<span class="parallel-label">PARALLEL</span>':''}</div>`;
+      for (const s of group) html+=renderSessionCard(s);
+      html+='</div>';
+    }
+  }
+  container.innerHTML = html || '<div style="padding:40px;text-align:center;color:var(--text-muted)">No sessions match current filters.</div>';
+  updateStats();
+  renderMySchedule();
+  renderTopPicks();
+}
+
+function renderSessionCard(s) {
+  const label=relevanceLabel(s.score), isSelected=APP.selectedSessions.has(s.id), conflict=isSelected?false:hasConflict(s.id);
+  const btnText=isSelected?'✓ Added':conflict?'⚠ Conflict':'+ Add';
+  const btnClass=isSelected?'btn-add added':conflict?'btn-add conflict-btn':'btn-add';
+  const matchKwHtml=s.matchedKws&&s.matchedKws.length?`<div class="sc-match-reasons"><strong>Matched on:</strong><div class="sc-match-keywords">${s.matchedKws.map(m=>`<span class="match-kw">${m.kw}</span>`).join('')}</div></div>`:'';
+
+  const isPoster = s.type==='poster';
+  const talksHtml = (s.talks||[]).length>0 ? (()=>{
+    if (isPoster) {
+      const scored=(s.talks||[]).map(t=>{const sc=scoreTalk(t);return{...t,_sc:sc,_lbl:relevanceLabel(sc)};}).sort((a,b)=>b._sc-a._sc);
+      const hc=scored.filter(t=>t._lbl==='high').length, mc=scored.filter(t=>t._lbl==='medium').length;
+      const filterBar=`<div class="poster-filter-bar"><button class="poster-filter-btn active" onclick="filterPosters(event,'${s.id}','all')">All (${scored.length})</button>${hc?`<button class="poster-filter-btn" onclick="filterPosters(event,'${s.id}','high')">★ High (${hc})</button>`:''}${mc?`<button class="poster-filter-btn" onclick="filterPosters(event,'${s.id}','medium')">◆ Med (${mc})</button>`:''}<span class="poster-count">click to expand abstract</span></div>`;
+      const rows=scored.map(t=>{const icon=t._lbl==='high'?'★ ':t._lbl==='medium'?'◆ ':'';const pct=t._lbl!=='low'?`<span class="poster-score">${Math.round(t._sc*100)}%</span>`:'';const topic=t.topic_area?`<span class="poster-topic">${t.topic_area}</span>`:'';const abs=t.abstract?`<div class="poster-abstract-body">${t.abstract}</div>`:'';return`<div class="poster-entry ${t._lbl}" data-poster-lbl="${t._lbl}" onclick="this.classList.toggle('expanded')">${pct}<span class="talk-num">${t.id||t.num}</span><span class="talk-title">${icon}${t.title}</span> — <span class="talk-speaker">${t.speaker}</span>${topic}${abs}</div>`;}).join('');
+      return `<div class="sc-talks" id="pt_${s.id}">${filterBar}${rows}</div>`;
+    } else {
+      return `<div class="sc-talks">${(s.talks||[]).map(t=>{const tScore=scoreTalk(t);const tLabel=relevanceLabel(tScore);const tClass=tLabel==='low'?'':tLabel;const tIcon=tLabel==='high'?'★ ':tLabel==='medium'?'◆ ':'';return`<div class="sc-talk"><span class="talk-num">T${t.num}</span><span class="talk-title">${tIcon}${t.title}</span> — <span class="talk-speaker">${t.speaker}</span><span class="talk-relevance ${tClass}">${tLabel==='low'?'':Math.round(tScore*100)+'%'}</span></div>`;}).join('')}</div>`;
+    }
+  })():'';
+
+  return `<div class="session-card ${label}${conflict?' conflict':''}${isSelected?' selected':''}" id="card_${s.id}">
+  <div class="sc-header" onclick="toggleExpand('${s.id}')">
+    <div class="sc-time">${s.start||'–'}${s.end?'–'+s.end:''}<br><span class="room">${s.room||''}</span></div>
+    <div class="sc-main"><div class="sc-type">${s.typeLabel||'Session'}</div><div class="sc-title">${s.title}</div>${s.chair?`<div class="sc-speaker">${s.chair}</div>`:''}</div>
+    <div class="sc-right"><div class="relevance-badge ${label}">${relevanceText(s.score)}</div><button class="${btnClass}" onclick="event.stopPropagation();toggleSession('${s.id}')">${btnText}</button></div>
+  </div>
+  <div class="sc-expand hidden" id="exp_${s.id}">
+    ${s.subtitle?`<div style="font-size:12px;font-weight:600;color:var(--primary);padding-top:8px;margin-bottom:4px">${s.subtitle}</div>`:''}
+    <div class="sc-abstract">${s.abstract||''}</div>
+    ${talksHtml}${matchKwHtml}
+    ${conflict?`<div style="background:#fef2f2;border:1px solid #fecaca;border-radius:5px;padding:6px 8px;font-size:11px;color:#b91c1c;margin-top:6px">⚠️ Conflicts with <strong>${conflict.title}</strong></div>`:''}
+  </div>
+</div>`;
+}
+
+function toggleExpand(id){const el=document.getElementById('exp_'+id);if(el)el.classList.toggle('hidden');}
+function toggleSession(id){if(APP.selectedSessions.has(id))APP.selectedSessions.delete(id);else APP.selectedSessions.add(id);renderCurrentDay();}
+function filterPosters(evt,sid,filter){evt.stopPropagation();const c=document.getElementById('pt_'+sid);if(!c)return;c.querySelectorAll('.poster-filter-btn').forEach(b=>b.classList.remove('active'));evt.target.classList.add('active');c.querySelectorAll('.poster-entry').forEach(r=>{r.style.display=(filter==='all'||r.getAttribute('data-poster-lbl')===filter)?'':' none';});}
+
+function renderMySchedule() {
+  const body=document.getElementById('myScheduleBody');
+  if (APP.selectedSessions.size===0){body.innerHTML='<div style="text-align:center;color:var(--text-muted);font-size:12px;padding:16px;line-height:1.6">No sessions selected.<br>Click "+ Add" to build your schedule.</div>';return;}
+  const byDay=APP.days.map(d=>APP.sessions.filter(s=>APP.selectedSessions.has(s.id)&&s.day===d.index).sort((a,b)=>(a.start||'').localeCompare(b.start||'')));
+  let html='';
+  APP.days.forEach((d,i)=>{
+    if(!byDay[i].length)return;
+    html+=`<div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--text-muted);margin:8px 0 4px;border-top:1px solid var(--border);padding-top:8px">${d.label}</div>`;
+    for(const s of byDay[i])html+=`<div class="sched-item"><span class="si-remove" onclick="toggleSession('${s.id}')">×</span><div class="si-title">${s.title.slice(0,50)}${s.title.length>50?'…':''}</div><div class="si-meta"><span>${s.start||'–'}</span><span>${s.room||''}</span></div></div>`;
+  });
+  body.innerHTML=html;
+}
+
+function renderTopPicks() {
+  const el=document.getElementById('topPicksPanel');
+  const top=APP.sessions.map(s=>({...s,...computeScore(s)})).sort((a,b)=>b.score-a.score).slice(0,5);
+  if(!top.length){el.innerHTML='Upload a PDF to get picks.';return;}
+  el.innerHTML=top.map(s=>`<div style="padding:5px 0;border-bottom:1px solid var(--border)"><div style="font-size:12px;font-weight:600">${s.title.slice(0,55)}${s.title.length>55?'…':''}</div><div style="font-size:11px;color:${s.score>=0.45?'var(--high)':s.score>=0.18?'var(--med)':'var(--low)'};margin-top:2px">${relevanceText(s.score)} · ${s.typeLabel||''}</div></div>`).join('');
+}
+
+function updateStats() {
+  const all=APP.sessions.map(s=>computeScore(s));
+  document.getElementById('selectedCount').textContent=APP.selectedSessions.size;
+  document.getElementById('highCount').textContent=all.filter(s=>relevanceLabel(s.score)==='high').length;
+}
+
+// ══════════════════════════════════════════════════════════════════
+// EXPORT
+// ══════════════════════════════════════════════════════════════════
+function exportText() {
+  const sel=[...APP.selectedSessions].map(id=>APP.sessions.find(s=>s.id===id)).filter(Boolean).sort((a,b)=>a.day-b.day||(a.start||'').localeCompare(b.start||''));
+  if(!sel.length){alert('No sessions selected.');return;}
+  const text=`${APP.conferenceName} — My Schedule\n${'='.repeat(50)}\n\n`+sel.map(s=>`${APP.days[s.day]?.label||'Day '+(s.day+1)} ${s.start||''} – ${s.end||''} | ${s.room||''}\n${s.title}\n${s.abstract?s.abstract.slice(0,200)+'…':''}\n`).join('\n---\n\n');
+  const a=document.createElement('a');a.href='data:text/plain;charset=utf-8,'+encodeURIComponent(text);a.download='confplan_schedule.txt';a.click();
+}
+function exportICS() {
+  const sel=[...APP.selectedSessions].map(id=>APP.sessions.find(s=>s.id===id)).filter(Boolean);
+  if(!sel.length){alert('No sessions selected.');return;}
+  const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//ConfPlan Universal//EN',...sel.map(s=>`BEGIN:VEVENT\nSUMMARY:${s.title}\nLOCATION:${s.room||''}\nDESCRIPTION:${(s.abstract||'').replace(/\n/g,'\\n').slice(0,300)}\nDTSTART;VALUE=DATE:19000101\nDTEND;VALUE=DATE:19000101\nEND:VEVENT`),'END:VCALENDAR'].join('\r\n');
+  const a=document.createElement('a');a.href='data:text/calendar;charset=utf-8,'+encodeURIComponent(ics);a.download='confplan_schedule.ics';a.click();
+}
+
+// ══════════════════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════════════════
+goToStep(1);
+</script>
+</body>
+</html>
