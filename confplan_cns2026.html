@@ -533,11 +533,11 @@ code-block { display: block; background: #1e293b; color: #e2e8f0; padding: 10px;
 
         <div class="profile-section">
           <label>Research Abstract</label>
-          <textarea class="profile-textarea" id="profileAbstract" rows="5" oninput="debouncedRecompute()">My research investigates how people build, maintain, and update mental representations of ongoing events during naturalistic perception. I study event segmentation, prediction errors that drive parsing of continuous experience into discrete events, and whether event representations are updated incrementally or globally. I use eye tracking, CLIP vision-language models to decode semantic content from gaze patterns during movie viewing, fMRI, computational modeling, and behavioral experiments.</textarea>
+          <textarea class="profile-textarea" id="profileAbstract" rows="5" oninput="debouncedRecompute()" placeholder="Paste your research abstract or describe your interests — keywords will be extracted automatically…"></textarea>
         </div>
 
         <div class="profile-section">
-          <label>Keywords <span style="font-weight:400;text-transform:none;letter-spacing:0">(click to toggle · × to remove)</span></label>
+          <label>Keywords <span style="font-weight:400;text-transform:none;letter-spacing:0">(auto-extracted from your text · click to toggle · × to remove)</span></label>
           <div class="keyword-chips" id="keywordChips"></div>
           <div class="add-kw-row">
             <input class="add-kw-input" id="addKwInput" placeholder="Add keyword…" onkeydown="if(event.key==='Enter')addKeyword()">
@@ -2046,8 +2046,8 @@ const PRESETS = {
 };
 
 // ==================== USER PROFILE ====================
-let userKeywords = [...PRESETS.sophie.keywords];
-let activeKeywords = new Set(userKeywords);
+let userKeywords = [];
+let activeKeywords = new Set();
 let selectedSessions = new Set();
 let currentSort = "time";
 let currentDay = 0;
@@ -2404,10 +2404,41 @@ function recomputeAll() {
   renderCurrentDay();
 }
 
+// ==================== KEYWORD EXTRACTION ====================
+function extractKeywordsFromText(text) {
+  const STOP = new Set(['the','a','an','and','or','but','in','on','at','to','for','of','with','by','from','is','are','was','were','be','been','being','have','has','had','do','does','did','will','would','could','should','may','might','this','that','these','those','it','its','i','my','me','we','our','you','your','they','their','them','who','which','what','when','where','how','all','each','both','few','more','most','other','some','such','no','not','only','same','so','than','too','very','just','also','about','into','through','during','before','after','above','below','between','out','use','used','using','can','as','if','he','she','his','her','then','there','here','any','many','much','now','new','well','whether','while','since','thus','however','although','because','across','within','without','whereas','along','upon','versus','given','show','shows','showed','shown','find','finds','found','study','studies','studied','suggest','suggests','suggested','result','results','effect','effects','data','analysis','method','approach','paper','present','recent','previous','current','different','multiple','several','large','small','high','low','important']);
+  const tokens = text.toLowerCase().replace(/[^a-z0-9\s\-]/g, ' ').split(/\s+/).filter(Boolean);
+  // Single-word frequencies
+  const wordFreq = {};
+  for (const t of tokens) {
+    if (t.length >= 4 && !STOP.has(t) && !/^\d+$/.test(t)) wordFreq[t] = (wordFreq[t] || 0) + 1;
+  }
+  // Bigrams from adjacent non-stop pairs
+  const bigramFreq = {};
+  for (let i = 0; i < tokens.length - 1; i++) {
+    const w1 = tokens[i], w2 = tokens[i+1];
+    if (w1.length >= 3 && w2.length >= 3 && !STOP.has(w1) && !STOP.has(w2)) {
+      const bg = `${w1} ${w2}`;
+      bigramFreq[bg] = (bigramFreq[bg] || 0) + 1;
+    }
+  }
+  const topBigrams = Object.entries(bigramFreq).sort((a,b)=>b[1]-a[1]).slice(0,12).map(([bg])=>bg);
+  const bigramWords = new Set(topBigrams.flatMap(bg => bg.split(' ')));
+  const topWords = Object.entries(wordFreq).filter(([w])=>!bigramWords.has(w)).sort((a,b)=>b[1]-a[1]).slice(0,12).map(([w])=>w);
+  return [...topBigrams, ...topWords].slice(0, 25);
+}
+
+function updateKeywordsFromText() {
+  const text = document.getElementById('profileAbstract').value.trim();
+  userKeywords = text ? extractKeywordsFromText(text) : [];
+  activeKeywords = new Set(userKeywords);
+  renderKeywordChips();
+}
+
 let recomputeTimer = null;
 function debouncedRecompute() {
   clearTimeout(recomputeTimer);
-  recomputeTimer = setTimeout(() => renderCurrentDay(), 600);
+  recomputeTimer = setTimeout(() => { updateKeywordsFromText(); renderCurrentDay(); }, 600);
 }
 
 // ==================== INLINE EDIT ====================
@@ -2461,6 +2492,7 @@ function applyModalProfile() {
   document.getElementById('profileInstDisplay').textContent = inst;
   document.getElementById('profileAvatar').textContent = name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
   document.getElementById('profileAbstract').value = abstract;
+  updateKeywordsFromText();
 
   saveProfile();
   closeModal();
@@ -2475,22 +2507,12 @@ function loadPreset(key, btn) {
   document.getElementById('modalName').value = p.name;
   document.getElementById('modalInst').value = p.inst;
   document.getElementById('modalAbstract').value = p.abstract;
-  // Update keywords too if user applies
-  if (key !== 'blank') {
-    userKeywords = [...p.keywords];
-    activeKeywords = new Set(userKeywords);
-  }
+  // keywords will be re-extracted from abstract when applied
 }
 
 function resetToDefault() {
-  const p = PRESETS.sophie;
-  document.getElementById('profileNameDisplay').textContent = p.name;
-  document.getElementById('profileInstDisplay').textContent = p.inst;
-  document.getElementById('profileAvatar').textContent = 'SS';
-  document.getElementById('profileAbstract').value = p.abstract;
-  userKeywords = [...p.keywords];
-  activeKeywords = new Set(userKeywords);
-  renderKeywordChips();
+  document.getElementById('profileAbstract').value = '';
+  updateKeywordsFromText();
   saveProfile();
   renderCurrentDay();
 }
@@ -2518,8 +2540,7 @@ function loadSavedProfile() {
     document.getElementById('profileInstDisplay').textContent = p.inst || '';
     document.getElementById('profileAvatar').textContent = (p.name||'U').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
     document.getElementById('profileAbstract').value = p.abstract || '';
-    userKeywords = p.keywords || [];
-    activeKeywords = new Set(p.activeKeywords || userKeywords);
+    // keywords are re-extracted from text — don't restore stale saved list
     return true;
   } catch(e) { return false; }
 }
@@ -2588,7 +2609,7 @@ function exportICS() {
 
 // ==================== INIT ====================
 const hasSavedProfile = loadSavedProfile();
-renderKeywordChips();
+updateKeywordsFromText();
 showDay(0);
 toggleApiPanel(); // open API panel by default
 
