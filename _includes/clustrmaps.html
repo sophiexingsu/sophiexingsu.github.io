@@ -1,0 +1,8 @@
+{% if site.clustrmaps_id and site.clustrmaps_id != "" %}
+<div class="author__visitor-map" style="text-align:center; margin-top:14px; padding-top:12px; border-top:1px solid #e2e8f0;">
+  <p style="font-size:11px; color:#94a3b8; margin-bottom:6px; text-transform:uppercase; letter-spacing:.5px; font-weight:600;">Visitors</p>
+  <script type='text/javascript' id='clustrmaps'
+    src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=220&t=n&d={{ site.clustrmaps_id }}&co=1a3a5c&ct=ffffff&cmo=3acc3a&cmn=ff5353'>
+  </script>
+</div>
+{% endif %}

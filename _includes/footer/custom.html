@@ -1,3 +1,8 @@
 <!-- start custom footer snippets -->
 <a href="/sitemap/">Sitemap</a>
+
+{% if site.goatcounter_id and site.goatcounter_id != "" %}
+<script data-goatcounter="https://{{ site.goatcounter_id }}.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+{% endif %}
 <!-- end custom footer snippets -->

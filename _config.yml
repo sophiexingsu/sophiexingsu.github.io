@@ -73,9 +73,26 @@ social:
 
 # Analytics
 analytics:
-  provider               :  "google-universal" # false (default), "google", "google-universal", "custom"
+  provider               : false # disabled (no GA tracking ID set)
   google:
     tracking_id          :
+
+# Visitor tracking
+# ─────────────────────────────────────────────────────────────────────
+# ClustrMaps: shows a world-map widget + total visitor count in your sidebar.
+#   Setup (2 min):
+#   1. Go to https://clustrmaps.com/add/
+#   2. Enter your site URL: https://sophiexingsu.github.io
+#   3. Click "I'll take it!" → copy the embed code
+#   4. From src='//cdn.clustrmaps.com/map_v2.js?...&d=XXXXXXXX', paste XXXXXXXX below
+clustrmaps_id            : ""  # e.g. "2fkjh3d9xyz"
+
+# GoatCounter: private analytics dashboard (location + page views, no cookies).
+#   Setup (2 min):
+#   1. Go to https://www.goatcounter.com/ → Sign up (free)
+#   2. Use code "sophiexingsu" (or any short name) for your site
+#   3. Paste that code below — your stats will be at https://sophiexingsu.goatcounter.com
+goatcounter_id           : ""  # e.g. "sophiexingsu"
 
 
 # Site Author
