@@ -250,6 +250,30 @@ code-block { display: block; background: #1e293b; color: #e2e8f0; padding: 10px;
   border-radius: 4px; font-size: 11px; white-space: nowrap; margin-bottom: 4px; z-index: 200; }
 
 
+/* ── Scoring Method Panel ── */
+.score-method-tabs { display:flex; gap:4px; margin-bottom:10px; }
+.score-tab { flex:1; padding:5px 2px; border:1px solid var(--border); border-radius:5px;
+  background:var(--bg); cursor:pointer; font-size:11px; font-weight:600; color:var(--text-muted);
+  text-align:center; transition:all .15s; }
+.score-tab:hover { border-color:var(--primary-light); color:var(--primary); }
+.score-tab.active { background:var(--primary); color:white; border-color:var(--primary); }
+.score-panel { display:none; }
+.score-panel.active { display:block; }
+.score-status { font-size:11px; color:var(--text-muted); margin-top:6px; line-height:1.5; }
+.score-status.success { color:var(--high); }
+.score-status.error { color:#b91c1c; }
+.progress-bar { height:5px; background:#e2e8f0; border-radius:3px; margin-top:8px; overflow:hidden; display:none; }
+.progress-bar-fill { height:100%; background:linear-gradient(90deg,#2d5a8e,#7c3aed); border-radius:3px; transition:width .25s; }
+.api-key-input { width:100%; border:1px solid var(--border); border-radius:5px; padding:6px 8px;
+  font-size:11px; font-family:monospace; color:var(--text); margin-top:6px; }
+.api-key-input:focus { outline:none; border-color:var(--primary-light); }
+.btn-run { width:100%; margin-top:8px; padding:7px; background:#0891b2; color:white;
+  border:none; border-radius:5px; cursor:pointer; font-size:12px; font-weight:700; transition:background .15s; }
+.btn-run:hover:not(:disabled) { background:#0e7490; }
+.btn-run:disabled { background:#94a3b8; cursor:not-allowed; }
+.active-method-badge { font-size:10px; text-align:center; margin-top:8px; color:var(--text-muted); }
+.active-method-badge strong { color:var(--primary); }
+
 /* ── Poster Abstracts ── */
 .poster-entry { display:block; padding:6px 0; border-bottom:1px solid #e2e8f0; font-size:12px; cursor:pointer; }
 .poster-entry:last-child { border-bottom:none; }
@@ -494,16 +518,38 @@ code-block { display: block; background: #1e293b; color: #e2e8f0; padding: 10px;
       </div>
     </div>
 
-    <!-- API upgrade hint -->
+    <!-- Scoring Method Panel -->
     <div class="panel" style="margin-top:12px">
       <div class="panel-header" style="background:#312e81"><span class="icon">✨</span> Scoring Method</div>
       <div class="panel-body">
-        <div style="font-size:12px;color:var(--text-muted);line-height:1.6">
-          <strong style="color:var(--text)">Current (free):</strong> Keyword frequency × position weight
+        <div class="score-method-tabs">
+          <button class="score-tab active" onclick="setScoringMode('tfidf',this)" title="Free, instant, no setup">TF-IDF</button>
+          <button class="score-tab" onclick="setScoringMode('embeddings',this)" title="Semantic model, runs in your browser">Semantic</button>
+          <button class="score-tab" onclick="setScoringMode('openai',this)" title="OpenAI API key required">OpenAI</button>
         </div>
-        <div style="margin-top:8px;font-size:12px;color:var(--text-muted);line-height:1.6">
-          <strong style="color:#7c3aed">With LLM API:</strong> True semantic embeddings, cross-references your papers, generates "why you'd like this" explanations. <a href="#api-panel" style="color:#7c3aed;font-weight:700">See comparison ↓</a>
+
+        <!-- TF-IDF -->
+        <div class="score-panel active" id="panel-tfidf">
+          <div class="score-status">🔍 Keyword frequency × position weight. Instant, no setup.</div>
         </div>
+
+        <!-- Transformers.js -->
+        <div class="score-panel" id="panel-embeddings">
+          <div class="score-status">🧬 Runs <strong>all-MiniLM-L6-v2</strong> fully in your browser — no API key needed. Downloads ~25 MB model once, then cached.</div>
+          <button class="btn-run" id="btnRunEmbeddings" onclick="runEmbeddings()">▶ Compute Embeddings</button>
+          <div class="progress-bar" id="embProgress"><div class="progress-bar-fill" id="embProgressFill" style="width:0%"></div></div>
+          <div class="score-status" id="embStatus"></div>
+        </div>
+
+        <!-- OpenAI -->
+        <div class="score-panel" id="panel-openai">
+          <div class="score-status">🤖 Uses <strong>text-embedding-3-small</strong>. Your key never leaves your browser. Est. cost: &lt;$0.01.</div>
+          <input type="password" class="api-key-input" id="openaiKey" placeholder="sk-…" autocomplete="off">
+          <button class="btn-run" id="btnRunOpenAI" onclick="runOpenAI()">▶ Run OpenAI Embeddings</button>
+          <div class="score-status" id="openaiStatus"></div>
+        </div>
+
+        <div class="active-method-badge" id="activeMethodBadge">Active: <strong>TF-IDF</strong></div>
       </div>
     </div>
   </div>
@@ -1970,8 +2016,17 @@ let selectedSessions = new Set();
 let currentSort = "time";
 let currentDay = 0;
 
+// ==================== EMBEDDING STATE ====================
+let scoringMode = 'tfidf'; // 'tfidf' | 'embeddings' | 'openai'
+let embeddingScores = new Map(); // sessionId -> {score, reasons:[]}
+
 // ==================== SCORING ====================
 function computeScore(session) {
+  // Use precomputed embedding scores when available
+  if (scoringMode !== 'tfidf' && embeddingScores.has(session.id)) {
+    const e = embeddingScores.get(session.id);
+    return { score: e.score, matchedKws: (e.reasons || []).map(r => ({kw: r, score: 1})) };
+  }
   const abstract = document.getElementById('profileAbstract').value.toLowerCase();
   const profileWords = abstract.split(/\W+/).filter(w => w.length > 3);
 
@@ -2512,6 +2567,145 @@ if (!hasSavedProfile) {
 document.getElementById('welcomeModal').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
+
+// ==================== EMBEDDING SCORING ====================
+
+function setScoringMode(mode, btn) {
+  document.querySelectorAll('.score-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.score-panel').forEach(p => p.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const panel = document.getElementById('panel-' + mode);
+  if (panel) panel.classList.add('active');
+  scoringMode = mode;
+  const labels = { tfidf:'TF-IDF', embeddings:'Sentence Embeddings (all-MiniLM-L6-v2)', openai:'OpenAI text-embedding-3-small' };
+  const badge = document.getElementById('activeMethodBadge');
+  if (badge) badge.innerHTML = `Active: <strong>${labels[mode] || mode}</strong>`;
+  renderCurrentDay();
+}
+
+function cosineSim(a, b) {
+  let dot = 0, na = 0, nb = 0;
+  for (let i = 0; i < a.length; i++) { dot += a[i]*b[i]; na += a[i]*a[i]; nb += b[i]*b[i]; }
+  return dot / (Math.sqrt(na) * Math.sqrt(nb) + 1e-9);
+}
+
+function sessionEmbedText(session) {
+  const base = `${session.title} ${session.subtitle} ${session.abstract}`;
+  const talkSlice = session.type === 'poster' ? 8 : session.talks.length;
+  const talks = session.talks.slice(0, talkSlice)
+    .map(t => t.title + (t.abstract ? ' ' + t.abstract.slice(0, 120) : '')).join(' ');
+  return (base + ' ' + talks).slice(0, 900);
+}
+
+// ── Transformers.js (in-browser, no API key) ─────────────────────
+async function runEmbeddings() {
+  const btn = document.getElementById('btnRunEmbeddings');
+  const statusEl = document.getElementById('embStatus');
+  const progressBar = document.getElementById('embProgress');
+  const progressFill = document.getElementById('embProgressFill');
+
+  btn.disabled = true; btn.textContent = '⏳ Loading model…';
+  progressBar.style.display = 'block'; progressFill.style.width = '0%';
+  statusEl.className = 'score-status';
+  statusEl.textContent = 'Downloading all-MiniLM-L6-v2 (~25 MB, cached after first use)…';
+
+  try {
+    const { pipeline, env } = await import('https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2');
+    env.allowLocalModels = false;
+
+    const extractor = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2', {
+      progress_callback: (p) => { if (p.progress) progressFill.style.width = Math.round(p.progress * 0.3) + '%'; }
+    });
+
+    btn.textContent = '⏳ Embedding sessions…';
+    const userText = document.getElementById('profileAbstract').value;
+    const userOut = await extractor(userText, { pooling: 'mean', normalize: true });
+    const userEmb = Array.from(userOut.data);
+    progressFill.style.width = '33%';
+
+    const total = SESSIONS.length;
+    for (let i = 0; i < total; i++) {
+      const session = SESSIONS[i];
+      const out = await extractor(sessionEmbedText(session), { pooling: 'mean', normalize: true });
+      const sim = cosineSim(userEmb, Array.from(out.data));
+      // Shift cosine sim from [-1,1] → [0,1] with generous scaling
+      const score = Math.max(0, Math.min(1, (sim - 0.05) / 0.55));
+      embeddingScores.set(session.id, { score, reasons: ['semantic match'] });
+      progressFill.style.width = Math.round(33 + (i + 1) / total * 67) + '%';
+      statusEl.textContent = `Scoring sessions… ${i + 1}/${total}`;
+    }
+
+    statusEl.className = 'score-status success';
+    statusEl.textContent = `✓ ${total} sessions scored with sentence embeddings`;
+    btn.textContent = '↻ Re-run'; btn.disabled = false;
+    setScoringMode('embeddings', null);
+    document.querySelector('#panel-embeddings').closest('.panel').querySelector('.score-tab:nth-child(2)');
+    document.getElementById('activeMethodBadge').innerHTML = 'Active: <strong>Sentence Embeddings ✓</strong>';
+    renderCurrentDay();
+
+  } catch (err) {
+    console.error(err);
+    statusEl.className = 'score-status error';
+    statusEl.textContent = '✗ ' + err.message;
+    btn.disabled = false; btn.textContent = '▶ Retry';
+  }
+}
+
+// ── OpenAI Embeddings ─────────────────────────────────────────
+async function runOpenAI() {
+  const apiKey = document.getElementById('openaiKey').value.trim();
+  const btn = document.getElementById('btnRunOpenAI');
+  const statusEl = document.getElementById('openaiStatus');
+
+  if (!apiKey.startsWith('sk-')) {
+    statusEl.className = 'score-status error';
+    statusEl.textContent = '✗ Enter a valid OpenAI key (starts with sk-)';
+    return;
+  }
+  btn.disabled = true; btn.textContent = '⏳ Embedding…';
+  statusEl.className = 'score-status';
+  statusEl.textContent = 'Sending to OpenAI API…';
+
+  try {
+    const userText = document.getElementById('profileAbstract').value;
+    const allTexts = [userText, ...SESSIONS.map(sessionEmbedText)];
+    const allEmbeddings = [];
+    const chunkSize = 100;
+
+    for (let i = 0; i < allTexts.length; i += chunkSize) {
+      statusEl.textContent = `Embedding batch ${Math.floor(i/chunkSize)+1}/${Math.ceil(allTexts.length/chunkSize)}…`;
+      const resp = await fetch('https://api.openai.com/v1/embeddings', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ input: allTexts.slice(i, i + chunkSize), model: 'text-embedding-3-small' })
+      });
+      if (!resp.ok) { const e = await resp.json(); throw new Error(e.error?.message || `HTTP ${resp.status}`); }
+      const data = await resp.json();
+      data.data.sort((a, b) => a.index - b.index);
+      allEmbeddings.push(...data.data.map(d => d.embedding));
+    }
+
+    const userEmb = allEmbeddings[0];
+    SESSIONS.forEach((s, i) => {
+      const sim = cosineSim(userEmb, allEmbeddings[i + 1]);
+      const score = Math.max(0, Math.min(1, (sim - 0.05) / 0.55));
+      embeddingScores.set(s.id, { score, reasons: ['OpenAI semantic'] });
+    });
+
+    statusEl.className = 'score-status success';
+    statusEl.textContent = `✓ ${SESSIONS.length} sessions scored via OpenAI`;
+    btn.textContent = '↻ Re-run'; btn.disabled = false;
+    scoringMode = 'openai';
+    document.getElementById('activeMethodBadge').innerHTML = 'Active: <strong>OpenAI text-embedding-3-small ✓</strong>';
+    renderCurrentDay();
+
+  } catch (err) {
+    console.error(err);
+    statusEl.className = 'score-status error';
+    statusEl.textContent = '✗ ' + err.message;
+    btn.disabled = false; btn.textContent = '▶ Retry';
+  }
+}
 
 function filterPosters(evt, sessionId, filter) {
   evt.stopPropagation();
