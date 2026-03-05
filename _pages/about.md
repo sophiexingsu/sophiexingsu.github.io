@@ -65,10 +65,20 @@ These projects combine computational modeling, eye-tracking, fMRI, and behaviora
 
 ---
 
+## Tools
+
+<div style="display:flex; gap:12px; flex-wrap:wrap; margin: 1em 0 1.5em;">
+  <a href="/confplan_cns2026.html" class="btn btn--primary btn--large">🗓 CNS 2026 Schedule Planner</a>
+</div>
+
+Interactive schedule optimizer for CNS 2026 Vancouver (March 7–10) — ranks all sessions and 769 poster abstracts by relevance to your research profile.
+
+---
+
 ## News & Highlights
 
-### 2025  
-- **Oct:** Paper published in *Journal of Experimental Psychology: General*  
+### 2025
+- **Oct:** Paper published in *Journal of Experimental Psychology: General*
 - **May:** Poster presentation at VSS 2025 (CLIP × gaze project)
 
 ### 2024  
