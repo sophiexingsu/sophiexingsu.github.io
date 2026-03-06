@@ -125,7 +125,38 @@ header.s3 .stats strong{color:#fbbf24;}
 
 .main-layout{display:grid;grid-template-columns:270px 1fr 270px;gap:14px;padding:14px 20px;max-width:1400px;margin:0 auto;}
 @media(max-width:1100px){.main-layout{grid-template-columns:230px 1fr 230px;}}
-@media(max-width:900px){.main-layout{grid-template-columns:1fr;}}
+@media(max-width:900px){.main-layout{grid-template-columns:1fr;padding:12px;gap:12px;}}
+.mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;height:56px;background:white;border-top:1px solid var(--border);z-index:800;}
+.mobile-nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:none;background:none;cursor:pointer;color:var(--text-muted);font-size:10px;font-weight:600;padding:4px 0;-webkit-tap-highlight-color:transparent;}
+.mobile-nav-btn .m-icon{font-size:19px;line-height:1;}
+.mobile-nav-btn.active{color:var(--primary);}
+@media(max-width:640px){
+  body{padding-bottom:58px;}
+  header{padding:8px 12px;flex-wrap:wrap;gap:6px;}
+  .logo{font-size:16px;}
+  .wizard-bar{padding:8px 12px;gap:0;overflow-x:auto;scrollbar-width:none;}
+  .wizard-bar::-webkit-scrollbar{display:none;}
+  .step-indicator{font-size:11px;padding:6px 8px;white-space:nowrap;}
+  .tab-nav{overflow-x:auto;padding:0 8px;scrollbar-width:none;}
+  .tab-nav::-webkit-scrollbar{display:none;}
+  .tab-btn{font-size:11px;padding:9px 10px;white-space:nowrap;}
+  .main-layout{grid-template-columns:1fr;padding:8px;gap:0;}
+  .main-layout>div{display:none;}
+  .main-layout>div.m-active{display:block;}
+  .sc-header{padding:8px 10px;gap:7px;}
+  .sc-time{font-size:10px;min-width:50px;}
+  .sc-title{font-size:12px;line-height:1.35;}
+  .sc-right{min-width:58px;gap:4px;}
+  .relevance-badge{font-size:10px;padding:2px 5px;}
+  .sort-bar{font-size:11px;gap:5px;margin-bottom:8px;}
+  .sort-btn{font-size:11px;padding:4px 9px;}
+  .sched-item{padding:6px 7px;}
+  .si-title{font-size:11px;}
+  .export-bar{gap:4px;}
+  .btn-export{font-size:11px;padding:5px;}
+  .fb-fab{bottom:66px;right:14px;padding:8px 13px;font-size:12px;}
+  .mobile-nav{display:flex;}
+}
 
 .panel{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;box-shadow:var(--shadow);}
 .panel-header{background:var(--primary);color:white;padding:10px 14px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;}
@@ -475,7 +506,7 @@ header.s3 .stats strong{color:#fbbf24;}
 
   <div class="main-layout">
     <!-- LEFT: Profile -->
-    <div>
+    <div id="col-profile">
       <div class="panel">
         <div class="panel-header" style="justify-content:space-between">
           <span>🧠 Research Profile</span>
@@ -536,7 +567,7 @@ header.s3 .stats strong{color:#fbbf24;}
     </div>
 
     <!-- CENTER: Schedule -->
-    <div>
+    <div id="col-schedule">
       <div class="sort-bar">
         <label>Sort:</label>
         <button class="sort-btn active" id="sortTime" onclick="setSort('time')">By Time</button>
@@ -552,7 +583,7 @@ header.s3 .stats strong{color:#fbbf24;}
     </div>
 
     <!-- RIGHT: My Schedule -->
-    <div>
+    <div id="col-mysched">
       <div class="panel" id="mySchedulePanel">
         <div class="panel-header">📅 My Schedule</div>
         <div class="panel-body" id="myScheduleBody">
@@ -1389,7 +1420,31 @@ function exportICS() {
 // INIT
 // ══════════════════════════════════════════════════════════════════
 goToStep(1);
+
+// ── Mobile panel switching ─────────────────────────────────────
+function showMobilePanel(idx) {
+  document.querySelectorAll('.main-layout > div').forEach((p, i) => {
+    p.classList.toggle('m-active', i === idx);
+  });
+  document.querySelectorAll('.mobile-nav-btn').forEach((b, i) => {
+    b.classList.toggle('active', i === idx);
+  });
+}
+showMobilePanel(1);
 </script>
+
+<!-- Mobile bottom nav -->
+<nav class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-btn" onclick="showMobilePanel(0)">
+    <span class="m-icon">🧠</span>Profile
+  </button>
+  <button class="mobile-nav-btn active" onclick="showMobilePanel(1)">
+    <span class="m-icon">📅</span>Schedule
+  </button>
+  <button class="mobile-nav-btn" onclick="showMobilePanel(2)">
+    <span class="m-icon">⭐</span>My List
+  </button>
+</nav>
 
 <!-- Feedback FAB -->
 <button class="fb-fab" onclick="openFb()">💬 Feedback</button>

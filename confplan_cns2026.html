@@ -236,8 +236,90 @@ code-block { display: block; background: #1e293b; color: #e2e8f0; padding: 10px;
   .main-layout { grid-template-columns: 240px 1fr 240px; }
 }
 @media (max-width: 900px) {
-  .main-layout { grid-template-columns: 1fr; }
+  .main-layout { grid-template-columns: 1fr; padding: 12px; gap: 12px; }
   .api-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Mobile bottom nav ── */
+.mobile-nav {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0; height: 56px;
+  background: white; border-top: 1px solid var(--border); z-index: 800;
+}
+.mobile-nav-btn {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 2px; border: none; background: none;
+  cursor: pointer; color: var(--text-muted); font-size: 10px; font-weight: 600;
+  padding: 4px 0; -webkit-tap-highlight-color: transparent;
+}
+.mobile-nav-btn .m-icon { font-size: 19px; line-height: 1; }
+.mobile-nav-btn.active { color: var(--primary); }
+
+/* ── Phone breakpoint ── */
+@media (max-width: 640px) {
+  body { padding-bottom: 58px; }
+
+  /* Header: compact, hide legend */
+  header { padding: 8px 12px; flex-wrap: wrap; gap: 6px; }
+  header .logo { font-size: 17px; }
+  header .logo svg { width: 22px; height: 22px; }
+  header .conference { font-size: 11px; }
+  header .conference strong { font-size: 12px; }
+  header .legend { display: none; }
+  header .stats { font-size: 11px; }
+
+  /* Tab nav: horizontal scroll, no overflow */
+  .tab-nav { overflow-x: auto; padding: 0 8px; scrollbar-width: none; }
+  .tab-nav::-webkit-scrollbar { display: none; }
+  .tab-btn { font-size: 11px; padding: 9px 10px; white-space: nowrap; }
+
+  /* Main layout: single column, panel switching via bottom nav */
+  .main-layout { grid-template-columns: 1fr; padding: 8px; gap: 0; }
+  .main-layout > div { display: none; }
+  .main-layout > div.m-active { display: block; }
+
+  /* Session cards: compact */
+  .sc-header { padding: 8px 10px; gap: 7px; }
+  .sc-time { font-size: 10px; min-width: 50px; }
+  .room { font-size: 9px; }
+  .sc-type { font-size: 9px; padding: 1px 4px; }
+  .sc-title { font-size: 12px; line-height: 1.35; }
+  .sc-speaker { font-size: 11px; }
+  .sc-right { min-width: 58px; gap: 4px; }
+  .relevance-badge { font-size: 10px; padding: 2px 5px; }
+  .btn-add, .btn-remove { font-size: 11px; padding: 5px 9px; }
+
+  /* Sort bar */
+  .sort-bar { font-size: 11px; gap: 5px; margin-bottom: 8px; padding: 0 2px; }
+  .sort-btn { font-size: 11px; padding: 4px 9px; }
+
+  /* Profile panel */
+  .profile-textarea { font-size: 12px; }
+  .profile-actions { flex-direction: row; }
+
+  /* Chips */
+  .chip { font-size: 11px; padding: 3px 7px; }
+
+  /* My Schedule items */
+  .sched-item { padding: 6px 7px; }
+  .si-title { font-size: 11px; }
+  .si-meta { font-size: 10px; }
+  .export-bar { gap: 4px; }
+  .btn-export { font-size: 11px; padding: 5px; }
+
+  /* Welcome modal: full-width */
+  .modal { padding: 16px; }
+  .modal-header h2 { font-size: 17px; }
+
+  /* Feedback FAB: above bottom nav */
+  .fb-fab { bottom: 66px; right: 14px; padding: 8px 13px; font-size: 12px; }
+
+  /* Bottom nav: show on mobile */
+  .mobile-nav { display: flex; }
+
+  /* API panel */
+  .api-grid { grid-template-columns: 1fr !important; }
+  .api-panel-header h3 { font-size: 12px; }
 }
 
 /* Loading animation */
@@ -517,7 +599,7 @@ code-block { display: block; background: #1e293b; color: #e2e8f0; padding: 10px;
 <div class="main-layout">
 
   <!-- LEFT: Profile -->
-  <div>
+  <div id="col-profile">
     <div class="panel">
       <div class="panel-header" style="justify-content:space-between">
         <span><span class="icon">🧠</span> Research Profile</span>
@@ -620,7 +702,7 @@ code-block { display: block; background: #1e293b; color: #e2e8f0; padding: 10px;
   </div>
 
   <!-- CENTER: Schedule -->
-  <div>
+  <div id="col-schedule">
     <div class="sort-bar">
       <label>Sort:</label>
       <button class="sort-btn active" id="sortTime" onclick="setSort('time')">By Time</button>
@@ -636,7 +718,7 @@ code-block { display: block; background: #1e293b; color: #e2e8f0; padding: 10px;
   </div>
 
   <!-- RIGHT: My Schedule -->
-  <div>
+  <div id="col-mysched">
     <div class="panel" id="mySchedulePanel">
       <div class="panel-header"><span class="icon">📅</span> My Schedule</div>
       <div class="panel-body" id="myScheduleBody">
@@ -2728,10 +2810,21 @@ function exportICS() {
   a.click();
 }
 
+// ==================== MOBILE PANEL SWITCHING ====================
+function showMobilePanel(idx) {
+  document.querySelectorAll('.main-layout > div').forEach((p, i) => {
+    p.classList.toggle('m-active', i === idx);
+  });
+  document.querySelectorAll('.mobile-nav-btn').forEach((b, i) => {
+    b.classList.toggle('active', i === idx);
+  });
+}
+
 // ==================== INIT ====================
 const hasSavedProfile = loadSavedProfile();
 updateKeywordsFromText();
 showDay(0);
+showMobilePanel(1); // default to schedule panel on mobile
 toggleApiPanel(); // open API panel by default
 
 // Show welcome modal only if no saved profile
@@ -3004,6 +3097,19 @@ function filterPosters(evt, sessionId, filter) {
 }
 
 </script>
+<!-- Mobile bottom nav (hidden on desktop via CSS) -->
+<nav class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-btn" onclick="showMobilePanel(0)">
+    <span class="m-icon">🧠</span>Profile
+  </button>
+  <button class="mobile-nav-btn active" onclick="showMobilePanel(1)">
+    <span class="m-icon">📅</span>Schedule
+  </button>
+  <button class="mobile-nav-btn" onclick="showMobilePanel(2)">
+    <span class="m-icon">⭐</span>My List
+  </button>
+</nav>
+
 <!-- Feedback FAB -->
 <button class="fb-fab" onclick="openFb()">💬 Feedback</button>
 <div class="fb-overlay hidden" id="fbOverlay" onclick="if(event.target===this)closeFb()">
