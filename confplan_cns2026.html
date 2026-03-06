@@ -2633,7 +2633,34 @@ function exportText() {
 }
 
 function exportICS() {
-  const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//ConfPlan CNS 2026//EN", "CALSCALE:GREGORIAN"];
+  // Conference timezone: America/Vancouver
+  // DST springs forward on Sun Mar 8 2026 at 02:00 PST → 03:00 PDT
+  const TZ = "America/Vancouver";
+  const lines = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//ConfPlan CNS 2026//EN",
+    "CALSCALE:GREGORIAN",
+    "X-WR-TIMEZONE:" + TZ,
+    // VTIMEZONE block so any calendar app understands the timezone
+    "BEGIN:VTIMEZONE",
+    "TZID:" + TZ,
+    "BEGIN:STANDARD",
+    "TZOFFSETFROM:-0700",
+    "TZOFFSETTO:-0800",
+    "TZNAME:PST",
+    "DTSTART:19701101T020000",
+    "RRULE:FREQ=YEARLY;BYDAY=1SU;BYMONTH=11",
+    "END:STANDARD",
+    "BEGIN:DAYLIGHT",
+    "TZOFFSETFROM:-0800",
+    "TZOFFSETTO:-0700",
+    "TZNAME:PDT",
+    "DTSTART:19700308T020000",
+    "RRULE:FREQ=YEARLY;BYDAY=2SU;BYMONTH=3",
+    "END:DAYLIGHT",
+    "END:VTIMEZONE"
+  ];
   const dateMap = { 0: "20260307", 1: "20260308", 2: "20260309", 3: "20260310" };
 
   for (const id of selectedSessions) {
@@ -2644,8 +2671,8 @@ function exportICS() {
     const endT = s.end.replace(':','') + "00";
     lines.push("BEGIN:VEVENT",
       `UID:${s.id}@cns2026`,
-      `DTSTART:${dt}T${startT}`,
-      `DTEND:${dt}T${endT}`,
+      `DTSTART;TZID=${TZ}:${dt}T${startT}`,
+      `DTEND;TZID=${TZ}:${dt}T${endT}`,
       `SUMMARY:${s.title}`,
       `LOCATION:${s.room} - JW Marriott Parq Vancouver`,
       `DESCRIPTION:${s.subtitle || ''} ${s.chair ? '| ' + s.chair : ''}`,
@@ -2657,8 +2684,8 @@ function exportICS() {
     const endT = p.end.replace(':','') + "00";
     lines.push("BEGIN:VEVENT",
       `UID:poster-${pid}@cns2026`,
-      `DTSTART:${dt}T${startT}`,
-      `DTEND:${dt}T${endT}`,
+      `DTSTART;TZID=${TZ}:${dt}T${startT}`,
+      `DTEND;TZID=${TZ}:${dt}T${endT}`,
       `SUMMARY:[Poster ${pid}] ${p.title}`,
       `LOCATION:${p.room} - JW Marriott Parq Vancouver`,
       `DESCRIPTION:${p.speaker}`,
