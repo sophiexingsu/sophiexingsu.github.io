@@ -563,7 +563,7 @@ code-block { display: block; background: #1e293b; color: #e2e8f0; padding: 10px;
         <div class="score-method-tabs">
           <button class="score-tab active" onclick="setScoringMode('tfidf',this)" title="Free, instant, no setup">TF-IDF</button>
           <button class="score-tab" onclick="setScoringMode('embeddings',this)" title="Semantic model, runs in your browser">Semantic</button>
-          <button class="score-tab" onclick="setScoringMode('openai',this)" title="OpenAI API key required">OpenAI</button>
+          <button class="score-tab" onclick="setScoringMode('llm',this)" title="AI scoring via Claude or OpenAI API">LLM</button>
         </div>
 
         <!-- TF-IDF -->
@@ -579,12 +579,21 @@ code-block { display: block; background: #1e293b; color: #e2e8f0; padding: 10px;
           <div class="score-status" id="embStatus"></div>
         </div>
 
-        <!-- OpenAI -->
-        <div class="score-panel" id="panel-openai">
-          <div class="score-status">🤖 Uses <strong>text-embedding-3-small</strong>. Your key never leaves your browser. Est. cost: &lt;$0.01.</div>
-          <input type="password" class="api-key-input" id="openaiKey" placeholder="sk-…" autocomplete="off">
-          <button class="btn-run" id="btnRunOpenAI" onclick="runOpenAI()">▶ Run OpenAI Embeddings</button>
-          <div class="score-status" id="openaiStatus"></div>
+        <!-- LLM (Claude / OpenAI) -->
+        <div class="score-panel" id="panel-llm">
+          <div class="score-status">🤖 AI reads your profile and scores every session. Key stays in your browser.</div>
+          <div style="display:flex;gap:14px;margin:8px 0 4px">
+            <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;font-weight:600">
+              <input type="radio" name="llmProvider" value="claude" checked onchange="setLlmProvider('claude')"> Claude (Anthropic)
+            </label>
+            <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px">
+              <input type="radio" name="llmProvider" value="openai" onchange="setLlmProvider('openai')"> OpenAI
+            </label>
+          </div>
+          <input type="password" class="api-key-input" id="llmKey" placeholder="sk-ant-…" autocomplete="off">
+          <div id="llmKeyHint" style="font-size:11px;color:var(--text-muted);margin:2px 0 6px">Anthropic key — get one at <a href="https://console.anthropic.com" target="_blank" style="color:var(--primary)">console.anthropic.com</a></div>
+          <button class="btn-run" id="btnRunLLM" onclick="runLLM()">▶ Run Claude Scoring</button>
+          <div class="score-status" id="llmStatus"></div>
         </div>
 
         <div class="active-method-badge" id="activeMethodBadge">Active: <strong>TF-IDF</strong></div>
@@ -2056,7 +2065,8 @@ let currentSort = "time";
 let currentDay = 0;
 
 // ==================== EMBEDDING STATE ====================
-let scoringMode = 'tfidf'; // 'tfidf' | 'embeddings' | 'openai'
+let scoringMode = 'tfidf'; // 'tfidf' | 'embeddings' | 'llm'
+let llmProvider = 'claude'; // 'claude' | 'openai'
 let embeddingScores = new Map(); // sessionId -> {score, reasons:[]}
 
 // ==================== SCORING ====================
@@ -2727,7 +2737,7 @@ function setScoringMode(mode, btn) {
   const panel = document.getElementById('panel-' + mode);
   if (panel) panel.classList.add('active');
   scoringMode = mode;
-  const labels = { tfidf:'TF-IDF', embeddings:'Sentence Embeddings (all-MiniLM-L6-v2)', openai:'OpenAI text-embedding-3-small' };
+  const labels = { tfidf:'TF-IDF', embeddings:'Sentence Embeddings (all-MiniLM-L6-v2)', llm:'LLM Scoring' };
   const badge = document.getElementById('activeMethodBadge');
   if (badge) badge.innerHTML = `Active: <strong>${labels[mode] || mode}</strong>`;
   renderCurrentDay();
@@ -2801,11 +2811,115 @@ async function runEmbeddings() {
   }
 }
 
-// ── OpenAI Embeddings ─────────────────────────────────────────
-async function runOpenAI() {
-  const apiKey = document.getElementById('openaiKey').value.trim();
-  const btn = document.getElementById('btnRunOpenAI');
-  const statusEl = document.getElementById('openaiStatus');
+// ── LLM Scoring (Claude / OpenAI) ─────────────────────────────
+function setLlmProvider(p) {
+  llmProvider = p;
+  const keyInput = document.getElementById('llmKey');
+  const keyHint  = document.getElementById('llmKeyHint');
+  const runBtn   = document.getElementById('btnRunLLM');
+  if (p === 'claude') {
+    keyInput.placeholder = 'sk-ant-…';
+    keyHint.innerHTML = 'Anthropic key — get one at <a href="https://console.anthropic.com" target="_blank" style="color:var(--primary)">console.anthropic.com</a>';
+    runBtn.textContent = '▶ Run Claude Scoring';
+  } else {
+    keyInput.placeholder = 'sk-…';
+    keyHint.innerHTML = 'OpenAI key — get one at <a href="https://platform.openai.com/api-keys" target="_blank" style="color:var(--primary)">platform.openai.com</a>. Est. cost: &lt;$0.01.';
+    runBtn.textContent = '▶ Run OpenAI Embeddings';
+  }
+}
+
+function runLLM() {
+  if (llmProvider === 'claude') runLLMClaude();
+  else runLLMOpenAI();
+}
+
+async function runLLMClaude() {
+  const apiKey  = document.getElementById('llmKey').value.trim();
+  const btn     = document.getElementById('btnRunLLM');
+  const statusEl = document.getElementById('llmStatus');
+
+  if (!apiKey.startsWith('sk-ant-')) {
+    statusEl.className = 'score-status error';
+    statusEl.textContent = '✗ Enter a valid Anthropic key (starts with sk-ant-)';
+    return;
+  }
+  btn.disabled = true; btn.textContent = '⏳ Scoring…';
+  statusEl.className = 'score-status';
+
+  try {
+    const userText = (document.getElementById('profileAbstract').value || '').slice(0, 600) || '(no profile provided)';
+    const batchSize = 12;
+
+    for (let i = 0; i < SESSIONS.length; i += batchSize) {
+      const batch = SESSIONS.slice(i, i + batchSize);
+      statusEl.textContent = `Scoring ${i + 1}–${Math.min(i + batchSize, SESSIONS.length)} of ${SESSIONS.length}…`;
+
+      const sessionList = batch.map(s => ({
+        id: s.id,
+        title: s.title,
+        type: s.typeLabel,
+        text: (s.subtitle + ' ' + s.abstract + ' ' + s.talks.slice(0, 5).map(t => t.title).join(', ')).slice(0, 500)
+      }));
+
+      const prompt = `Rate how relevant each conference session is to this researcher's profile. Return ONLY a valid JSON array — no explanation, no markdown, no extra text.
+
+RESEARCHER PROFILE:
+${userText}
+
+SESSIONS:
+${JSON.stringify(sessionList)}
+
+Return format (one object per session, same order): [{"id":"...","score":75,"reason":"one short phrase"}, ...]
+Score 0–100 where 100 = directly relevant to the researcher's specific work.`;
+
+      const resp = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true',
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 1024,
+          temperature: 0,
+          messages: [{ role: 'user', content: prompt }]
+        })
+      });
+
+      if (!resp.ok) { const e = await resp.json(); throw new Error(e.error?.message || `HTTP ${resp.status}`); }
+      const data = await resp.json();
+      const raw = data.content[0].text.trim();
+      const match = raw.match(/\[[\s\S]*\]/);
+      if (!match) throw new Error('Unexpected response format from Claude');
+      const results = JSON.parse(match[0]);
+
+      for (const r of results) {
+        const score = Math.max(0, Math.min(1, (r.score || 0) / 100));
+        embeddingScores.set(r.id, { score, reasons: [r.reason || 'Claude relevance'] });
+      }
+    }
+
+    statusEl.className = 'score-status success';
+    statusEl.textContent = `✓ ${SESSIONS.length} sessions scored via Claude`;
+    btn.textContent = '↻ Re-run'; btn.disabled = false;
+    scoringMode = 'llm';
+    document.getElementById('activeMethodBadge').innerHTML = 'Active: <strong>Claude (claude-haiku-4-5) ✓</strong>';
+    renderCurrentDay();
+
+  } catch (err) {
+    console.error(err);
+    statusEl.className = 'score-status error';
+    statusEl.textContent = '✗ ' + err.message;
+    btn.disabled = false; btn.textContent = '▶ Retry';
+  }
+}
+
+async function runLLMOpenAI() {
+  const apiKey  = document.getElementById('llmKey').value.trim();
+  const btn     = document.getElementById('btnRunLLM');
+  const statusEl = document.getElementById('llmStatus');
 
   if (!apiKey.startsWith('sk-')) {
     statusEl.className = 'score-status error';
@@ -2823,7 +2937,7 @@ async function runOpenAI() {
     const chunkSize = 100;
 
     for (let i = 0; i < allTexts.length; i += chunkSize) {
-      statusEl.textContent = `Embedding batch ${Math.floor(i/chunkSize)+1}/${Math.ceil(allTexts.length/chunkSize)}…`;
+      statusEl.textContent = `Embedding batch ${Math.floor(i / chunkSize) + 1}/${Math.ceil(allTexts.length / chunkSize)}…`;
       const resp = await fetch('https://api.openai.com/v1/embeddings', {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
@@ -2845,7 +2959,7 @@ async function runOpenAI() {
     statusEl.className = 'score-status success';
     statusEl.textContent = `✓ ${SESSIONS.length} sessions scored via OpenAI`;
     btn.textContent = '↻ Re-run'; btn.disabled = false;
-    scoringMode = 'openai';
+    scoringMode = 'llm';
     document.getElementById('activeMethodBadge').innerHTML = 'Active: <strong>OpenAI text-embedding-3-small ✓</strong>';
     renderCurrentDay();
 
