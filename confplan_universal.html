@@ -281,6 +281,24 @@ header.s3 .stats strong{color:#fbbf24;}
 
 @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 .session-card{animation:fadeIn .2s ease;}
+/* ── Feedback ── */
+.fb-fab{position:fixed;bottom:22px;right:22px;background:#6366f1;color:white;border:none;border-radius:20px;padding:9px 15px;font-size:12px;font-weight:600;cursor:pointer;box-shadow:0 3px 10px rgba(99,102,241,0.4);z-index:900;transition:transform 0.15s,box-shadow 0.15s;}
+.fb-fab:hover{background:#4f46e5;transform:translateY(-1px);box-shadow:0 5px 16px rgba(99,102,241,0.5);}
+.fb-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:1000;display:flex;align-items:center;justify-content:center;}
+.fb-overlay.hidden{display:none;}
+.fb-box{background:#fff;border-radius:14px;padding:22px 24px;width:min(400px,92vw);box-shadow:0 8px 40px rgba(0,0,0,0.2);}
+.fb-box h3{margin:0 0 4px;font-size:15px;color:#1e293b;}
+.fb-box p{margin:0 0 12px;font-size:12px;color:#64748b;}
+.fb-type-row{display:flex;gap:6px;margin-bottom:10px;}
+.fb-type-btn{flex:1;padding:5px 2px;border:1px solid #e2e8f0;border-radius:6px;background:#f8fafc;font-size:11px;cursor:pointer;}
+.fb-type-btn.sel{background:#6366f1;color:white;border-color:#6366f1;}
+.fb-input{width:100%;box-sizing:border-box;border:1px solid #e2e8f0;border-radius:7px;padding:8px 10px;font-size:13px;font-family:inherit;margin-bottom:10px;color:#1e293b;}
+.fb-input:focus{outline:none;border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,0.12);}
+.fb-row{display:flex;justify-content:flex-end;gap:8px;margin-top:4px;}
+.fb-cancel{padding:7px 14px;border:1px solid #e2e8f0;border-radius:7px;background:#f8fafc;cursor:pointer;font-size:12px;}
+.fb-send{padding:7px 16px;border:none;border-radius:7px;background:#6366f1;color:white;cursor:pointer;font-size:12px;font-weight:600;}
+.fb-send:hover{background:#4f46e5;}
+.fb-thanks{text-align:center;padding:16px 0 8px;}
 </style>
 </head>
 <body>
@@ -1371,6 +1389,58 @@ function exportICS() {
 // INIT
 // ══════════════════════════════════════════════════════════════════
 goToStep(1);
+</script>
+
+<!-- Feedback FAB -->
+<button class="fb-fab" onclick="openFb()">💬 Feedback</button>
+<div class="fb-overlay hidden" id="fbOverlay" onclick="if(event.target===this)closeFb()">
+  <div class="fb-box">
+    <div id="fbForm">
+      <h3>Share Feedback</h3>
+      <p>Bug report, feature idea, or general thought — all welcome.</p>
+      <div class="fb-type-row">
+        <button class="fb-type-btn sel" onclick="selFbType(this,'🐛 Bug')">🐛 Bug</button>
+        <button class="fb-type-btn" onclick="selFbType(this,'💡 Idea')">💡 Idea</button>
+        <button class="fb-type-btn" onclick="selFbType(this,'⭐ General')">⭐ General</button>
+      </div>
+      <input class="fb-input" id="fbName" placeholder="Your name (optional)">
+      <textarea class="fb-input" id="fbText" rows="4" placeholder="Tell Sophie what you think…" style="resize:vertical"></textarea>
+      <div class="fb-row">
+        <button class="fb-cancel" onclick="closeFb()">Cancel</button>
+        <button class="fb-send" onclick="submitFb()">Send →</button>
+      </div>
+    </div>
+    <div id="fbThanks" class="fb-thanks hidden">
+      <div style="font-size:32px;margin-bottom:8px">🙏</div>
+      <div style="font-weight:600;margin-bottom:4px">Thanks for your feedback!</div>
+      <div style="font-size:12px;color:#64748b;margin-bottom:14px">Your email client should open with a pre-filled message.</div>
+      <button class="fb-send" onclick="closeFb()">Close</button>
+    </div>
+  </div>
+</div>
+<script>
+let _fbType = '🐛 Bug';
+function openFb() {
+  document.getElementById('fbForm').classList.remove('hidden');
+  document.getElementById('fbThanks').classList.add('hidden');
+  document.getElementById('fbOverlay').classList.remove('hidden');
+}
+function closeFb() { document.getElementById('fbOverlay').classList.add('hidden'); }
+function selFbType(btn, t) {
+  _fbType = t;
+  document.querySelectorAll('.fb-type-btn').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+}
+function submitFb() {
+  const text = document.getElementById('fbText').value.trim();
+  if (!text) { document.getElementById('fbText').focus(); return; }
+  const name = document.getElementById('fbName').value.trim() || 'Anonymous';
+  const subj = encodeURIComponent(`ConfPlan Universal Feedback [${_fbType}]`);
+  const body = encodeURIComponent(`From: ${name}\nType: ${_fbType}\n\n${text}`);
+  window.open(`mailto:xingsu1996@gmail.com?subject=${subj}&body=${body}`);
+  document.getElementById('fbForm').classList.add('hidden');
+  document.getElementById('fbThanks').classList.remove('hidden');
+}
 </script>
 </body>
 </html>

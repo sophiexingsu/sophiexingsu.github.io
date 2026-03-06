@@ -98,6 +98,17 @@ Interactive schedule optimizer for CNS 2026 Vancouver (March 7–10) — ranks a
 I write essays in both [Chinese](/files/wechat.bmp) and English and bake cakes that double as small-scale science experiments.
 You can contact me via <a href="mailto:xingsu1996&#64;gmail.com">xingsu1996&#64;gmail.com</a>
 
+---
+
+## Feedback
+
+Have a question, found something broken, or want to suggest something? I'd love to hear from you.
+
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin:1em 0;">
+  <a href="mailto:xingsu1996@gmail.com?subject=Website%20Feedback" class="btn btn--primary">✉️ Send Feedback</a>
+  <a href="https://github.com/sophiexingsu/sophiexingsu.github.io/issues/new?title=Feedback&body=Hi+Sophie," class="btn btn--inverse" target="_blank">🐛 Open GitHub Issue</a>
+</div>
+
 
 
 ---
