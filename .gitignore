@@ -1,0 +1,25 @@
+node_modules/
+_site/
+.sass-cache/
+.jekyll-cache/
+*.gem
+
+# Development/scratch files not part of the website
+app_ideas.md
+confplan_cns2026.html
+confplan_universal.html
+generate_poster_data.py
+parse_pdf.py
+project_meta_descrption.md
+CNS_2026_Abstracts.pdf
+CNS_2026_Abstracts.txt
+CNS_2026_Program.pdf
+IMPLEMENTATION_SUMMARY.md
+
+# Take-home project — large data file and build artefacts
+TakeHomeProject/census-bureau.data
+TakeHomeProject/report.aux
+TakeHomeProject/report.log
+TakeHomeProject/report.out
+TakeHomeProject/.claude/
+.DS_Store
