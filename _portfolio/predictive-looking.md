@@ -1,4 +1,4 @@
-cd ..---
+---
 title: "Predictive Looking Errors and Event Segmentation"
 excerpt: "Investigating how gaze anticipation errors reveal event boundaries during movie watching — Published in Journal of Experimental Psychology: General"
 collection: portfolio
