@@ -9,19 +9,19 @@ author_profile: true
 
 <p>My research investigates how people perceive, segment, and remember ongoing events using eye-tracking, fMRI, and computational modeling. I combine behavioral experiments with machine learning approaches (vision-language models, neural networks) to understand the cognitive and neural mechanisms underlying event cognition.</p>
 
-<div class="grid__wrapper">
+<div class="grid__wrapper portfolio-grid">
   {% assign research_posts = site.portfolio | where_exp: "post", "post.category != 'other'" | sort: "date" | reverse %}
   {% for post in research_posts %}
     {% include archive-single.html type="grid" %}
   {% endfor %}
 </div>
 
-<hr style="margin: 3em 0;">
+<hr class="portfolio-section-divider">
 
 <h2>Other Projects</h2>
 <p>Applied research and translational work demonstrating how cognitive science findings can be translated into practical tools and applications.</p>
 
-<div class="grid__wrapper">
+<div class="grid__wrapper portfolio-grid">
   {% assign other_posts = site.portfolio | where: "category", "other" %}
   {% for post in other_posts %}
     {% include archive-single.html type="grid" %}

@@ -155,6 +155,43 @@
   }
 }
 
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2em 1.5em;
+  clear: both;
+
+  &::after {
+    content: none;
+  }
+
+  > .grid__item {
+    float: none;
+    width: auto;
+    margin: 0;
+    clear: none;
+  }
+
+  > .grid__item:nth-child(n) {
+    margin-left: 0;
+    margin-right: 0;
+    clear: none;
+  }
+
+  @include breakpoint($small) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include breakpoint($medium) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.portfolio-section-divider {
+  clear: both;
+  margin: 3em 0;
+}
+
 
 /*
    Features
