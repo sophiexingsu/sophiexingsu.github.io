@@ -112,6 +112,10 @@
    Grid view
    ========================================================================== */
 
+.grid__wrapper {
+  @include clearfix();
+}
+
 .grid__item {
   margin-bottom: 2em;
 
