@@ -100,8 +100,8 @@ author:
   name             : "Sophie(Xing) Su "
   avatar           : "1559750279003.jpeg"
   bio              : "WUSTL PBS Grad,Haskins, Cornell"
-  location         : "Washington University in Saint Louis"
-  employer         : Washington University in Saint Louis
+  location         :
+  employer         : "WashU, Cornell"
   googlescholar    : https://scholar.google.com/citations?user=L4EIOIYAAAAJ&hl=en"
   email            : xingsu1996@gmail.com
   researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
