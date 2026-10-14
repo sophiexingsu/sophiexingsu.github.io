@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Visual Evidence in Shoot Decisions</title>
+<link rel="stylesheet" href="fonts/fonts_local.css">
+<style>
+html, body { margin:0; height:100%; background:#101010; overflow:hidden; }
+#stage { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; }
+#deck { position:relative; width:1920px; height:1080px; flex:none; transform-origin:center center; background:#ffffff; }
+#deck section { position:absolute; left:0; top:0; width:1920px; height:1080px; box-sizing:border-box; display:flex;
+  flex-direction:column; overflow:hidden; font-family:'Libre Franklin', Arial, sans-serif; color:#1a1a1a;
+  opacity:0; visibility:hidden; transition:opacity .35s, visibility 0s .35s; }
+#deck section.active { opacity:1; visibility:visible; transition:opacity .35s; }
+#deck * { box-sizing:border-box; }
+#deck div { display:flex; flex-direction:column; }
+#deck h1, #deck h2, #deck h3, #deck p, #deck ul, #deck ol { margin:0; }
+#deck h1 { font-size:96px; font-weight:600; line-height:1.1; }
+#deck h2 { font-size:64px; font-weight:600; line-height:1.15; }
+#deck h3 { font-size:44px; font-weight:600; line-height:1.2; }
+#deck p { font-size:32px; line-height:1.4; }
+#deck ul, #deck ol { padding-left:1.2em; }
+#deck table { border-collapse:collapse; }
+#deck th, #deck td { padding:.35em .6em; border-bottom:1px solid #cfcfcf; text-align:left; vertical-align:top; }
+#deck th { font-weight:700; border-bottom:2px solid #9a9a9a; }
+#deck aside { display:none; }
+#deck video { cursor:pointer; }
+#deck .b-hidden { opacity:0 !important; }
+#deck [data-in-step], #deck [data-out-step] { transition:opacity .45s, translate .45s, scale .45s; }
+#deck .b-hidden[data-fx=rise] { translate:0 40px; }
+#deck .b-hidden[data-fx=drop] { translate:0 -40px; }
+#deck .b-hidden[data-fx=left] { translate:-60px 0; }
+#deck .b-hidden[data-fx=right] { translate:60px 0; }
+#deck .b-hidden[data-fx=pop], #deck .b-hidden[data-fx=scale] { scale:.85; }
+#hud { position:fixed; right:14px; bottom:10px; font:13px -apple-system, sans-serif; color:#bbb; background:#000a;
+  padding:4px 10px; border-radius:6px; opacity:0; transition:opacity .4s; pointer-events:none; }
+#hud.show { opacity:1; }
+#notes { position:fixed; left:0; right:0; bottom:0; max-height:38vh; overflow:auto; background:#000e; color:#f2f2f2;
+  font:18px/1.5 -apple-system, sans-serif; padding:16px 24px; white-space:pre-wrap; display:none; }
+body.notes #notes { display:block; }
+/* presenter window */
+body.presenter #stage { right:auto; width:62vw; }
+#pside { display:none; }
+body.presenter #pside { display:flex; flex-direction:column; position:fixed; left:62vw; right:0; top:0; bottom:0;
+  color:#eee; font:20px/1.5 -apple-system, sans-serif; padding:20px 24px; box-sizing:border-box; gap:12px; }
+#pclock { font-size:34px; font-variant-numeric:tabular-nums; }
+#pmeta { color:#aaa; font-size:16px; }
+#pnotes { flex:1; overflow:auto; white-space:pre-wrap; }
+</style>
+</head>
+<body>
+<div id="stage"><div id="deck">
+<section id="cover" data-transition="fade" style="display:flex; flex-direction:column; gap:36px; justify-content:center; padding:128px; background:#990000">
+  <div style="position:absolute; top:0; left:1663px; width:125px; height:213px; display:flex; flex-direction:column; background:#ffffff">
+  </div>
+  <img src="assets/64dfe4b68445a3d60309fa5260fe84c5.png" alt="IU trident" style="position:absolute; top:72px; left:1685px; width:80px; height:101px; object-fit:contain">
+  <p style="width:1400px; font-family:'Azeret Mono', monospace; font-size:24px; font-weight:500; letter-spacing:1px; color:#ffffff">VISUAL EVIDENCE IN SHOOT DECISIONS</p>
+  <h1 style="width:1480px; font-family:'Libre Franklin', Arial, sans-serif; font-size:80px; font-weight:900; font-style:italic; line-height:1.08; text-transform:uppercase; color:#eeeef0">Seeing Threat Unfold: Dynamic Visual Information Shapes Police Decisions to Shoot</h1>
+  <p style="width:1400px; font-family:'Libre Franklin', Arial, sans-serif; font-size:32px; font-style:italic; line-height:1.35; text-transform:uppercase; color:#ffffff">temporal dynamic informations that influence police evidence accumulation process</p>
+  <div style="position:absolute; top:960px; left:128px; width:80px; height:6px; display:flex; flex-direction:column; background:#f31c40">
+  </div>
+  <img src="assets/87924e9e0edaa1e27299203e58cff8b3.png" alt="Bring On Tomorrow" style="position:absolute; top:986px; left:128px; width:318px; height:25px; object-fit:contain">
+  <p style="position:absolute; top:982px; left:1092px; width:700px; font-family:'Azeret Mono', monospace; font-size:24px; text-align:right; color:#ffffff">Sophie Su · 10/07/2026</p>
+<aside>SCRIPT: Hi everyone, I'm Sophie Su. Today I'm going to talk about what officers actually see in the moments before they decide whether to shoot. The title is "Seeing Threat Unfold: Dynamic Visual Information Shapes Police Decisions to Shoot." The idea is simple: a shoot decision unfolds over time, and the visual information in the scene unfolds with it. I want to ask which of that information drives the officer's evidence accumulation, and whether it helps explain the race effect we see in police shooting decisions.</aside>
+</section>
+<section id="why" data-transition="fade" style="background:#ffffff">
+  <div style="position:absolute; top:0; left:0; width:1920px; height:100px; display:flex; flex-direction:column; background:#eeeef0">
+  </div>
+  <img src="assets/124b2230321f46b94e6f632acade154e.png" alt="Indiana University" style="position:absolute; top:16px; left:48px; width:349px; height:68px; object-fit:contain">
+  <p style="position:absolute; top:34px; left:960px; width:896px; font-family:'Azeret Mono', monospace; font-size:24px; font-weight:500; letter-spacing:1px; text-align:right; color:#990000">VISUAL EVIDENCE IN SHOOT DECISIONS</p>
+  <h2 style="position:absolute; top:140px; left:128px; width:1664px; font-family:'Libre Franklin', Arial, sans-serif; font-size:60px; font-weight:700; line-height:1.15; color:#1b3e50">Police shootings are a pressing issue in the United States</h2>
+  <div style="position:absolute; top:312px; left:128px; width:521px; display:flex; flex-direction:column; gap:6px; padding:16px 0 0; border-top:3px solid #990000">
+    <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:80px; font-weight:800; line-height:1.05; color:#990000">1,365</p>
+    <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:26px; line-height:1.35; color:#1b3e50">people killed by US police in 2024, the most on record</p>
+    <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; color:#777777"><i>Mapping Police Violence</i></p>
+  </div>
+  <div style="position:absolute; top:312px; left:699px; width:521px; display:flex; flex-direction:column; gap:6px; padding:16px 0 0; border-top:3px solid #990000">
+    <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:80px; font-weight:800; line-height:1.05; color:#990000">2.9×</p>
+    <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:26px; line-height:1.35; color:#1b3e50">as likely for Black as for White people to be killed by police (2024)</p>
+    <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; color:#777777"><i>Mapping Police Violence</i></p>
+  </div>
+  <div style="position:absolute; top:312px; left:1270px; width:521px; display:flex; flex-direction:column; gap:6px; padding:16px 0 0; border-top:3px solid #990000">
+    <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:80px; font-weight:800; line-height:1.05; color:#990000">≈1,000</p>
+    <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:26px; line-height:1.35; color:#1b3e50">people shot and killed by US police every year since 2015</p>
+    <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; color:#777777"><i>Washington Post, Fatal Force</i></p>
+  </div>
+  <img src="assets/a772f50c8a40fe0626eb6e60cb26785c.jpg" alt="Protester holding a Stephon Clark sign at a rally, Washington DC, March 24, 2018" style="position:absolute; top:572px; left:128px; width:465px; height:310px">
+  <img src="assets/17cabfb7b883c512537d8faedc0165e4.jpg" alt="Protester holding a sign reading Hands up, don't shoot, Minneapolis, 2014" style="position:absolute; top:572px; left:609px; width:310px; height:310px">
+  <p style="position:absolute; top:892px; left:128px; width:800px; font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; color:#888888">Photos: Elvert Barnes (CC BY-SA 2.0); Fibonacci Blue (CC BY 2.0), Wikimedia Commons</p>
+  <img src="assets/0264427118fd20ea1807ef463a60d27e.png" alt="The New York Times topic page Police Brutality, Misconduct and Shootings, October 2026: Chicago Woman Shot by Border Patrol Agent Sues Federal Government (Oct. 5); Ex-Florida Deputy Is Acquitted in Killing of Airman at His Own Door (Oct. 3)" style="position:absolute; top:540px; left:1132px; width:660px; height:370px; background:#ffffff; border:1px solid #dddddd; object-fit:contain; box-shadow:0 6px 18px #00000026">
+  <p style="position:absolute; top:922px; left:1132px; width:660px; font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; color:#888888"><i>The New York Times</i>, Police Brutality, Misconduct and Shootings (Oct. 2026)</p>
+  <aside>SCRIPT: Let me start with why this matters. Police shootings are a pressing issue in the United States. In 2024, at least 1,365 people were killed by police in the US, the most since Mapping Police Violence started counting in 2013. And Black people were 2.9 times as likely as White people to be killed by police. The Washington Post's Fatal Force database counts about a thousand people shot and killed by police every single year since 2015. Behind these numbers are real people and communities, and these deaths have sparked protests across the country. And it is still in the news: this is The New York Times' ongoing coverage of police shootings. IF ASKED: There is no official national count, so totals differ by source. Mapping Police Violence is run by Campaign Zero; 2023 was 1,329. The news clipping is the New York Times topic page (screenshot Oct 8, 2026); ads and the sidebar were cropped out. Photos: Stephon Clark rally, Washington DC, March 2018; "Hands up, don't shoot," Minneapolis, 2014.</aside>
+</section>
+<section id="lit" data-transition="fade" style="background:#ffffff">
+  <div style="position:absolute; top:0; left:0; width:1920px; height:100px; display:flex; flex-direction:column; background:#eeeef0">
+  </div>
+  <img src="assets/124b2230321f46b94e6f632acade154e.png" alt="Indiana University" style="position:absolute; top:16px; left:48px; width:349px; height:68px; object-fit:contain">
+  <p style="position:absolute; top:34px; left:960px; width:896px; font-family:'Azeret Mono', monospace; font-size:24px; font-weight:500; letter-spacing:1px; text-align:right; color:#990000">VISUAL EVIDENCE IN SHOOT DECISIONS</p>
+  <p style="position:absolute; bottom:64px; left:128px; width:400px; font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; color:#888888">3</p>
+  <h2 style="position:absolute; top:140px; left:128px; width:1664px; font-family:'Libre Franklin', Arial, sans-serif; font-size:60px; font-weight:700; line-height:1.15; color:#1b3e50">What drives the decision to shoot?</h2>
+  <p style="position:absolute; top:227.06px; left:110.2px; width:1640px; font-family:'Libre Franklin', Arial, sans-serif; font-size:28px; line-height:1.4; color:#1b3e50">A pressing problem studied across criminology, economics, policy and psychology, yet still <b>poorly understood</b>. Prior work points to three factors:</p>
+  <div data-build-in="rise 1" style="position:absolute; top:318px; left:128px; width:521px; display:flex; flex-direction:column; gap:6px; padding:14px 0 0">
+    <h3 style="font-family:'Libre Franklin', Arial, sans-serif; font-size:30px; font-weight:700; line-height:1.2; color:#1b3e50">1. Race</h3>
+    <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; line-height:1.35; color:#444444">Race effects on speed and errors</p>
+    <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; line-height:1.35; color:#777777"><i>Correll et al. 2002, 2007; Plant &amp; Peruche 2005</i></p>
+  </div>
+  <div data-build-in="rise 2" style="position:absolute; top:318px; left:699px; width:521px; display:flex; flex-direction:column; gap:6px; padding:14px 0 0">
+    <h3 style="font-family:'Libre Franklin', Arial, sans-serif; font-size:30px; font-weight:700; line-height:1.2; color:#1b3e50">2. Visual evidence</h3>
+    <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; line-height:1.35; color:#444444">Gaze on the held object predicts accuracy</p>
+    <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; line-height:1.35; color:#777777"><i>Vickers &amp; Lewinski 2012; Nieuwenhuys et al. 2015</i></p>
+  </div>
+  <div data-build-in="rise 3" style="position:absolute; top:318px; left:1270px; width:521px; display:flex; flex-direction:column; gap:6px; padding:14px 0 0">
+    <h3 style="font-family:'Libre Franklin', Arial, sans-serif; font-size:30px; font-weight:700; line-height:1.2; color:#1b3e50">3. Threat</h3>
+    <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; line-height:1.35; color:#444444">Scene and suspect behaviour shift shooting</p>
+    <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; line-height:1.35; color:#777777"><i>Correll et al. 2011; Pleskac et al. 2025</i></p>
+  </div>
+  <p data-build-in="fade 4" style="position:absolute; top:486px; left:128px; width:1640px; font-family:'Libre Franklin', Arial, sans-serif; font-size:28px; font-weight:700; line-height:1.3; color:#990000">The limit: the data leave out the dynamic visual information the officer actually sees.</p>
+  <div data-build-in="rise 5" style="position:absolute; top:540px; left:128px; width:812px; display:flex; flex-direction:row; gap:20px; align-items:start">
+    <img src="assets/67405a0031073ea7c1d43e51bec5676e.png" alt="Dot map of every fatal police shooting in the contiguous US, 2015 to 2024, Black and White victims coloured" style="width:400px; height:260px; border:1px solid #dddddd; object-fit:contain">
+    <div style="display:flex; flex-direction:column; gap:8px; flex:1">
+      <h3 style="font-family:'Libre Franklin', Arial, sans-serif; font-size:28px; font-weight:700; line-height:1.2; color:#1b3e50">Aggregate records</h3>
+      <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; line-height:1.35; color:#444444">Who was shot and where: 9,194 fatal shootings, 2015–2024. Nothing about what the officer saw.</p>
+      <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; line-height:1.3; color:#777777"><i>Washington Post, Fatal Force</i></p>
+    </div>
+  </div>
+  <div data-build-in="rise 6" style="position:absolute; top:540px; left:980px; width:812px; display:flex; flex-direction:column; gap:10px">
+    <img src="assets/ce6798b6242070e30b8da66cc6cd4d1e.jpg" alt="Four first-person shooter task stimuli: men holding a gun or a harmless object, pasted onto photographs of parks and streets" style="width:812px; height:147px; object-fit:contain">
+    <h3 style="font-family:'Libre Franklin', Arial, sans-serif; font-size:28px; font-weight:700; line-height:1.2; color:#1b3e50">Static lab images</h3>
+    <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; line-height:1.35; color:#444444">One still photo per trial: no movement, no unfolding draw, no timing to the object.</p>
+    <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; line-height:1.3; color:#777777"><i>First-person shooter task, Correll et al. 2002 (image: Correll lab)</i></p>
+  </div>
+  <p data-build-in="fade 7" style="position:absolute; top:868px; left:128px; width:1640px; padding:8px 0 8px 24px; font-family:'Libre Franklin', Arial, sans-serif; font-size:28px; line-height:1.35; color:#1b3e50"><b>Research Question:</b> what dynamic visual information drives the decision, and does it explain the race effect?</p>
+  <aside>SCRIPT: So what drives the decision to shoot? This question has been studied in criminology, economics, policy and psychology, but it is still poorly understood. Prior work points to three factors. [Click 1] First, race. Lab shooter tasks find race effects on both speed and errors. [Click 2] Second, visual evidence. Where officers look, especially at the object in the suspect's hand, predicts how accurate they are. [Click 3] Third, threat. The scene and the suspect's behaviour shift shooting decisions. [Click 4] But there is a limit. The data used so far leave out the dynamic visual information the officer actually sees. [Click 5] On one side we have aggregate records, like this map of every fatal police shooting from 2015 to 2024. They tell us who was shot and where, but nothing about what the officer saw. [Click 6] On the other side we have lab tasks that use a single still photo per trial. There is no movement, no unfolding draw, and no timing. [Click 7] So my research question is: what dynamic visual information drives the decision, and does it explain the race effect? IF ASKED: Race: Correll et al. 2002, 2007; Plant and Peruche 2005. Visual evidence: Vickers and Lewinski 2012; Nieuwenhuys et al. 2015. Threat: Correll et al. 2011; Pleskac et al. 2025. The map shows 9,194 fatal shootings from the Washington Post Fatal Force data (CC BY-NC-SA).</aside>
+</section>
+<section id="data" data-transition="fade" style="background:#ffffff">
+<div style="position:absolute;left:0px;top:0px;width:1920px;height:100px;background:#eeeef0"></div>
+<img src="assets/124b2230321f46b94e6f632acade154e.png" alt="Indiana University" style="position:absolute;left:48px;top:16px;width:349px;height:68px;object-fit:contain">
+<p style="position:absolute;left:960px;top:34px;width:896px;text-align:right;font-family:'Azeret Mono', monospace;font-size:24px;font-weight:500;letter-spacing:1px;color:#990000">VISUAL EVIDENCE IN SHOOT DECISIONS</p>
+  <h2 style="position:absolute; top:140px; left:128px; width:1665px; font-family:'Libre Franklin', Arial, sans-serif; font-size:60px; font-weight:700; line-height:1.15; color:#1b3e50">Current Dataset</h2>
+  <div style="position:absolute; top:240px; left:128px; width:1000px; display:flex; flex-direction:row; gap:32px">
+    <div style="display:flex; flex-direction:column; gap:4px; flex:1; padding:14px 0 0; border-top:2px solid #cccccc">
+      <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:64px; font-weight:700; line-height:1.05; color:#1b3e50">659</p>
+      <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:26px; color:#555555">police officers</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:4px; flex:1; padding:14px 0 0; border-top:2px solid #cccccc">
+      <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:64px; font-weight:700; line-height:1.05; color:#1b3e50">64</p>
+      <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:26px; color:#555555">videos, 8 scenarios</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:4px; flex:1; padding:14px 0 0; border-top:2px solid #cccccc">
+      <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:64px; font-weight:700; line-height:1.05; color:#1b3e50">19,316</p>
+      <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:26px; color:#555555">trials analysed</p>
+    </div>
+  </div>
+  <table style="position:absolute; top:410px; left:128px; width:1000px; font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; color:#1b3e50">
+    <tr><th style="width:26%">Factor</th><th style="width:74%">Levels</th></tr>
+    <tr><td>Scenario (8)</td><td>Alley, Domestic phone call, Grocery, Parking lot, Pullover (day), Pullover (night), Sidewalk, Warehouse</td></tr>
+    <tr><td>Suspect race</td><td>Black actor, White actor</td></tr>
+    <tr><td>Object</td><td>Gun, harmless object</td></tr>
+    <tr><td>Behaviour</td><td>Nonantagonistic, antagonistic</td></tr>
+  </table>
+  <p style="position:absolute; top:760px; left:128px; width:1000px; font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; line-height:1.4; color:#444444"><b>Right, top:</b> the immersive shooting simulator: the officer faces a life-size screen; the decision clock starts when the object is first visible (t0). Figure 1 of Pleskac et al. (2025).<br><b>Right, bottom:</b> example stimulus, Pullover (day), Black actor, nonantagonistic, harmless object. <span style="color:#990000"><b>59% of officers shot.</b></span></p>
+  <img src="assets/07b7e1ed5ad55e147561a50e05ad3140.png" alt="Figure 1 of Pleskac et al. 2025: a pullover scenario on the simulator screen above, the officer responding with a handgun below, along a timeline with the object onset t0" style="position:absolute; top:236px; left:1168px; width:624px; height:360px; object-fit:contain">
+  <div  style="position:absolute; top:612px; left:1168px; width:624px; height:351px; object-fit:cover; background:#2b2b2b; display:flex; align-items:center; justify-content:center"><p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:26px; line-height:1.35; color:#e6e6e6; text-align:center; padding:24px">Stimulus video shown in the live talk</p></div>
+  <aside>SCRIPT: Here is the data. It is the same data set as Pleskac et al. 2025. 659 police officers from the Milwaukee Police Department took part in an immersive shooting simulator. On the top right you can see the setup: the officer stands in front of a life-size screen with a realistic handgun, the scenario plays out, and they decide whether to shoot. The decision clock starts at t zero, the moment the object the suspect pulls out first becomes visible.
+There are 64 videos across 8 scenarios, and after exclusions we analyse 19,316 trials. Each video crosses suspect race, Black or White actor; the object, a gun or a harmless object; and the suspect's behaviour, nonantagonistic or antagonistic.
+On the bottom right is the example I'll come back to: a daytime pullover, Black actor, nonantagonistic, holding a harmless object. 59 percent of officers shot. [CLICK the still to play the stimulus clip.]
+
+IF ASKED: Most officers saw 32 videos. Twenty actors across the 8 scenarios. Response time is measured from object onset.</aside>
+</section>
+<section id="behavior" data-transition="fade" style="display:flex; flex-direction:column; gap:32px; padding:140px 128px 160px; background:#ffffff">
+  <div style="position:absolute; top:0; left:0; width:1920px; height:100px; display:flex; flex-direction:column; background:#eeeef0">
+  </div>
+  <img src="assets/124b2230321f46b94e6f632acade154e.png" alt="Indiana University" style="position:absolute; top:16px; left:48px; width:349px; height:68px; object-fit:contain">
+  <p style="position:absolute; top:34px; left:960px; width:896px; font-family:'Azeret Mono', monospace; font-size:24px; font-weight:500; letter-spacing:1px; text-align:right; color:#990000">VISUAL EVIDENCE IN SHOOT DECISIONS</p>
+  <h2 style="font-family:'Libre Franklin', Arial, sans-serif; font-size:60px; font-weight:700; line-height:1.15; color:#1b3e50">The race gap in errors in non antagonist unarmed conditions&nbsp;</h2>
+  <img src="assets/c433718350bf094d2993d5c439641b61.png" alt="Shoot rate with 95% CI across officers by race in four panels, no highlight: unarmed nonantagonistic White 5.4%, Black 22.2%; unarmed antagonistic 16.1%, 10.0%; armed nonantagonistic 96.3%, 96.4%; armed antagonistic 97.7%, 97.0%" style="position:absolute; top:296px; left:128px; width:1664px; height:589px; object-fit:contain">
+  <img src="assets/e610d8b99df381f40bf15117c7a4f096.png" alt="The same figure with the unarmed nonantagonistic panel outlined and drawn in crimson (White 5.4%, Black 22.2%)" data-build-in="fade 1" style="position:absolute; top:296px; left:128px; width:1664px; height:589px; object-fit:contain">
+  <div data-build-in="fade 2" style="position:absolute; top:300px; left:668px; width:1124px; display:flex; flex-direction:column; gap:8px; padding:14px; background:#ffffff; border:2px solid #990000; box-shadow:0 8px 24px #00000026">
+    <p style="font-family:'Azeret Mono', monospace; font-size:24px; font-weight:500; color:#990000">MODEL PREVIEW</p>
+    <div style="display:flex; flex-direction:row; gap:16px; align-items:end">
+      <div style="width:480px; display:flex; flex-direction:column; gap:4px">
+        <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; font-weight:700; color:#1b3e50">The GoDDM</p>
+        <img src="assets/fe471b430c12602cf914dd9061339c1c.png" alt="GoDDM schematic: after a non-decision time, evidence starts at start point beta and drifts at rate delta until it reaches the shoot boundary; threshold alpha is the distance between the shoot and don't-shoot boundaries" style="width:480px; height:259px; object-fit:contain">
+      </div>
+      <img src="assets/6037ba4c3e4e49321147f51ec327836a.png" alt="Figure 5A of Pleskac et al. 2025: relative start point by race and behaviour; White and Black estimates overlap in both behaviour conditions" style="width:290px; height:243px; object-fit:contain">
+      <img src="assets/b67c763ef0daf65e38f6407671479a1b.png" alt="Figure 5C of Pleskac et al. 2025: group-level drift rate by object, race and behaviour; unarmed nonantagonistic drift is less negative for Black than for White suspects" style="width:290px; height:236px; object-fit:contain">
+    </div>
+    <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; line-height:1.3; color:#1b3e50"><b>Start point (A):</b> no race difference. <b>Drift (C):</b> weaker toward don't shoot for Black suspects, only when unarmed and nonantagonistic.</p>
+    <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; color:#777777"><i>Pleskac et al. 2025, Fig. 5A and 5C</i></p>
+  </div>
+  <aside>SCRIPT: Now the behaviour. These four panels show how often officers shot, by suspect race, in each condition.
+[Click 1] The key panel is unarmed and nonantagonistic. Here, officers shot 22 percent of Black suspects but only 5 percent of White suspects. That is the race gap in errors. In the other panels it is not there: with antagonistic unarmed suspects the raw rates even reverse, and armed suspects are shot 96 to 98 percent of the time regardless of race.
+[Click 2] Here is a quick preview of the published model. On the left is the GoDDM: after a non-decision time, evidence starts at a start point and drifts toward the shoot boundary or away from it; the threshold is the distance between the boundaries, and a shoot happens when evidence reaches the upper one. In panel A, the start point, White and Black overlap, so race does not change where the decision starts. In panel C, the drift rate, officers accumulated weaker evidence toward "don't shoot" for Black suspects, and only when the suspect was unarmed and nonantagonistic. So the race effect lives in the evidence accumulation. That is exactly where visual information should enter, and that is what I test today.
+
+BACKGROUND: THE GoDDM (Pleskac, Cesario, Johnson & Gagnon, 2025; their Table 1 and Figure 1)
+What it is: the diffusion decision model (DDM; Ratcliff) describes a decision as noisy evidence accumulating over time until it reaches one of two thresholds. The clock starts when the object is drawn (object onset). It is fitted to each officer's trials: whether they shot, and when.
+Why "Go": officers make only one explicit response, shoot. Not shooting has no response time. Go/no-go work (Gomez et al., 2007; Ratcliff et al., 2018) shows people use the same accumulation process in go/no-go as in two-choice tasks; the no-go ("don't shoot") boundary is implicit. So a don't-shoot trial is treated as a hit on the lower boundary whose time is missing (censored); the model uses the probability of not shooting together with the shoot RTs.
+The four parameters:
+- Relative start point β (0 to 1): where evidence starts between the two thresholds, i.e. a bias before the object is seen. Above .5 = closer to shoot; below .5 = closer to don't shoot.
+- Threshold separation α (above 0): the distance between the shoot threshold (at α) and the don't-shoot threshold (at 0); it is caution. Larger = more evidence needed, so slower but more accurate decisions (the speed-accuracy tradeoff).
+- Drift rate δ (any value): the average strength of evidence per unit time. The sign is the direction (positive = toward shoot, negative = toward don't shoot); the size is the quality of the information.
+- Relative non-decision time NDT′ (0 to 1): the share of the response time, relative to the minimum observed response time, spent on things other than deciding, such as seeing the object and pulling the trigger.
+How it was fitted: hierarchical Bayesian estimation (pools officers, keeps each officer's own values); every parameter has an officer-level random intercept. Start point and threshold vary by race × behaviour; drift and NDT′ by race × object × behaviour. Model comparison put the scenario and suspect (actor) effects on the start point. "Credible" = 95% HDI excludes a region of practical equivalence (±0.05 for β and NDT′, ±0.1 for α and δ).
+Published results (Figure 5):
+- Start point (5A): no race effect (−0.005 [−0.037, 0.028]), so no pre-object bias to shoot Black suspects; officers start further from shoot with antagonistic suspects (−0.056).
+- Threshold (5B): lower for nonantagonistic Black than White suspects (−0.21), higher for antagonistic Black suspects (+0.48).
+- Drift (5C): race × object × behaviour interaction; for unarmed nonantagonistic suspects, evidence against shooting is stronger for White than Black suspects (−0.69 [−0.79, −0.59]); no credible race gap in the other three cells.
+- NDT′ (5D): higher for unarmed nonantagonistic Black suspects (+0.07), lower for antagonistic Black suspects (−0.10).
+The paper's reading: weaker drift plus a lower threshold for unarmed, nonantagonistic Black suspects explains their higher error rate; race acts as a cue to disambiguate threat when behaviour is ambiguous.
+Our version (slide 9): the same model plus st0 (trial-to-trial variability in non-decision time) and the previous trial on the start point; the visual information model then adds gun score and wrist speed on drift.
+
+IF ASKED: Shoot rate is each officer's own proportion in the cell, averaged over officers, with a 95 percent t interval across officers. Published drift difference: about −0.69 [−0.79, −0.59]. Start points: nonantagonistic about .53 vs .52, antagonistic .47 vs .47.</aside>
+</section>
+<section id="59cb034f" data-transition="fade" style="background:#ffffff">
+  <div style="position:absolute; top:0; left:0; width:1920px; height:100px; display:flex; flex-direction:column; background:#eeeef0">
+  </div>
+  <img src="assets/124b2230321f46b94e6f632acade154e.png" alt="Indiana University" style="position:absolute; top:16px; left:48px; width:349px; height:68px; object-fit:contain">
+  <p style="position:absolute; top:34px; left:960px; width:896px; font-family:'Azeret Mono', monospace; font-size:24px; font-weight:500; letter-spacing:1px; text-align:right; color:#990000">VISUAL EVIDENCE IN SHOOT DECISIONS</p>
+  <h2 id="f5619dfb" style="position:absolute; top:140px; left:128px; width:1664px; font-family:'Libre Franklin', Arial, sans-serif; font-size:60px; font-weight:700; line-height:1.15; color:#1b3e50">Machine learning on pre-onset video features</h2>
+  <img src="assets/7e6d453d0ab0144adcf3860bfca1678c.webp" alt="Gun vs no-gun from 23,206 pre-onset features: actual model AUROC 0.66 (95% CI 0.52–0.78, p = 0.019) against 2,000 label shuffles centred on 0.5" id="324e27f9" data-build-in="fade 2" style="position:absolute; top:594.98px; left:128px; width:700px; height:388px; object-fit:contain">
+  <img src="assets/175bd9e0779e02e9354050315fd2a497.png" alt="Top 30 pre-onset features by mean SHAP for the gradient-boosting decision model; VideoMAE last-1-s motion slope is first at 0.455, boxed in crimson" id="b2f0ee29" data-build-in="fade 3" style="position:absolute; top:232px; left:1000px; width:792px; height:700px; object-fit:contain">
+  <h3 data-build-in="rise 1" style="position:absolute; top:232px; left:160px; width:840px; font-family:'Libre Franklin', Arial, sans-serif; font-size:28px; font-weight:700; color:#990000">Methods</h3>
+  <ul data-build-in="rise 1" style="position:absolute; top:267.37px; left:120px; width:840px; font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; line-height:1.35; color:#1b3e50">
+    <li><b>Features:</b> 23,206 pre-onset summaries (mean, SD, slope, last value) of motion, image and audio embeddings, CLIP text probes, pose and object detections.</li>
+    <li><b>Models:</b> all features enter 22 tree models (single trees, random forests, extra trees, gradient boosting); no pre-selection.</li>
+    <li><b>Test:</b> leave-one-scenario-out, 8 folds; importance = mean |SHAP| on held-out videos.</li>
+  </ul>
+  <div data-build-in="fade 4" style="position:absolute; bottom:128px; left:128px; width:1664px; display:flex; flex-direction:column; gap:8px; padding:16px; background:#ffffff; border:2px solid #990000; box-shadow:0 8px 24px #00000026">
+    <h3 style="font-family:'Libre Franklin', Arial, sans-serif; font-size:28px; font-weight:700; color:#990000">What the top feature tracks: the right wrist moving toward the waist</h3>
+    <div style="display:flex; flex-direction:row; gap:24px">
+      <div style="flex:1; display:flex; flex-direction:column; gap:8px">
+        <img src="assets/45ac6025ca691d98cc09c8c37112e447.png" alt="Correlations of the top latent motion feature with interpretable pre-onset features across 64 videos: calm cooperative person +0.40, reaching for waistband variability +0.10, hand height trend +0.10, imminent threat +0.04, two-hands separation -0.37, right wrist-to-hip trend -0.38, right wrist-to-waist trend -0.41" style="width:790px; height:422px; object-fit:contain">
+        <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; line-height:1.35; color:#1b3e50">Strongest links: the right wrist moving toward the waist (r = −0.41) and a calm, cooperative, nonantagonistic look (r = +0.40), across 64 videos.</p>
+      </div>
+      <div style="flex:1; display:flex; flex-direction:column; gap:8px">
+        <img src="assets/a85c077af4677b264284155f18cd9122.png" alt="Scatter of the top motion feature against the right wrist-to-waist distance trend for 64 videos, all drawn alike, r = -0.41: videos where the wrist moves toward the waist have higher values of the top feature" style="width:790px; height:422px; object-fit:contain">
+        <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; line-height:1.35; color:#1b3e50">Each point is one video. The closer the right wrist moves to the waist, the higher the top feature (r = −0.41).</p>
+      </div>
+    </div>
+  </div>
+  <aside>SCRIPT: Before building the decision model, we asked a broader question with machine learning: is there information in the video before the object appears that predicts the outcome?
+[Click 1] We extracted 23,206 features from the lead-in of each video: motion, image and audio embeddings, text probes, pose and object detections. All of them went into 22 tree models with no pre-selection, and we tested on held-out scenarios, training on seven and testing on the eighth.
+[Click 2] Can these features tell whether a gun is coming? Somewhat. The model reaches an AUROC of 0.66, better than shuffled labels, but this is weak evidence.
+[Click 3] Can they predict the officer's decision? Here are the features the best model relied on. The top one is a motion feature from the last second before the object appears.
+[Click 4] When we unpack that feature, it tracks the right wrist moving toward the waist, and a calm, cooperative look: a waistband reach in an otherwise calm suspect. On the right is the wrist relationship on its own. Each point is a video. Moving left, the right wrist closes in on the waist over the lead-in, and the top feature goes up. The correlation is minus 0.41 across all 64 videos.
+So the takeaway is: before the object appears there is little reliable information. The decision is mostly driven by what happens after onset. That led us to the two measures in the next slides.
+
+IF ASKED: Gun vs no-gun AUROC 0.66 (95% CI 0.52 to 0.78), p = .019 against 2,000 shuffles, but it was the best of 161 combinations and the null best-of-161 is about 0.65. Decision model AUROC 0.545 [0.42, 0.67]; all 22 configurations include chance. Top feature correlations across 64 videos: wrist-to-waist −0.41, calm cooperative +0.40; correlational only. Split by object, the wrist correlation is −0.67 in gun videos and −0.25 in no-gun videos.</aside>
+</section>
+<section id="wrist" data-transition="fade" style="background:#ffffff;color:#1b3e50;font-family:'Libre Franklin', Arial, sans-serif;padding:140px 128px 160px;display:flex;flex-direction:column;gap:28px">
+<div style="position:absolute;left:0px;top:0px;width:1920px;height:100px;background:#eeeef0"></div>
+<img src="assets/124b2230321f46b94e6f632acade154e.png" alt="Indiana University" style="position:absolute;left:48px;top:16px;width:349px;height:68px;object-fit:contain">
+<p style="position:absolute;left:960px;top:34px;width:896px;text-align:right;font-family:'Azeret Mono', monospace;font-size:24px;font-weight:500;letter-spacing:1px;color:#990000">VISUAL EVIDENCE IN SHOOT DECISIONS</p>
+<h2 style="font-size:60px;font-weight:700;line-height:1.15">Measure 1: right-wrist trend before the object appears (wrist speed)</h2>
+<div style="display:flex;gap:32px">
+<div style="flex:1;display:flex;flex-direction:column;gap:12px">
+<div  style="width:816px;height:459px;object-fit:contain;background:#141414; background:#2b2b2b; display:flex; align-items:center; justify-content:center"><p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:26px; line-height:1.35; color:#e6e6e6; text-align:center; padding:24px">Stimulus video shown in the live talk</p></div>
+<p style="font-size:24px;line-height:1.35;color:#444444"><b>Wrist slows toward onset</b> (wrist speed z −1.27) → drift −0.26, toward don't shoot. Grocery, Black actor, unarmed, nonantagonistic: 0.3% shot.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px">
+<div  style="width:816px;height:459px;object-fit:contain;background:#141414; background:#2b2b2b; display:flex; align-items:center; justify-content:center"><p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:26px; line-height:1.35; color:#e6e6e6; text-align:center; padding:24px">Stimulus video shown in the live talk</p></div>
+<p style="font-size:24px;line-height:1.35;color:#444444"><b>Wrist speeds up toward onset</b> (wrist speed z +1.19) → drift +0.24, toward shoot. Pullover (day), White actor, unarmed, nonantagonistic: 13% shot.</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#888888">7 · ViTPose++ tracks the right shoulder and wrist at 30 Hz. wrist speed = slope of wrist speed relative to the shoulder over the whole lead-in. Clips play at 0.5× real time.</p>
+<aside>SCRIPT: The first measure is the right-wrist trend before the object appears; I'll call it wrist speed. We track the suspect's pose with ViTPose and measure how fast the right wrist moves relative to the shoulder. The red line is the trend over the lead-in, and its slope is the measure.
+On the left, a grocery scenario: the wrist slows down toward the reveal. In the model that pushes drift toward "don't shoot," and almost no officer shot, 0.3 percent.
+On the right, a daytime pullover: the wrist speeds up just before the reveal. That pushes drift toward "shoot," and 13 percent of officers shot.
+Everything shown here happens before the object is visible.
+
+IF ASKED: Wrist speed is z-scored across the 64 videos: −1.27 on the left, +1.19 on the right; drift effects −0.26 and +0.24. Pose at 30 Hz. Clips play at half speed.</aside>
+</section>
+<section id="gunlike" data-transition="fade" style="background:#ffffff">
+  <div style="position:absolute; top:0; left:0; width:1920px; height:100px; display:flex; flex-direction:column; background:#eeeef0">
+  </div>
+  <img src="assets/124b2230321f46b94e6f632acade154e.png" alt="Indiana University" style="position:absolute; top:16px; left:48px; width:349px; height:68px; object-fit:contain">
+  <p style="position:absolute; top:34px; left:960px; width:896px; font-family:'Azeret Mono', monospace; font-size:24px; font-weight:500; letter-spacing:1px; text-align:right; color:#990000">VISUAL EVIDENCE IN SHOOT DECISIONS</p>
+  <p id="e4-1q0h1g6" style="position:absolute; bottom:56px; left:128px; width:1664px; font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; color:#888888">Gun score = mean P("gun") over the frames +0.3 to +0.6 s after onset. Clips: Sidewalk, nonantagonistic, played at 0.1× real time.</p>
+  <h2 id="pacc18d5b856ar0-97d4ffa9" style="position:absolute; top:140px; left:128px; width:1665px; font-family:'Libre Franklin', Arial, sans-serif; font-size:60px; font-weight:700; line-height:1.15; color:#1b3e50">Measure 2: gun score of the held object</h2>
+  <div id="pacc18d5b856ar1-97d4ffa9" style="position:absolute; top:231px; left:128px; width:1665px; height:171px; display:flex; flex-direction:row; gap:12px">
+    <div style="display:flex; flex-direction:column; gap:8px; flex:1; padding:16px 18px; border:1px solid #cccccc">
+      <h3 style="font-family:'Libre Franklin', Arial, sans-serif; font-size:26px; font-weight:700; color:#1b3e50">Frame</h3>
+      <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; line-height:1.35; color:#444444">every 0.1 s, −0.5 to +1.2 s from onset</p>
+    </div>
+    <x-connector style="width:36px; color:#888888"></x-connector>
+    <div style="display:flex; flex-direction:column; gap:8px; flex:1; padding:16px 18px; border:1px solid #cccccc">
+      <h3 style="font-family:'Libre Franklin', Arial, sans-serif; font-size:26px; font-weight:700; color:#1b3e50">Suspect crop</h3>
+      <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; line-height:1.35; color:#444444">square, 1.5 × the box, 672 px</p>
+    </div>
+    <x-connector style="width:36px; color:#888888"></x-connector>
+    <div style="display:flex; flex-direction:column; gap:8px; flex:1; padding:16px 18px; border:2px solid #990000">
+      <h3 style="font-family:'Libre Franklin', Arial, sans-serif; font-size:26px; font-weight:700; color:#1b3e50">Qwen3-VL-32B</h3>
+      <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; line-height:1.35; color:#444444">crop + one fixed question</p>
+    </div>
+    <x-connector style="width:36px; color:#888888"></x-connector>
+    <div style="display:flex; flex-direction:column; gap:8px; flex:1; padding:16px 18px; border:1px solid #cccccc">
+      <h3 style="font-family:'Libre Franklin', Arial, sans-serif; font-size:26px; font-weight:700; color:#1b3e50">First token</h3>
+      <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; line-height:1.35; color:#444444">one forward pass</p>
+    </div>
+    <x-connector style="width:36px; color:#888888"></x-connector>
+    <div style="display:flex; flex-direction:column; gap:8px; flex:1; padding:16px 18px; border:1px solid #cccccc">
+      <h3 style="font-family:'Libre Franklin', Arial, sans-serif; font-size:26px; font-weight:700; color:#1b3e50">7 answers</h3>
+      <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; line-height:1.35; color:#444444">p(gun) rescaled over the 7 words</p>
+    </div>
+  </div>
+  <div id="pacc18d5b856ar2-97d4ffa9" style="position:absolute; top:423px; left:128px; width:1665px; height:498px; display:flex; flex-direction:row; gap:32px">
+    <div style="display:flex; flex-direction:column; gap:8px; flex:1">
+      <div  style="width:816px; height:459px; background:#141414; object-fit:contain; background:#2b2b2b; display:flex; align-items:center; justify-content:center"><p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:26px; line-height:1.35; color:#e6e6e6; text-align:center; padding:24px">Stimulus video shown in the live talk</p></div>
+      <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; line-height:1.3; color:#444444"><b>Harmless object:</b> gun score 0.00 · 2% of officers shot</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:8px; flex:1">
+      <div  style="width:816px; height:459px; background:#141414; object-fit:contain; background:#2b2b2b; display:flex; align-items:center; justify-content:center"><p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:26px; line-height:1.35; color:#e6e6e6; text-align:center; padding:24px">Stimulus video shown in the live talk</p></div>
+      <p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; line-height:1.3; color:#444444"><b>Gun:</b> gun score 0.25 · 99% of officers shot</p>
+    </div>
+  </div>
+  <aside>SCRIPT: The second measure is how much the object in the suspect's hand looks like a gun. Every tenth of a second, we crop the suspect and give the crop to a vision-language model, Qwen, with one fixed question: what object is in this person's hand? It answers with one of seven words, like gun, phone, wallet or nothing. The model never sees the word race. We read the probability that its answer is "gun," and average it from 0.3 to 0.6 seconds after onset. That gives one gun score per video. On the left, a harmless object: the model says "nothing" on every frame, the gun score is zero, and only 2 percent of officers shot. On the right, a gun: the score is 0.25 and 99 percent shot. Across the 32 harmless-object videos, the gun score correlates 0.80 with how often officers shot. IF ASKED: Only 5 harmless-object videos score above 0.1, and 4 of those 5 have Black actors. Single-frame scores are noisy. Gun score is z-scored over the 64 videos. Clips are at 0.1 times real time.</aside>
+</section>
+<section id="ddm" data-transition="fade" style="display:flex; flex-direction:column; gap:24px; padding:140px 128px 160px; background:#ffffff">
+<div style="position:absolute;left:0px;top:0px;width:1920px;height:100px;background:#eeeef0"></div>
+<img src="assets/124b2230321f46b94e6f632acade154e.png" alt="Indiana University" style="position:absolute;left:48px;top:16px;width:349px;height:68px;object-fit:contain">
+<p style="position:absolute;left:960px;top:34px;width:896px;text-align:right;font-family:'Azeret Mono', monospace;font-size:24px;font-weight:500;letter-spacing:1px;color:#990000">VISUAL EVIDENCE IN SHOOT DECISIONS</p>
+  <h2 style="font-family:'Libre Franklin', Arial, sans-serif; font-size:60px; font-weight:700; line-height:1.15; color:#1b3e50">Model setups</h2>
+  <p style="width:1600px; font-family:'Libre Franklin', Arial, sans-serif; font-size:28px; line-height:1.4; color:#444444">Both models build on the published GoDDM (Pleskac et al., 2025), adding trial-to-trial non-decision time (<b>st0</b>) and the <b>previous trial</b> on the start point.</p>
+  <table style="width:1664px; font-family:'Libre Franklin', Arial, sans-serif; font-size:28px; color:#1b3e50">
+    <tr><th style="width:22%">Parameter</th><th style="width:46%; color:#8a97a3">Base model</th><th style="width:32%; color:#0b6e70">Visual information model</th></tr>
+    <tr><td>Start point β</td><td>race × behaviour + officer + actor + scenario + previous trial</td><td>same as base</td></tr>
+    <tr><td>Threshold α</td><td>race × behaviour + officer</td><td>same as base</td></tr>
+    <tr style="background:#eeeef0"><td>Drift δ</td><td>race × object × behaviour + officer</td><td><b>base + gun score + wrist speed</b></td></tr>
+    <tr><td>Non-decision time</td><td>race × object × behaviour + officer, plus st0</td><td>same as base</td></tr>
+  </table>
+  <p style="position:absolute; bottom:64px; left:128px; width:1664px; font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; color:#888888">9 · Previous trial: +0.5 if the last video had a gun, −0.5 if not. Gun score and wrist speed: one value per video, z-scored, one slope per object × behaviour cell. Stan, 3 chains × 1,000 draws, 19,316 trials.</p>
+  <div data-build-out="fade 1" style="position:absolute; left:1252px; top:300px; width:556px; height:640px; background:#ffffff"></div>
+  <aside>SCRIPT: Now the model. Both models build on the published drift-diffusion model from Pleskac et al. 2025. In a drift-diffusion model, evidence starts at a start point, accumulates at a rate called the drift, and the officer responds when it reaches a threshold; non-decision time covers things like perception and pulling the trigger. Our base model adds two things to the published one: trial-to-trial variability in non-decision time, and the previous trial on the start point.
+[Click 1] The visual information model is identical except for one row: the drift. We add the gun score and the wrist speed to the drift. Each measure gets one slope per object and behaviour condition, shared by Black and White videos. So any change in the race gap has to come from the videos themselves, not from a separate race slope.
+
+IF ASKED: Previous trial: after a gun video officers start closer to shoot (slope +0.19). The non-decision-time variability fixes the too-slow predicted false alarms. 8 slopes total. Fitted in Stan, 3 chains of 1,000 draws.</aside>
+</section>
+<section id="models" data-transition="fade" style="background:#ffffff">
+<div style="position:absolute;left:0px;top:0px;width:1920px;height:100px;background:#eeeef0"></div>
+<img src="assets/124b2230321f46b94e6f632acade154e.png" alt="Indiana University" style="position:absolute;left:48px;top:16px;width:349px;height:68px;object-fit:contain">
+<p style="position:absolute;left:960px;top:34px;width:896px;text-align:right;font-family:'Azeret Mono', monospace;font-size:24px;font-weight:500;letter-spacing:1px;color:#990000">VISUAL EVIDENCE IN SHOOT DECISIONS</p>
+  <p id="e1-5o7rez" style="position:absolute; bottom:64px; left:136px; width:1664px; font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; color:#888888">10 · ELPD = expected log predictive density (PSIS-LOO), higher is better; difference = visual information minus base.</p>
+  <h2 id="pe4e309edbadar0-09e9b125" style="position:absolute; top:140px; left:128px; width:1665px; font-family:'Libre Franklin', Arial, sans-serif; font-size:60px; font-weight:700; line-height:1.15; color:#1b3e50">Model fit: the visual measures predict the trials better</h2>
+  <table id="pe4e309edbadar1-09e9b125" style="position:absolute; top:50%; left:50%; width:1664px; font-family:'Libre Franklin', Arial, sans-serif; font-size:32px; color:#1b3e50; transform:translate(-50%, -50%)">
+    <tr><th style="width:22%">Measure</th><th style="width:25%; text-align:right; color:#8a97a3">Base model</th><th style="width:29%; text-align:right; color:#0b6e70">Visual information model</th><th style="width:24%; text-align:right; color:#990000">Difference</th></tr>
+    <tr><td>ELPD ± SE</td><td style="text-align:right">−3,484.8 ± 122.4</td><td style="text-align:right">−2,742.7 ± 119.9</td><td style="text-align:right"><b>+742.1 ± 34.5</b></td></tr>
+  </table>
+  <aside>SCRIPT: First, does adding visual information actually help? Yes. We compare the models with leave-one-out cross-validation, where higher is better. The visual information model is better by 742 points, about 21 standard errors.
+Because many trials share the same video, we also did a stricter check by video, and it still holds: 46 of the 64 videos are fit better.
+
+IF ASKED: Video-level z = 4.9. Pareto k is fine for all but a handful of trials. One divergent transition in 3,000 draws; the only R-hat above 1.01 are the between-officer SDs, the same as in the base model.</aside>
+</section>
+<section id="params" data-transition="fade" style="display:flex; flex-direction:column; gap:28px; padding:140px 128px 160px; background:#ffffff">
+  <div style="position:absolute; top:0; left:0; width:1920px; height:100px; display:flex; flex-direction:column; background:#eeeef0">
+  </div>
+  <img src="assets/124b2230321f46b94e6f632acade154e.png" alt="Indiana University" style="position:absolute; top:16px; left:48px; width:349px; height:68px; object-fit:contain">
+  <p style="position:absolute; top:34px; left:960px; width:896px; font-family:'Azeret Mono', monospace; font-size:24px; font-weight:500; letter-spacing:1px; text-align:right; color:#990000">VISUAL EVIDENCE IN SHOOT DECISIONS</p>
+  <h2 style="font-family:'Libre Franklin', Arial, sans-serif; font-size:60px; font-weight:700; line-height:1.15; color:#1b3e50">Drift changes; start, threshold and NDT barely move</h2>
+  <img src="assets/e8c4915c30c2d7c69f8c9fb55837074f.png" alt="Group-level start point, threshold, drift and relative NDT by race, object and behaviour, base model only" style="position:absolute; top:236px; left:128px; width:1050px; height:727px; object-fit:contain">
+  <img src="assets/fa2635384da4e20274fc01fecd10060f.png" alt="The same panels with the visual information model added next to the base model" data-build-in="fade 1" style="position:absolute; top:236px; left:128px; width:1050px; height:727px; object-fit:contain">
+  <div data-build-in="fade 2" style="position:absolute; top:842px; left:194px; width:92px; height:92px; display:flex; flex-direction:column; background:#9900000f; border:5px solid #990000; border-radius:12px">
+  </div>
+  <p style="position:absolute; top:300px; left:1230px; width:562px; font-family:'Libre Franklin', Arial, sans-serif; font-size:28px; line-height:1.35; color:#1b3e50"><span style="color:#8a97a3"><b>Base model</b></span>: drift for unarmed, nonantagonistic suspects is less negative for Black suspects.</p>
+  <p data-build-in="fade 3" style="position:absolute; top:440px; left:1230px; width:562px; font-family:'Libre Franklin', Arial, sans-serif; font-size:28px; line-height:1.35; color:#1b3e50"><span style="color:#0b6e70"><b>Visual information model</b></span>: at matched gun score and wrist speed, that drift gap shrinks.</p>
+  <p data-build-in="fade 3" style="position:absolute; top:580px; left:1230px; width:562px; padding:12px 0 12px 20px; font-family:'Libre Franklin', Arial, sans-serif; font-size:30px; line-height:1.35; color:#1b3e50"><b>Unarmed nonantagonistic drift gap</b><br>0.68 → <span style="color:#990000"><b>0.27</b></span></p>
+  <p data-build-in="fade 3" style="position:absolute; top:712px; left:1230px; width:562px; font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; line-height:1.35; color:#555555">Start point, threshold and non-decision time barely change.</p>
+  <p style="position:absolute; bottom:64px; left:128px; width:400px; font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; color:#888888">11</p>
+  <aside>SCRIPT: Here are the parameters. The grey points are the base model. Look at panel C, the drift rate: for unarmed, nonantagonistic suspects, the drift is less negative for Black suspects. That is the race gap. [Click 1] Now I add the visual information model in teal. Here we compare both races at the same gun score and wrist speed. [Click 2] The box marks that condition: unarmed, nonantagonistic suspects. [Click 3] With the visual information model, at matched gun score and wrist speed, the race gap in drift drops from 0.68 to 0.27. Meanwhile the start point, threshold and non-decision time barely change. So visual information works through the drift, which is exactly where the race effect was. IF ASKED: 95% intervals: 0.68 [0.55, 0.82] and 0.27 [0.11, 0.43]. Dots are posterior means for a typical officer, actor and scenario; bars are 95% intervals.</aside>
+</section>
+<section id="slopes" data-transition="fade" style="background:#ffffff;color:#1b3e50;font-family:'Libre Franklin', Arial, sans-serif;padding:140px 128px 160px;display:flex;flex-direction:column;gap:24px">
+<div style="position:absolute;left:0px;top:0px;width:1920px;height:100px;background:#eeeef0"></div>
+<img src="assets/124b2230321f46b94e6f632acade154e.png" alt="Indiana University" style="position:absolute;left:48px;top:16px;width:349px;height:68px;object-fit:contain">
+<p style="position:absolute;left:960px;top:34px;width:896px;text-align:right;font-family:'Azeret Mono', monospace;font-size:24px;font-weight:500;letter-spacing:1px;color:#990000">VISUAL EVIDENCE IN SHOOT DECISIONS</p>
+<h2 style="font-size:60px;font-weight:700;line-height:1.15">How gun score and wrist speed move drift</h2>
+<p style="font-size:28px;line-height:1.4;color:#444444;width:1600px">Both push drift toward shoot most where the race gap is: unarmed, nonantagonistic suspects (crimson).</p>
+<img src="assets/3a538d9ec864e6a9fb8e531b420ecb34.png" alt="Change in drift toward shoot per within-cell SD of gun-likeness and of the right-wrist trend, by object and behaviour, with 95% intervals and the probit slopes" style="width:1480px;height:638px;object-fit:contain">
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#888888">13 · Visual information model. Dot: drift change for +1 SD among the cell's 16 videos; bar: 95% interval; label: probit-scale slope per 1 SD across all 64 videos.</p>
+<aside>SCRIPT: How do the two measures move drift? Each dot shows how much drift changes toward shoot for a one standard deviation increase within a condition.
+Both measures push toward shoot most in the condition where the race gap is: unarmed, nonantagonistic suspects, in crimson. One standard deviation more gun-like adds about 1.0 to the drift toward shoot. A faster wrist trend adds about 0.7.
+
+IF ASKED: All intervals exclude zero. The probit slope alone misleads, because armed videos vary much more in gun-likeness. In armed antagonistic videos the wrist effect flips sign (−0.29), which is hard to explain; treat the wrist effects as exploratory.</aside>
+</section>
+<section id="ppcrates" data-transition="fade" style="display:flex; flex-direction:column; gap:28px; padding:140px 128px 160px; background:#ffffff">
+  <div style="position:absolute; top:0; left:0; width:1920px; height:100px; display:flex; flex-direction:column; background:#eeeef0">
+  </div>
+  <img src="assets/124b2230321f46b94e6f632acade154e.png" alt="Indiana University" style="position:absolute; top:16px; left:48px; width:349px; height:68px; object-fit:contain">
+  <p style="position:absolute; top:34px; left:960px; width:896px; font-family:'Azeret Mono', monospace; font-size:24px; font-weight:500; letter-spacing:1px; text-align:right; color:#990000">VISUAL EVIDENCE IN SHOOT DECISIONS</p>
+  <h2 style="font-family:'Libre Franklin', Arial, sans-serif; font-size:60px; font-weight:700; line-height:1.15; color:#1b3e50">Posterior predictions: both models reproduce the shoot rates</h2>
+  <img src="assets/898d31711a0044da537f5e2f0bb8c00e.png" alt="Observed and posterior predicted proportion of trials shot per officer in each condition, for both models" style="width:1480px; height:680px; object-fit:contain">
+  <aside>SCRIPT: Next, can the models reproduce the data? Here the crosses are the observed shoot rates and the circles are the model predictions. Both models capture the shoot rate in every condition. The one visible difference: for White unarmed nonantagonistic suspects, the base model over-predicts false alarms, 7.6 percent against 5.4 observed, while the visual information model gets it right at 5.5 percent. IF ASKED: 300 posterior draws; each observed trial re-simulated so each officer keeps their own trial count. Bars are wide because each officer saw about four videos per condition.</aside>
+</section>
+<section id="ppcrt" data-transition="fade" style="display:flex; flex-direction:column; gap:24px; padding:140px 128px 160px; background:#ffffff">
+  <div style="position:absolute; top:0; left:0; width:1920px; height:100px; display:flex; flex-direction:column; background:#eeeef0">
+  </div>
+  <img src="assets/124b2230321f46b94e6f632acade154e.png" alt="Indiana University" style="position:absolute; top:16px; left:48px; width:349px; height:68px; object-fit:contain">
+  <p style="position:absolute; top:34px; left:960px; width:896px; font-family:'Azeret Mono', monospace; font-size:24px; font-weight:500; letter-spacing:1px; text-align:right; color:#990000">VISUAL EVIDENCE IN SHOOT DECISIONS</p>
+  <h2 style="font-family:'Libre Franklin', Arial, sans-serif; font-size:60px; font-weight:700; line-height:1.15; color:#1b3e50">Posterior predictions: shoot-RT quantiles</h2>
+  <h3 style="position:absolute; top:236px; left:128px; width:812px; font-family:'Libre Franklin', Arial, sans-serif; font-size:30px; font-weight:700; color:#1b3e50">Armed suspects (hits)</h3>
+  <img src="assets/b766254e2a9011b93c206c27e51ed4e8.png" alt="Observed and predicted RT quantiles for armed suspects by race and behaviour, with 95% HDIs of officer-level predicted quantiles" style="position:absolute; top:284px; left:128px; width:812px; height:620px; object-fit:contain">
+  <p style="position:absolute; top:912px; left:128px; width:812px; font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; color:#1b3e50"><b>Hit RTs reproduced:</b> both models sit on the observed quantiles.</p>
+  <h3 data-build-in="fade 1" style="position:absolute; top:236px; left:980px; width:812px; font-family:'Libre Franklin', Arial, sans-serif; font-size:30px; font-weight:700; color:#1b3e50">Unarmed suspects (false alarms)</h3>
+  <img src="assets/2f528f13e41e240d9154c284037ed520.png" alt="Observed and predicted RT quantiles for unarmed suspects by race and behaviour, with 95% HDIs of officer-level predicted quantiles" data-build-in="fade 1" style="position:absolute; top:284px; left:980px; width:812px; height:620px; object-fit:contain">
+  <p data-build-in="fade 1" style="position:absolute; top:912px; left:980px; width:812px; font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; color:#1b3e50"><b>False alarms:</b> medians fit; the slow tail is predicted too slow, as in the published paper.</p>
+  <aside>SCRIPT: And the response times. Each row is a quantile of shoot response time, from the fastest 10 percent to the slowest 90 percent. The crosses are observed, the circles predicted. First, armed suspects, the hits. Both models sit right on the observed quantiles, so the model reproduces the response-time distribution for correct shoots. [Click 1] Now unarmed suspects, the false alarms. The medians still fall within both models' bands. Where the models struggle is the slow tail for Black unarmed suspects: they predict responses that are too slow. The published paper reports the same pattern, so this is a known limit of the model, not something the visual measures introduced. Overall the fit is still acceptable. IF ASKED: Bars are the 95% range of officer-level predicted quantiles, as in supplement Figure S5: 60 posterior draws, each officer's trials re-simulated 10 times. In unarmed conditions only officers with at least 5 simulated shots enter, so those bands describe more shoot-prone officers.</aside>
+</section>
+<section id="takeaways" data-transition="fade" style="display:flex; flex-direction:column; gap:40px; padding:140px 128px 160px; background:#ffffff">
+  <div style="position:absolute; top:0; left:0; width:1920px; height:100px; display:flex; flex-direction:column; background:#eeeef0">
+  </div>
+  <img src="assets/124b2230321f46b94e6f632acade154e.png" alt="Indiana University" style="position:absolute; top:16px; left:48px; width:349px; height:68px; object-fit:contain">
+  <p style="position:absolute; top:34px; left:960px; width:896px; font-family:'Azeret Mono', monospace; font-size:24px; font-weight:500; letter-spacing:1px; text-align:right; color:#990000">VISUAL EVIDENCE IN SHOOT DECISIONS</p>
+  <h2 style="font-family:'Libre Franklin', Arial, sans-serif; font-size:60px; font-weight:700; line-height:1.15; color:#1b3e50">Takeaways</h2>
+  <div style="position:absolute; top:260px; left:128px; width:1600px; display:flex; flex-direction:column; gap:40px">
+    <p style="padding:8px 0 8px 24px; font-family:'Libre Franklin', Arial, sans-serif; font-size:34px; line-height:1.5; color:#1b3e50; border-left:6px solid #0b6e70"><b>Visual information improves the temporal decision model:</b> adding gun-likeness and the wrist trend to drift gains +742 ELPD</p>
+    <p style="padding:8px 0 8px 24px; font-family:'Libre Franklin', Arial, sans-serif; font-size:34px; line-height:1.5; color:#1b3e50; border-left:6px solid #990000"><b>It accounts for much of the race gap:</b> the unarmed nonantagonistic drift gap falls from 0.68 to 0.27 at matched video features; smaller, but still above zero.</p>
+  </div>
+  <p data-build-in="fade 3" style="position:absolute; top:576px; left:128px; width:960px; padding:8px 0 8px 24px; font-family:'Libre Franklin', Arial, sans-serif; font-size:34px; line-height:1.5; color:#1b3e50; border-left:6px solid #8a97a3"><b>Next, eye-tracking:</b> use where people actually look to validate these measures and learn which visual features they use to make that critical decision.</p>
+  <div data-build-in="fade 3" style="position:absolute; top:576px; left:1168px; width:560px; height:336px; background:#1a1a1a; border-radius:8px; object-fit:contain; background:#2b2b2b; display:flex; align-items:center; justify-content:center"><p style="font-family:'Libre Franklin', Arial, sans-serif; font-size:26px; line-height:1.35; color:#e6e6e6; text-align:center; padding:24px">Stimulus video shown in the live talk</p></div>
+  <p style="position:absolute; bottom:64px; left:128px; width:400px; font-family:'Libre Franklin', Arial, sans-serif; font-size:24px; color:#888888">16</p>
+  <aside>SCRIPT (each takeaway appears on its own click): To wrap up, three takeaways. Click 1: first, visual information improves the decision model. Adding the gun score and the wrist trend to the drift improves the fit by 742 points, and predicts which videos draw false alarms much better, with the correlation going from 0.78 to 0.94. Click 2: second, it accounts for much of the race gap. The drift gap for unarmed nonantagonistic suspects falls from 0.68 to 0.27 when videos are matched on these features. Smaller, but still above zero. Click 3: third, next steps: eye-tracking. Using where people actually look, we can validate these measures and learn which visual features people use to make that critical decision. VIDEO (appears with click 3; click it to play): this is the eye-tracking we have now, mapped onto the stimulus. It is a pull-over scene with an armed driver, and the heatmap shows where the 21 participants who correctly shot were looking, frame by frame. Early on gaze is spread over the car, the officer and the driver; inside the car it splits between his face, his hands and his lap; about two seconds before the shots almost everyone converges on his hand by his lap, where the gun comes out. Good-homography trials only, each person weighted equally, blur about 1 degree. IF ASKED, LIMITS: the features were chosen on these same videos; there are few videos per condition; single-frame vision scores are noisy; and the timing of false alarms is not fully captured.</aside>
+</section>
+<section id="1321a48c" data-transition="fade" style="display:flex; flex-direction:column; gap:28px; justify-content:center; padding:128px; background:#990000">
+  <div style="position:absolute; top:0; left:1663px; width:125px; height:213px; display:flex; flex-direction:column; background:#ffffff">
+  </div>
+  <img src="assets/64dfe4b68445a3d60309fa5260fe84c5.png" alt="IU trident" style="position:absolute; top:72px; left:1685px; width:80px; height:101px; object-fit:contain">
+  <img src="assets/39617a85b1f62bd0b8097481ceb859cd.jpg" alt="Lab group photo in front of the brain sculpture at the Psychology building" style="position:absolute; top:300px; left:1060px; width:732px; height:488px; object-fit:cover; border:6px solid #eeeef0; border-radius:8px">
+  <h1 style="width:900px; font-family:'Libre Franklin', Arial, sans-serif; font-size:96px; font-weight:900; font-style:italic; line-height:1.05; text-transform:uppercase; color:#eeeef0">Thank you</h1>
+  <p style="width:900px; font-family:'Libre Franklin', Arial, sans-serif; font-size:30px; line-height:1.45; color:#ffffff"><b>Collaborators:</b> Timothy J. Pleskac, Joseph Cesario, David J. Johnson, Glen Gagnon</p>
+  <p style="width:900px; font-family:'Libre Franklin', Arial, sans-serif; font-size:30px; line-height:1.45; color:#ffffff"><b>The officers of the Milwaukee Police Department</b>, and Chief Edward Flynn, Captain Nicole Davila, Lieutenant Richard Stein, Sergeants Paul Riehle and Jeffrey Sunn</p>
+  <p style="width:900px; font-family:'Libre Franklin', Arial, sans-serif; font-size:30px; line-height:1.45; color:#ffffff"><b>Simulator and videos:</b> Larry Lumb (Saturn Manufacturing), David McFarlane, Ahptic Film &amp; Digital</p>
+  <p style="width:900px; font-family:'Azeret Mono', monospace; font-size:24px; color:#f5e3cc">Funding: NSF SBE 1230281 and 1756092</p>
+  <div style="position:absolute; top:960px; left:128px; width:80px; height:6px; display:flex; flex-direction:column; background:#f31c40">
+  </div>
+  <img src="assets/87924e9e0edaa1e27299203e58cff8b3.png" alt="Bring On Tomorrow" style="position:absolute; top:986px; left:128px; width:318px; height:25px; object-fit:contain">
+  <aside>SCRIPT: Thank you. I want to thank my collaborators, Tim Pleskac, Joe Cesario, David Johnson and Glen Gagnon; the officers of the Milwaukee Police Department and its leadership; and the people who built the simulator and the videos. This work was funded by the National Science Foundation. I'm happy to take questions.
+
+PHOTO: the current lab, including our newest members, [name] on the far left and [name] in the back row, centre. Welcome to the lab! (Composite: added to the group photo.)</aside>
+</section>
+</div></div>
+<div id="hud"></div>
+<div id="notes"></div>
+<div id="pside"><div id="pclock">0:00</div><div id="pmeta"></div><div id="pnotes"></div></div>
+<script>
+(() => {
+  const deck = document.getElementById('deck'), stage = document.getElementById('stage');
+  const slides = [...deck.querySelectorAll(':scope > section')].filter(s => !s.hasAttribute('hidden'));
+  const presenter = new URLSearchParams(location.search).has('presenter');
+  if (presenter) document.body.classList.add('presenter');
+  let peer = presenter ? window.opener : null;
+
+  // flow connectors between cards: a straight arrow across the box
+  deck.querySelectorAll('x-connector:not([x1])').forEach(c => {
+    const d = document.createElement('div');
+    d.setAttribute('style', (c.getAttribute('style') || '') + ';flex:none;justify-content:center');
+    d.innerHTML = '<svg width="100%" height="24" viewBox="0 0 36 24" preserveAspectRatio="none"><line x1="0" y1="12" x2="26" y2="12" stroke="currentColor" stroke-width="2.5"/><polygon points="24,5 36,12 24,19" fill="currentColor"/></svg>';
+    c.replaceWith(d);
+  });
+
+  // images with a clip become videos (poster = the still)
+  deck.querySelectorAll('img[data-video]').forEach(img => {
+    const v = document.createElement('video');
+    v.src = img.dataset.video; v.poster = img.getAttribute('src'); v.playsInline = true; v.preload = 'metadata';
+    v.setAttribute('style', img.getAttribute('style') || '');
+    v.setAttribute('aria-label', img.alt || '');
+    for (const a of ['data-build-in', 'data-build-out', 'id']) if (img.hasAttribute(a)) v.setAttribute(a, img.getAttribute(a));
+    v.muted = img.dataset.videoSound !== 'on';
+    if (img.dataset.videoStart !== 'click') v.dataset.auto = '1';
+    v.addEventListener('click', e => { e.stopPropagation(); if (v.paused) { if (v.ended) v.currentTime = 0; v.play(); } else v.pause(); });
+    img.replaceWith(v);
+  });
+
+  // click builds: "fade 2" = effect, step number
+  slides.forEach(s => {
+    const steps = new Set();
+    s.querySelectorAll('[data-build-in],[data-build-out]').forEach(el => {
+      for (const [a, k] of [['data-build-in', 'in'], ['data-build-out', 'out']]) {
+        const v = el.getAttribute(a); if (!v) continue;
+        const parts = v.trim().split(/\s+/), n = parseInt(parts.find(p => /^\d+$/.test(p)) || '1', 10);
+        el.dataset[k + 'Step'] = n; el.dataset[k + 'Fx'] = parts[0]; steps.add(n);
+      }
+    });
+    s._steps = [...steps].sort((a, b) => a - b);
+  });
+
+  function applyBuild(s, k) {
+    const cur = k === 0 ? 0 : s._steps[k - 1];
+    s.querySelectorAll('[data-in-step],[data-out-step]').forEach(el => {
+      const before = el.dataset.inStep && +el.dataset.inStep > cur, after = el.dataset.outStep && +el.dataset.outStep <= cur;
+      el.classList.toggle('b-hidden', !!(before || after));
+      el.dataset.fx = before ? el.dataset.inFx : after ? el.dataset.outFx : '';
+      if (el.tagName === 'VIDEO' && el.dataset.auto && !before && !after && el.paused && s.classList.contains('active')) el.play().catch(() => {});
+    });
+  }
+
+  let i = 0, k = 0, t0 = null;
+  function go(ni, nk, fromPeer) {
+    ni = Math.max(0, Math.min(slides.length - 1, ni));
+    const s = slides[ni]; nk = Math.max(0, Math.min(s._steps.length, nk));
+    if (ni !== i || !s.classList.contains('active')) {
+      slides[i].classList.remove('active');
+      slides[i].querySelectorAll('video').forEach(v => v.pause());
+      s.classList.add('active');
+      s.querySelectorAll('video').forEach(v => { v.currentTime = 0; });
+    }
+    i = ni; k = nk; applyBuild(s, k);
+    s.querySelectorAll('video[data-auto]').forEach(v => { if (!v.classList.contains('b-hidden') && v.paused) v.play().catch(() => {}); });
+    history.replaceState(null, '', '#' + (i + 1));
+    hud(); notes();
+    if (!fromPeer && peer && !peer.closed) peer.postMessage({ deck: 'go', i, k }, '*');
+  }
+  const next = () => k < slides[i]._steps.length ? go(i, k + 1) : go(i + 1, 0);
+  const prev = () => k > 0 ? go(i, k - 1) : i > 0 ? go(i - 1, slides[i - 1]._steps.length) : null;
+
+  function notes() {
+    const a = slides[i].querySelector('aside'), txt = a ? a.textContent.trim() : '';
+    document.getElementById('notes').textContent = txt || '(no notes)';
+    document.getElementById('pnotes').textContent = txt;
+    const nx = slides[i + 1], h = nx && nx.querySelector('h1,h2');
+    document.getElementById('pmeta').textContent = `Slide ${i + 1} / ${slides.length} · build ${k}/${slides[i]._steps.length}` + (h ? ` · next: ${h.textContent.trim()}` : '');
+  }
+  let hudT;
+  function hud() {
+    const el = document.getElementById('hud'); el.textContent = `${i + 1} / ${slides.length}`;
+    el.classList.add('show'); clearTimeout(hudT); hudT = setTimeout(() => el.classList.remove('show'), 1500);
+  }
+  function fit() {
+    const sc = Math.min(stage.clientWidth / 1920, stage.clientHeight / 1080);
+    deck.style.transform = `scale(${sc})`;
+  }
+
+  addEventListener('resize', fit);
+  addEventListener('keydown', e => {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    const key = e.key;
+    if (['ArrowRight', 'ArrowDown', ' ', 'PageDown', 'Enter'].includes(key)) { e.preventDefault(); next(); }
+    else if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].includes(key)) { e.preventDefault(); prev(); }
+    else if (key === 'Home') go(0, 0);
+    else if (key === 'End') go(slides.length - 1, slides[slides.length - 1]._steps.length);
+    else if (key === 'f' || key === 'F') document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+    else if (key === 'n' || key === 'N') document.body.classList.toggle('notes');
+    else if ((key === 'p' || key === 'P') && !presenter) {
+      peer = window.open(location.pathname + '?presenter#' + (i + 1), 'deck-presenter', 'width=1200,height=760');
+    }
+  });
+  stage.addEventListener('click', e => { if (!e.target.closest('a,video')) next(); });
+  let tx = null;
+  addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+  addEventListener('touchend', e => {
+    if (tx === null) return; const dx = e.changedTouches[0].clientX - tx; tx = null;
+    if (Math.abs(dx) > 50) (dx < 0 ? next : prev)();
+  });
+  addEventListener('message', e => {
+    const m = e.data; if (!m || !m.deck) return;
+    if (m.deck === 'hello') { peer = e.source; peer.postMessage({ deck: 'go', i, k }, '*'); }
+    if (m.deck === 'go') go(m.i, m.k, true);
+  });
+  addEventListener('hashchange', () => { const n = parseInt(location.hash.slice(1), 10); if (n && n - 1 !== i) go(n - 1, 0); });
+
+  if (presenter) {
+    deck.querySelectorAll('video').forEach(v => { v.muted = true; });
+    if (peer) peer.postMessage({ deck: 'hello' }, '*');
+    t0 = Date.now();
+    setInterval(() => { const s = Math.floor((Date.now() - t0) / 1000); document.getElementById('pclock').textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`; }, 500);
+    document.getElementById('pclock').addEventListener('click', () => { t0 = Date.now(); });
+  }
+  fit();
+  const [h1, h2] = location.hash.slice(1).split('.').map(x => parseInt(x, 10)); // #6 = slide 6, #6.3 = slide 6 after 3 clicks
+  go((h1 || 1) - 1, h2 || 0, true);
+})();
+</script>
+</body>
+</html>
